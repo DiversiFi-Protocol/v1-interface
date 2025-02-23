@@ -11,7 +11,7 @@ export default function TwoColumnLayout({ main, sidebar }: TwoColumnLayoutProps)
       <div className="flex-1 h-[calc(100vh-var(--navbar-height))] overflow-y-auto bg-background">
         {main}
       </div>
-      <div className="w-80 flex-shrink-0 h-[calc(100vh-var(--navbar-height))] overflow-y-auto bg-card border-l border-border">
+      <div className="w-[25rem] flex-shrink-0 h-[calc(100vh-var(--navbar-height))] overflow-y-auto bg-card border-l border-border">
         {sidebar}
       </div>
     </div>
