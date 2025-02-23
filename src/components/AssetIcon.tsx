@@ -19,11 +19,11 @@ export default function AssetIcon({ asset, size = 'sm', className }: AssetIconPr
   const assetPath = (() => {
     switch (asset) {
       case 'USDC':
-        return 'src/icons/usdc.png';
+        return '/usdc.png';
       case 'USDT':
-        return 'src/icons/usdt.png';
+        return '/usdt.png';
       case 'DAI':
-        return 'src/icons/dai.png';
+        return '/dai.png';
       default:
         return null;
     }
