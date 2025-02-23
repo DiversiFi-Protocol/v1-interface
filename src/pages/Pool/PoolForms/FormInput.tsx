@@ -17,6 +17,7 @@ export default function FormInput({
         <input
           value={value}
           type="number"
+          inputMode="decimal"
           onChange={(e) => onChange(e.target.value)}
           placeholder="0.00"
           className="flex-1 bg-transparent text-2xl focus-visible:outline-none min-w-0"
