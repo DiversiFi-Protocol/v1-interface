@@ -1,5 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import TwoColumnLayout from '@/layouts/TwoColumnLayout';
+import PoolPieChart from './PoolCharts/PoolPieChart';
+import VolumeAndFeeChart from './PoolCharts/VolumeAndFeeChart';
 import AddLiquidity from './PoolForms/AddLiquidity';
 import SwapForm from './PoolForms/SwapForm';
 
@@ -7,14 +9,10 @@ export default function Pool() {
   return (
     <TwoColumnLayout
       main={
-        <div className="p-4">
-          <h1 className="text-2xl font-bold">Pool Main Content</h1>
-          {/* Add lots of content to test scrolling */}
-          {Array.from({ length: 50 }).map((_, i) => (
-            <p key={i} className="my-4">
-              Placeholder Item {i + 1}
-            </p>
-          ))}
+        <div className="p-4 flex flex-col gap-4">
+          <h1 className="text-2xl font-bold">USD1 Liquidity Pool</h1>
+          <PoolPieChart />
+          <VolumeAndFeeChart />
         </div>
       }
       sidebar={
