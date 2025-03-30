@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import TwoColumnLayout from '@/layouts/TwoColumnLayout';
 import PoolPieChart from './PoolCharts/PoolPieChart';
 import VolumeAndFeeChart from './PoolCharts/VolumeAndFeeChart';
-import AddLiquidity from './PoolForms/AddLiquidity';
+import MintForm from './PoolForms/AddLiquidity';
 import SwapForm from './PoolForms/SwapForm';
 
 export default function Pool() {
@@ -19,20 +19,21 @@ export default function Pool() {
         <div className="p-4">
           <Tabs defaultValue="pool">
             <TabsList className="w-full">
-              <TabsTrigger className="w-full" value="pool">
-                Pool
-              </TabsTrigger>
               <TabsTrigger className="w-full" value="swap">
                 Swap
               </TabsTrigger>
-            </TabsList>
 
-            <TabsContent value="pool">
-              <AddLiquidity />
-            </TabsContent>
+              <TabsTrigger className="w-full" value="pool">
+                Mint
+              </TabsTrigger>
+            </TabsList>
 
             <TabsContent value="swap">
               <SwapForm />
+            </TabsContent>
+
+            <TabsContent value="pool">
+              <MintForm />
             </TabsContent>
           </Tabs>
         </div>

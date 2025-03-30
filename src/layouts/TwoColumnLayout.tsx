@@ -12,7 +12,7 @@ export default function TwoColumnLayout({ main, sidebar }: TwoColumnLayoutProps)
         {main}
         <div className="md:hidden">{sidebar}</div>
       </div>
-      <div className="hidden md:block w-[25rem] flex-shrink-0 h-[calc(100vh-var(--navbar-height))] overflow-y-auto bg-card border-l border-border">
+      <div className="hidden md:block w-[25rem] flex-shrink-0 h-[calc(100vh-var(--navbar-height))] overflow-y-auto bg-background border-l border-border">
         {sidebar}
       </div>
     </div>
