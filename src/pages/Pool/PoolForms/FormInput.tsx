@@ -5,15 +5,17 @@ import { Wallet } from 'lucide-react';
 export default function FormInput({
   token,
   onChange,
+  onClick,
   value,
 }: {
   token: string;
   onChange: (value: string) => void;
+  onClick: () => void;
   value: string;
 }) {
   return (
     <div className="flex flex-col gap-2 bg-input rounded-md p-4">
-      <div className="flex flex-row gap-2">
+      <div className="grid grid-cols-[1fr_auto] gap-2">
         <input
           value={value}
           type="number"
@@ -22,7 +24,7 @@ export default function FormInput({
           placeholder="0.00"
           className="flex-1 bg-transparent text-2xl focus-visible:outline-none min-w-0"
         />
-        <Button>
+        <Button onClick={onClick}>
           <AssetIcon asset={token} />
           {token}
         </Button>

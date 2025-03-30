@@ -104,17 +104,6 @@ const chartData = [
   { date: '2024-06-30', volume: 446, fee: 400 },
 ];
 
-const chartConfig = {
-  volume: {
-    label: 'Volume',
-    color: 'hsl(var(--chart-1))',
-  },
-  fee: {
-    label: 'Fees',
-    color: 'hsl(var(--chart-2))',
-  },
-} satisfies ChartConfig;
-
 export default function VolumeAndFeeChart() {
   const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig>('volume');
 
@@ -126,6 +115,21 @@ export default function VolumeAndFeeChart() {
     []
   );
 
+  const chartConfig = React.useMemo(
+    () =>
+      ({
+        volume: {
+          label: 'Volume',
+          color: 'hsl(var(--chart-1))',
+        },
+        fee: {
+          label: 'Fees',
+          color: 'hsl(var(--chart-2))',
+        },
+      }) satisfies ChartConfig,
+    []
+  );
+
   return (
     <Card>
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
@@ -133,14 +137,17 @@ export default function VolumeAndFeeChart() {
           <CardTitle>USD1 Pool Information</CardTitle>
           <CardDescription>View the volume and fees for the USD1 pool</CardDescription>
         </div>
-        <div className="flex">
+        <div className="flex mx-2">
           {['volume', 'fee'].map((key) => {
             const chart = key as keyof typeof chartConfig;
             return (
               <button
                 key={chart}
                 data-active={activeChart === chart}
-                className="active:outline-none relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
+                className="focus:outline-none active:outline-none relative rounded-none z-30 flex flex-1 flex-col justify-center gap-1 text-left border-0 data-[active=true]:border-b-2"
+                style={{
+                  borderBottomColor: chartConfig[chart].color,
+                }}
                 onClick={() => setActiveChart(chart)}
               >
                 <span className="text-xs text-muted-foreground">{chartConfig[chart].label}</span>

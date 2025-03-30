@@ -50,7 +50,6 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -92,9 +91,9 @@ input[type='number'] {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 34.3 100% 91.8%;
     --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
+    --card: 32.1 97.7% 83.1%;
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
