@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { mainnet } from 'viem/chains';
 import { useAccount, useBalance } from 'wagmi';
 
-export const useStableBalances = () => {
+export function useStableBalances() {
   const { address } = useAccount();
 
   const queryConfig = useMemo(() => {
@@ -37,4 +37,4 @@ export const useStableBalances = () => {
     usdcQuery,
     usdtQuery,
   };
-};
+}
