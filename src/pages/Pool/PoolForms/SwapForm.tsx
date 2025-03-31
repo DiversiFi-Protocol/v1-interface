@@ -2,7 +2,11 @@ import AssetIcon from '@/components/AssetIcon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { SWAPPABLE_ASSETS } from '@/constants/tokens';
-import { useState } from 'react';
+import { useStableBalances } from '@/hooks/useStableBalances';
+import { MustBigNumber } from '@/lib/numbers';
+import { Wallet } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { formatUnits } from 'viem';
 import FormInput from './FormInput';
 
 type SwappableAsset = keyof typeof SWAPPABLE_ASSETS;
@@ -16,6 +20,32 @@ export default function SwapForm() {
   const [output2Amount, setOutput2Amount] = useState('');
   const [output2Token, setOutput2Token] = useState<SwappableAsset>('USDT');
 
+  const { daiQuery, usdcQuery, usdtQuery } = useStableBalances();
+  const daiBalance = daiQuery.data?.value ?? 0n;
+  const usdcBalance = usdcQuery.data?.value ?? 0n;
+  const usdtBalance = usdtQuery.data?.value ?? 0n;
+  const formattedDaiBalance = formatUnits(daiBalance, SWAPPABLE_ASSETS.DAI.decimals);
+  const formattedUsdcBalance = formatUnits(usdcBalance, SWAPPABLE_ASSETS.USDC.decimals);
+  const formattedUsdtBalance = formatUnits(usdtBalance, SWAPPABLE_ASSETS.USDT.decimals);
+
+  const formattedBalances = useMemo(
+    () => ({
+      DAI: formattedDaiBalance,
+      USDC: formattedUsdcBalance,
+      USDT: formattedUsdtBalance,
+      USD1: '0',
+    }),
+    [formattedDaiBalance, formattedUsdcBalance, formattedUsdtBalance]
+  );
+
+  const { inputWalletBalance, outputWalletBalance } = useMemo(
+    () => ({
+      inputWalletBalance: formattedBalances[input1Token],
+      outputWalletBalance: formattedBalances[output2Token],
+    }),
+    [formattedBalances, input1Token, output2Token]
+  );
+
   const swapView = (
     <div className="flexColumn gap-1">
       <FormInput
@@ -23,12 +53,14 @@ export default function SwapForm() {
         onChange={setInput1Amount}
         value={input1Amount}
         onClick={() => setView('select1')}
+        balance={inputWalletBalance}
       />
       <FormInput
         token={output2Token}
         onChange={setOutput2Amount}
         value={output2Amount}
         onClick={() => setView('select2')}
+        balance={outputWalletBalance}
       />
     </div>
   );
@@ -38,7 +70,7 @@ export default function SwapForm() {
       {Object.entries(SWAPPABLE_ASSETS).map(([asset, assetInfo]) => (
         <button
           key={asset}
-          className="row w-full border border-border gap-2"
+          className="row w-full border border-border gap-2 justify-between"
           onClick={() => {
             if (view === 'select1') {
               if (asset === output2Token) {
@@ -57,8 +89,14 @@ export default function SwapForm() {
             setView('swap');
           }}
         >
-          <AssetIcon size="md" asset={asset} />
-          {assetInfo.name}
+          <div className="row gap-2">
+            <AssetIcon size="md" asset={asset} />
+            {assetInfo.name}
+          </div>
+          <div className="row gap-2">
+            <span>{MustBigNumber(formattedBalances[asset as SwappableAsset]).toFixed(2)}</span>
+            <Wallet className="w-4 h-4" />
+          </div>
         </button>
       ))}
     </div>
