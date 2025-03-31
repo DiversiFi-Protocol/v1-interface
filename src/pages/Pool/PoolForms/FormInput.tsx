@@ -7,11 +7,13 @@ export default function FormInput({
   onChange,
   onClick,
   value,
+  balance,
 }: {
   token: string;
   onChange: (value: string) => void;
-  onClick: () => void;
+  onClick?: () => void;
   value: string;
+  balance?: string;
 }) {
   return (
     <div className="flex flex-col gap-2 bg-input rounded-md p-4">
@@ -30,10 +32,9 @@ export default function FormInput({
         </Button>
       </div>
 
-      <div className="flex flex-row justify-between text-sm text-muted-foreground">
-        <span>$0.00</span>
+      <div className="flex flex-row justify-end text-sm text-muted-foreground">
         <span className="flex flex-row items-center gap-2">
-          0.00 <Wallet className="w-4 h-4" />
+          {balance ?? '0.00'} <Wallet className="w-4 h-4" />
         </span>
       </div>
     </div>
