@@ -1,24 +1,30 @@
 import IBackingPoolAbi from '@/abi/IBackingPool';
 import { toast } from 'sonner';
 import { Address, zeroAddress } from 'viem';
-import { useWriteContract } from 'wagmi';
+import { useAccount, useSimulateContract, useWriteContract } from 'wagmi';
+
 export function useSwap() {
+  const { address } = useAccount();
   const { writeContractAsync } = useWriteContract();
 
   const swap = async (
-    recipient: Address,
     inputAsset: Address,
     outputAsset: Address,
     inputAmount: bigint,
     minOutput: bigint
   ) => {
     try {
+      if (address == null) {
+        throw new Error('No account connected');
+      }
+
       const txHash = await writeContractAsync({
         abi: IBackingPoolAbi,
         address: zeroAddress,
         functionName: 'swapGivenIn',
-        args: [recipient, inputAsset, outputAsset, inputAmount, minOutput],
+        args: [address, inputAsset, outputAsset, inputAmount, minOutput],
       });
+
       toast.success('Swap has been submitted', {
         action: {
           label: 'View tx',
@@ -34,4 +40,31 @@ export function useSwap() {
   };
 
   return swap;
+}
+
+export function useSimulateSwap({
+  inputAsset,
+  outputAsset,
+  inputAmount,
+  minOutput,
+}: {
+  inputAsset?: Address;
+  outputAsset?: Address;
+  inputAmount?: bigint;
+  minOutput?: bigint;
+}) {
+  const { address } = useAccount();
+
+  const swapSimulation = useSimulateContract({
+    abi: IBackingPoolAbi,
+    address: zeroAddress,
+    functionName: 'swapGivenIn',
+    args: [address!, inputAsset!, outputAsset!, inputAmount!, minOutput!],
+    account: address,
+    query: {
+      enabled: !!address && !!inputAsset && !!outputAsset && !!inputAmount && !!minOutput,
+    },
+  });
+
+  return swapSimulation;
 }
