@@ -1,7 +1,5 @@
 import IBackingPoolAbi from '@/abi/IBackingPool';
-import { TOKEN_ADDRESSES } from '@/constants/tokens';
 import { zeroAddress } from 'viem';
-import { mainnet } from 'viem/chains';
 import { useBalance, useReadContract } from 'wagmi';
 
 // TODO: Add backing pool address
@@ -19,9 +17,9 @@ export function useInsuranceFund() {
 
   const insuranceFundBalanceQuery = useBalance({
     address: insuranceFundAddress,
-    token: TOKEN_ADDRESSES.USDC[mainnet.id],
+    token: zeroAddress, // TODO: Add token address
     query: {
-      enabled: !!insuranceFundAddress,
+      enabled: false,
     },
   });
 

@@ -1,45 +1,75 @@
-import { Address } from 'viem';
-import { mainnet } from 'viem/chains';
+import { chainId } from '@/constants/chain';
+import { Address, zeroAddress } from 'viem';
+import { hardhat, mainnet } from 'viem/chains';
 
-export const SWAPPABLE_ASSETS = {
-  USDC: {
-    name: 'USDC',
-    symbol: 'USDC',
-    decimals: 6,
+export type SupportedAsset = {
+  address: Address;
+  symbol: string;
+  decimals: number;
+  image: string;
+};
+
+const ALL_SUPPORTED_RESERVE_ASSETS: Record<number, SupportedAsset[]> = {
+  [mainnet.id]: [
+    {
+      address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+      symbol: 'DAI',
+      decimals: 18,
+      image: '/currencies/dai.png',
+    },
+    {
+      address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+      symbol: 'USDC',
+      decimals: 6,
+      image: '/currencies/usdc.png',
+    },
+    {
+      address: '0xdAC17f958d2ee523a2206206994597c13d831ec7',
+      symbol: 'USDT',
+      decimals: 6,
+      image: '/currencies/usdt.png',
+    },
+  ],
+  [hardhat.id]: [
+    {
+      address: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+      symbol: 'TEST',
+      decimals: 20,
+      image: '/currencies/usdc.png',
+    },
+    {
+      address: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
+      symbol: 'TEST1',
+      decimals: 18,
+      image: '/currencies/dai.png',
+    },
+    {
+      address: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
+      symbol: 'TEST2',
+      decimals: 6,
+      image: '/currencies/usdt.png',
+    },
+  ],
+};
+
+export const SUPPORTED_RESERVE_ASSETS = ALL_SUPPORTED_RESERVE_ASSETS[chainId];
+
+const BACKED_TOKENS: Record<number, SupportedAsset> = {
+  [mainnet.id]: {
+    address: zeroAddress, // TODO: Add address
+    decimals: 18,
+    symbol: 'USD1',
     image: '/currencies/usdc.png',
   },
-  USDT: {
-    name: 'USDT',
-    symbol: 'USDT',
-    decimals: 6,
-    image: '/currencies/usdt.png',
-  },
-  DAI: {
-    name: 'DAI',
-    symbol: 'DAI',
+  [hardhat.id]: {
+    address: '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9',
     decimals: 18,
-    image: '/currencies/dai.png',
-  },
-  USD1: {
-    name: 'USD1',
     symbol: 'USD1',
-    decimals: 18,
-    image: '/currencies/dai.png',
+    image: '/currencies/usdc.png',
   },
 };
 
-export const TOKEN_ADDRESSES: {
-  [asset: string]: {
-    [chainId: number]: Address;
-  };
-} = {
-  USDC: {
-    [mainnet.id]: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-  },
-  USDT: {
-    [mainnet.id]: '0xdAC17f958d2ee523a2206206994597c13d831ec7',
-  },
-  DAI: {
-    [mainnet.id]: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-  },
-};
+export const BACKED_TOKEN = BACKED_TOKENS[chainId];
+
+export const ALL_SUPPORTED_TOKENS = [...SUPPORTED_RESERVE_ASSETS, BACKED_TOKEN];
+export const NORMALIZED_ASSET_DECIMALS = 18;
