@@ -1,3 +1,4 @@
 import { Address } from 'viem';
+import { envVar } from './environment';
 
-export const BACKING_POOL_ADDRESS: Address = import.meta.env.VITE_BACKING_POOL_ADDRESS;
+export const BACKING_POOL_ADDRESS: Address = envVar.backingPoolAddress;
