@@ -1,3 +1,4 @@
+import { envVar } from '@/constants/environment';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit';
 import { ReactNode } from 'react';
@@ -14,7 +15,7 @@ const config = createConfig(
     // Chains you want to support
     chains: [mainnet, hardhat],
     // Your alchemy/infura api key
-    walletConnectProjectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || '',
+    walletConnectProjectId: envVar.walletConnectProjectId || '',
     transports: {
       [mainnet.id]: http(),
       [hardhat.id]: http('http://127.0.0.1:8545/'),
