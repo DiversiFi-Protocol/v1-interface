@@ -1,85 +1,112 @@
-import * as React from 'react';
+import { useMemo } from 'react';
 import { Label, Pie, PieChart } from 'recharts';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   ChartConfig,
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-
-const chartData = [
-  { asset: 'USDC', amount: 275_000, fill: 'var(--color-usdc)' },
-  { asset: 'USDT', amount: 200_000, fill: 'var(--color-usdt)' },
-  { asset: 'DAI', amount: 287_000, fill: 'var(--color-dai)' },
-];
-
-const chartConfig = {
-  tvl: {
-    label: 'Total Value Locked',
-  },
-  usdc: {
-    label: 'USDC',
-    color: 'hsl(var(--chart-1))',
-  },
-  usdt: {
-    label: 'USDT',
-    color: 'hsl(var(--chart-2))',
-  },
-  dai: {
-    label: 'DAI',
-    color: 'hsl(var(--chart-3))',
-  },
-} satisfies ChartConfig;
+import {
+  useAllAssetScaledReserves,
+  useGetTotalScaledReserves,
+} from '@/hooks/BackingPool/usePoolReserves';
+import { MustBigNumber } from '@/lib/numbers';
+import { objectFromEntries } from '@/lib/objectHelpers';
+import { Loader2 } from 'lucide-react';
 
 export default function PoolPieChart() {
-  const tvl = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.amount, 0);
-  }, []);
+  const { totalScaledReserves, isLoading: totalScaledReservesLoading } =
+    useGetTotalScaledReserves();
+  const { scaledReserves, isLoading: scaledReservesLoading } = useAllAssetScaledReserves();
+
+  const chartData = useMemo(() => {
+    return scaledReserves?.map(({ amount, symbol }) => ({
+      asset: symbol,
+      amount: MustBigNumber(amount).toNumber(),
+      fill: `var(--color-${symbol})`,
+    }));
+  }, [scaledReserves]);
+
+  const chartConfig = useMemo(() => {
+    const config: ChartConfig = objectFromEntries(
+      scaledReserves?.map(({ symbol }, idx) => [
+        symbol,
+        {
+          label: symbol,
+          color: `hsl(var(--chart-${idx + 1}))`,
+        },
+      ]) ?? []
+    );
+
+    return config;
+  }, [scaledReserves]);
 
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>USD1 Distribution</CardTitle>
+        <CardTitle>USD1 Pool Composition</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
-        <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-[400px]">
-          <PieChart>
-            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-            <Pie data={chartData} dataKey="amount" nameKey="asset" innerRadius={80} strokeWidth={5}>
-              <Label
-                content={({ viewBox }) => {
-                  if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
-                    return (
-                      <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                      >
-                        <tspan
+        {totalScaledReservesLoading || scaledReservesLoading ? (
+          <div className="flex items-center justify-center h-[400px]">
+            <Loader2 className="size-10 animate-spin" />
+          </div>
+        ) : (
+          <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-[400px]">
+            <PieChart>
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel indicator="dot" />}
+              />
+              <Pie
+                data={chartData}
+                dataKey="amount"
+                nameKey="asset"
+                innerRadius={80}
+                strokeWidth={5}
+              >
+                <Label
+                  content={({ viewBox }) => {
+                    if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                      return (
+                        <text
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-foreground text-3xl font-bold"
+                          textAnchor="middle"
+                          dominantBaseline="middle"
                         >
-                          {tvl.toLocaleString()}
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
-                          className="fill-muted-foreground"
-                        >
-                          Total Value Locked
-                        </tspan>
-                      </text>
-                    );
-                  }
-                }}
+                          <tspan
+                            x={viewBox.cx}
+                            y={viewBox.cy}
+                            className="fill-foreground text-3xl font-bold"
+                          >
+                            {MustBigNumber(totalScaledReserves).toNumber().toLocaleString()}
+                          </tspan>
+                          <tspan
+                            x={viewBox.cx}
+                            y={(viewBox.cy || 0) + 24}
+                            className="fill-muted-foreground"
+                          >
+                            Total Value Locked
+                          </tspan>
+                        </text>
+                      );
+                    }
+                  }}
+                />
+              </Pie>
+
+              <ChartLegend
+                content={<ChartLegendContent nameKey="asset" />}
+                className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
               />
-            </Pie>
-          </PieChart>
-        </ChartContainer>
+            </PieChart>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
   );
