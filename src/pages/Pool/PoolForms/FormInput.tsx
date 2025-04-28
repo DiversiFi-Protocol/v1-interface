@@ -1,35 +1,53 @@
 import AssetIcon from '@/components/AssetIcon';
 import { Button } from '@/components/ui/button';
+import { SupportedAsset } from '@/constants/tokens';
+import { cn } from '@/lib/tw';
 import { Wallet } from 'lucide-react';
+import TokenSelectDialog from './TokenSelectDialog';
 
 export default function FormInput({
+  className,
+  label,
   token,
+  disabled,
   onChange,
-  onClick,
+  onSelectToken,
   value,
   balance,
 }: {
+  className?: string;
+  disabled?: boolean;
+  label?: string;
   token: string;
   onChange: (value: string) => void;
-  onClick?: () => void;
+  onSelectToken: (token: SupportedAsset) => void;
   value: string;
   balance?: string;
 }) {
   return (
-    <div className="flex flex-col gap-2 bg-input rounded-md p-4">
+    <div className={cn('flex flex-col gap-2 bg-input rounded-xl px-4 py-2', className)}>
+      <label className="text-md text-foreground">{label}</label>
+
       <div className="grid grid-cols-[1fr_auto] gap-2">
         <input
           value={value}
+          disabled={disabled}
           type="number"
           inputMode="decimal"
           onChange={(e) => onChange(e.target.value)}
           placeholder="0.00"
           className="flex-1 bg-transparent text-2xl focus-visible:outline-none min-w-0"
         />
-        <Button onClick={onClick}>
-          <AssetIcon asset={token} />
-          {token}
-        </Button>
+
+        <TokenSelectDialog onSelectToken={onSelectToken}>
+          <Button>
+            <AssetIcon
+              className="border-background border-solid [border-width:1px]"
+              asset={token}
+            />
+            {token}
+          </Button>
+        </TokenSelectDialog>
       </div>
 
       <div className="flex flex-row justify-end text-sm text-muted-foreground">
