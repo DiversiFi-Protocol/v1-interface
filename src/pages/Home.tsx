@@ -21,7 +21,7 @@ export default function Home({ particlesReady }: { particlesReady: boolean }) {
               The next generation decentralized stablecoin protocol
             </p>
             <Link to={PageRoutes.Pool}>
-              <Button variant="default">Launch App</Button>
+              <Button variant="default">Swap Now</Button>
             </Link>
           </div>
         </section>

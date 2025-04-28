@@ -57,6 +57,15 @@ export default {
           5: 'hsl(var(--chart-5))',
         },
       },
+      animation: {
+        'loading-dots': 'loading-dots 1s infinite alternate',
+      },
+      keyframes: {
+        'loading-dots': {
+          '0%': { width: '60px', aspectRatio: '4' },
+          '100%': { width: '25px', aspectRatio: '1' },
+        },
+      },
     },
   },
   plugins: [

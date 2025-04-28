@@ -9,7 +9,6 @@ export default function Pool() {
     <TwoColumnLayout
       main={
         <div className="p-4 flexColumn gap-4">
-          <h1 className="text-2xl font-bold">USD1 Liquidity Pool</h1>
           <PoolPieChart />
           <VolumeAndFeeChart />
         </div>

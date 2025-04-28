@@ -2,11 +2,13 @@ import IBackingPool from '@/abi/IBackingPool';
 import { chain, chainId } from '@/constants/chain';
 import { envVar } from '@/constants/environment';
 import { SupportedAsset } from '@/constants/tokens';
+import { MustBigNumber } from '@/lib/numbers';
 import { sleep } from '@/lib/sleep';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { erc20Abi, maxUint256, parseUnits, WalletClient } from 'viem';
+import { erc20Abi, formatGwei, formatUnits, maxUint256, parseUnits, WalletClient } from 'viem';
 import { useAccount, useChainId, usePublicClient } from 'wagmi';
+import { useEthereumPrice } from '../useEthereumPrice';
 
 export type SwapStep = {
   type: 'network' | 'approve' | 'swap';
@@ -18,14 +20,16 @@ export function useSwapSteps({
   assetOut,
   amount,
   allowMaxApproval,
+  minAmountOut,
 }: {
   assetIn: SupportedAsset;
   assetOut: SupportedAsset;
   amount: string;
   allowMaxApproval?: boolean;
+  minAmountOut?: string;
 }) {
   const { address: assetInAddress, decimals: assetInDecimals } = assetIn;
-  const { address: assetOutAddress } = assetOut;
+  const { address: assetOutAddress, decimals: assetOutDecimals } = assetOut;
   const walletChainId = useChainId();
   const { address } = useAccount();
   const client = usePublicClient({
@@ -140,26 +144,18 @@ export function useSwapSteps({
     }
 
     // Step 3. Swap
+    const minAmountOutBigInt = minAmountOut ? parseUnits(minAmountOut, assetOutDecimals) : 0n;
+
     steps.push({
       type: 'swap',
       execute: async (signer: WalletClient) => {
         try {
-          // Simulate the swap
-          const simulate = await client!.simulateContract({
-            address: envVar.backingPoolAddress,
-            abi: IBackingPool,
-            functionName: 'swapGivenIn',
-            args: [address, assetInAddress, assetOutAddress, amountBigInt, 0n],
-          });
-
-          const minAmountOut = simulate.result;
-
           // Execute the swap
           const txHash = await signer.writeContract({
             address: envVar.backingPoolAddress,
             abi: IBackingPool,
             functionName: 'swapGivenIn',
-            args: [address, assetInAddress, assetOutAddress, amountBigInt, minAmountOut],
+            args: [address, assetInAddress, assetOutAddress, amountBigInt, minAmountOutBigInt],
             chain,
             account: address,
           });
@@ -195,13 +191,150 @@ export function useSwapSteps({
         }
       },
     });
+
+    return steps;
   }
 
   return useQuery({
     enabled: !!client && !!address && amount.trim() !== '',
     queryKey: [assetInAddress, assetOutAddress, address, amount],
     queryFn: getStepsForSwap,
-    refetchInterval: 5_000,
-    staleTime: 5_000,
+    refetchInterval: 10_000,
+    staleTime: 10_000,
+  });
+}
+
+export function useSimulateSwapGivenIn({
+  assetIn,
+  assetOut,
+  amount,
+}: {
+  assetIn: SupportedAsset;
+  assetOut: SupportedAsset;
+  amount: string;
+}) {
+  const { address: assetInAddress, decimals: assetInDecimals } = assetIn;
+  const { address: assetOutAddress, decimals: assetOutDecimals } = assetOut;
+  const { address } = useAccount();
+  const { data: ethPrice } = useEthereumPrice();
+
+  const client = usePublicClient({
+    chainId,
+  });
+
+  async function simulateSwap() {
+    if (!client || !address || amount.trim() === '') {
+      throw new Error('simulateSwapGivenIn: Invalid input');
+    }
+
+    const amountBigInt = parseUnits(amount, assetInDecimals);
+    const simulate = await client.simulateContract({
+      address: envVar.backingPoolAddress,
+      abi: IBackingPool,
+      functionName: 'swapGivenIn',
+      args: [address, assetInAddress, assetOutAddress, amountBigInt, 0n],
+    });
+
+    const gas = await client.estimateContractGas({
+      address: envVar.backingPoolAddress,
+      abi: IBackingPool,
+      functionName: 'swapGivenIn',
+      args: [address, assetInAddress, assetOutAddress, amountBigInt, 0n],
+    });
+
+    const networkCost = ethPrice.price
+      ? MustBigNumber(formatGwei(gas)).times(ethPrice.price).toFixed(2)
+      : undefined;
+
+    if (simulate.result == null) {
+      return undefined;
+    }
+
+    const amountOut = formatUnits(simulate.result, assetOutDecimals);
+
+    return {
+      amountIn: amount,
+      assetIn,
+      amountOut,
+      assetOut,
+      networkCost,
+    };
+  }
+
+  return useQuery({
+    enabled: !!client && amount.trim() !== '',
+    queryKey: ['simulateSwapGivenIn', assetInAddress, assetOutAddress, amount],
+    queryFn: simulateSwap,
+    staleTime: 20_000,
+    refetchInterval: 20_000,
+  });
+}
+
+export function useSimulateSwapGivenOut({
+  assetIn,
+  assetOut,
+  amount,
+}: {
+  assetIn: SupportedAsset;
+  assetOut: SupportedAsset;
+  amount: string;
+}) {
+  const { address: assetInAddress, decimals: assetInDecimals } = assetIn;
+  const { address: assetOutAddress, decimals: assetOutDecimals } = assetOut;
+  const { address } = useAccount();
+  const { data: ethPrice } = useEthereumPrice();
+
+  const client = usePublicClient({
+    chainId,
+  });
+
+  async function simulateSwap() {
+    if (!address || amount.trim() === '') {
+      throw new Error('simulateSwapGivenOut: Invalid input');
+    }
+
+    if (!client) {
+      throw new Error('simulateSwapGivenOut: No client found');
+    }
+
+    const amountBigInt = parseUnits(amount, assetOutDecimals);
+    const simulate = await client.simulateContract({
+      address: envVar.backingPoolAddress,
+      abi: IBackingPool,
+      functionName: 'swapGivenOut',
+      args: [address, assetInAddress, assetOutAddress, amountBigInt, 0n],
+    });
+
+    const gas = await client.estimateContractGas({
+      address: envVar.backingPoolAddress,
+      abi: IBackingPool,
+      functionName: 'swapGivenOut',
+      args: [address, assetInAddress, assetOutAddress, amountBigInt, 0n],
+    });
+
+    const networkCost = ethPrice.price
+      ? MustBigNumber(formatGwei(gas)).times(ethPrice.price).toFixed(2)
+      : undefined;
+    if (simulate.result == null) {
+      return undefined;
+    }
+
+    const amountOut = formatUnits(simulate.result, assetInDecimals);
+
+    return {
+      amountIn: amount,
+      assetIn,
+      amountOut,
+      assetOut,
+      networkCost,
+    };
+  }
+
+  return useQuery({
+    enabled: !!client && amount.trim() !== '',
+    queryKey: ['simulateSwapGivenOut', assetInAddress, assetOutAddress, amount],
+    queryFn: simulateSwap,
+    staleTime: 20_000,
+    refetchInterval: 20_000,
   });
 }
