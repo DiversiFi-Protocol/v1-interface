@@ -50,39 +50,6 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/no-non-null-assertion': 'warn',
 
-    // Import rules
-    'import/order': [
-      'error',
-      {
-        groups: [
-          'builtin', // Node.js built-in modules
-          'external', // Packages from node_modules
-          'internal', // Paths aliased in tsconfig
-          ['parent', 'sibling'], // Relative imports
-          'index', // Index of the current directory
-          'object', // TypeScript only
-          'type', // TypeScript only
-        ],
-        pathGroups: [
-          {
-            pattern: 'react',
-            group: 'external',
-            position: 'before',
-          },
-          {
-            pattern: '@/**',
-            group: 'internal',
-            position: 'after',
-          },
-        ],
-        pathGroupsExcludedImportTypes: ['react'],
-        'newlines-between': 'always',
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
-        },
-      },
-    ],
     'import/no-unresolved': 'error',
     'import/no-cycle': 'error',
     'import/no-duplicates': 'error',

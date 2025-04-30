@@ -6,5 +6,19 @@
   "tabWidth": 2,
   "useTabs": false,
   "endOfLine": "auto",
-  "plugins": ["prettier-plugin-organize-imports"]
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrder": [
+    "^./polyfills$",
+    "^react$",
+    "<THIRD_PARTY_MODULES>",
+    "^@/(constants|abi|types)(.*)$",
+    "^@/(hooks|contexts|providers)(.*)$",
+    "^@/(styles|assets)(.*)$",
+    "^@/(components|pages)(.*)$",
+    "^@/state(.*)$",
+    "^@/lib(.*)$",
+    "^@/utils(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true
 }
