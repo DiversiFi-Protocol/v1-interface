@@ -50,7 +50,7 @@ export default function FormInput({
         />
 
         <TokenSelectDialog onSelectToken={onSelectToken}>
-          <Button>
+          <Button className="rounded-3xl" variant="outline">
             <AssetIcon
               className="border-background border-solid [border-width:1px]"
               asset={token}
