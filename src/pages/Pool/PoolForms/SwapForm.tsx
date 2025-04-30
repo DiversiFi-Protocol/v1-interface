@@ -134,10 +134,11 @@ export default function SwapForm() {
   const swapButton = (
     <div className="flex flex-col gap-2 w-full">
       <Button
+        variant="ghost"
         isLoading={stepsQuery.isLoading}
         disabled={shouldDisableSwap}
         onClick={onSwap}
-        className="w-full py-6 text-xl"
+        className="w-full py-6 text-xl border border-border"
       >
         Swap
       </Button>

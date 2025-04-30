@@ -1,4 +1,5 @@
 import TwoColumnLayout from '@/layouts/TwoColumnLayout';
+import AssetCards from './AssetCards/AssetCards';
 import InsuranceFund from './InsuranceFund/InsuranceFund';
 import PoolPieChart from './PoolCharts/PoolPieChart';
 import VolumeAndFeeChart from './PoolCharts/VolumeAndFeeChart';
@@ -9,6 +10,7 @@ export default function Pool() {
     <TwoColumnLayout
       main={
         <div className="p-4 flexColumn gap-4">
+          <AssetCards />
           <PoolPieChart />
           <VolumeAndFeeChart />
         </div>

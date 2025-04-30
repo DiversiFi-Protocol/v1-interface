@@ -11,12 +11,12 @@ export default function Navbar() {
       <div className="flex-1 mx-4 h-full flex items-center justify-between">
         <ul className="flex space-x-4">
           <li>
-            <Link to={PageRoutes.Home} className="text-muted-foreground hover:text-foreground">
+            <Link to={PageRoutes.Home} className="text-foreground hover:text-foreground">
               Home
             </Link>
           </li>
           <li>
-            <Link to={PageRoutes.Pool} className="text-muted-foreground hover:text-foreground">
+            <Link to={PageRoutes.Pool} className="text-foreground hover:text-foreground">
               Pool
             </Link>
           </li>
