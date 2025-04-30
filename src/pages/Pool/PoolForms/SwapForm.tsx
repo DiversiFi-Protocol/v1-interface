@@ -87,7 +87,7 @@ export default function SwapForm() {
 
   const switchAssetButton = (
     <Button
-      className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-input text-textPrimary border-card border-[3px]"
+      className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-input text-textPrimary border-card border-[3px] rounded-[50%] size-12"
       variant="ghost"
       onClick={() => {
         const tmp = inputToken;
