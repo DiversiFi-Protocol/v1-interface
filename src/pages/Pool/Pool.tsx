@@ -1,11 +1,42 @@
+import SingleColumnLayout from '@/layouts/SingleColumnLayout';
 import TwoColumnLayout from '@/layouts/TwoColumnLayout';
+import { InfoIcon } from 'lucide-react';
+
+import { useBreakpoints } from '@/hooks/useBreakpoints';
+
+import { Button } from '@/components/ui/button';
+
 import AssetCards from './AssetCards/AssetCards';
 import InsuranceFund from './InsuranceFund/InsuranceFund';
 import PoolPieChart from './PoolCharts/PoolPieChart';
 import VolumeAndFeeChart from './PoolCharts/VolumeAndFeeChart';
 import SwapForm from './PoolForms/SwapForm';
+import PoolInfoDrawer from './PoolInfoDrawer/PoolInfoDrawer';
 
 export default function Pool() {
+  const { isTablet } = useBreakpoints();
+
+  if (isTablet) {
+    return (
+      <SingleColumnLayout>
+        <div className="p-4 flexColumn gap-4">
+          <AssetCards />
+          <SwapForm />
+        </div>
+
+        <PoolInfoDrawer>
+          <Button
+            variant="secondary"
+            size="icon"
+            className="absolute bottom-4 right-4 rounded-[50%]"
+          >
+            <InfoIcon />
+          </Button>
+        </PoolInfoDrawer>
+      </SingleColumnLayout>
+    );
+  }
+
   return (
     <TwoColumnLayout
       main={
