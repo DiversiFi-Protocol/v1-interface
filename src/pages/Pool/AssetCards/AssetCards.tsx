@@ -1,4 +1,5 @@
 import { Clipboard } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { ALL_SUPPORTED_TOKENS } from '@/constants/tokens';
 
@@ -9,6 +10,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { truncateAddress } from '@/lib/addressUtils';
 
 export default function AssetCards() {
+  const onCopy = (address: string) => {
+    navigator.clipboard.writeText(address);
+    toast.success('Copied address to clipboard');
+  };
   return (
     <div className="row gap-4 overflow-x-auto">
       {ALL_SUPPORTED_TOKENS.map((asset) => (
@@ -25,6 +30,7 @@ export default function AssetCards() {
                   className="[&_svg]:size-3 size-5 min-w-5 min-h-5 p-0"
                   variant="ghost"
                   size="icon"
+                  onClick={() => onCopy(asset.address)}
                 >
                   <Clipboard />
                 </Button>
