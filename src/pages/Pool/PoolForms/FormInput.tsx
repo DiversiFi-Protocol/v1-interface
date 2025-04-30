@@ -1,8 +1,12 @@
+import { Wallet } from 'lucide-react';
+
+import { SupportedAsset } from '@/constants/tokens';
+
 import AssetIcon from '@/components/AssetIcon';
 import { Button } from '@/components/ui/button';
-import { SupportedAsset } from '@/constants/tokens';
+
 import { cn } from '@/lib/tw';
-import { Wallet } from 'lucide-react';
+
 import TokenSelectDialog from './TokenSelectDialog';
 
 export default function FormInput({
@@ -25,7 +29,13 @@ export default function FormInput({
   balance?: string;
 }) {
   return (
-    <div className={cn('flex flex-col gap-2 bg-input rounded-xl px-4 py-2', className)}>
+    <div
+      className={cn(
+        'flex flex-col gap-2 bg-input rounded-xl px-4 py-2',
+        disabled && 'cursor-not-allowed [&>*]:cursor-not-allowed [&_input]:cursor-not-allowed',
+        className
+      )}
+    >
       <label className="text-md text-foreground">{label}</label>
 
       <div className="grid grid-cols-[1fr_auto] gap-2">
