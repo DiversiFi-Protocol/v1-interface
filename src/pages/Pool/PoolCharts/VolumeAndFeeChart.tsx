@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,6 +11,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
+
 const chartData = [
   { date: '2024-04-01', volume: 222, fee: 150 },
   { date: '2024-04-02', volume: 97, fee: 180 },
@@ -134,7 +136,7 @@ export default function VolumeAndFeeChart() {
     <Card>
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle>USD1 Pool Information</CardTitle>
+          <CardTitle>Historical Pool Information</CardTitle>
           <CardDescription>View the volume and fees for the USD1 pool</CardDescription>
         </div>
         <div className="flex mx-2">

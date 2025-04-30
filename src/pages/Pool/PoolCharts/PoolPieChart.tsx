@@ -1,5 +1,12 @@
 import { useMemo } from 'react';
+
+import { Loader2 } from 'lucide-react';
 import { Label, Pie, PieChart } from 'recharts';
+
+import {
+  useAllAssetScaledReserves,
+  useGetTotalScaledReserves,
+} from '@/hooks/BackingPool/usePoolReserves';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -10,13 +17,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-import {
-  useAllAssetScaledReserves,
-  useGetTotalScaledReserves,
-} from '@/hooks/BackingPool/usePoolReserves';
-import { MustBigNumber } from '@/lib/numbers';
+
+import { MustBigNumber, formatNumber } from '@/lib/numbers';
 import { objectFromEntries } from '@/lib/objectHelpers';
-import { Loader2 } from 'lucide-react';
 
 export default function PoolPieChart() {
   const { totalScaledReserves, isLoading: totalScaledReservesLoading } =
@@ -44,6 +47,26 @@ export default function PoolPieChart() {
 
     return config;
   }, [scaledReserves]);
+
+  const tvl = useMemo(() => {
+    const tvlBN = MustBigNumber(totalScaledReserves);
+    if (tvlBN.isZero()) return '-';
+    if (tvlBN.gte(1e5))
+      return formatNumber({
+        value: tvlBN,
+        type: 'compact-fiat',
+        options: {
+          maximumFractionDigits: 2,
+          style: 'currency',
+          currency: 'USD',
+        },
+      });
+    return formatNumber({
+      value: tvlBN,
+      type: 'fiat',
+      options: { maximumFractionDigits: 2 },
+    });
+  }, [totalScaledReserves]);
 
   return (
     <Card className="flex flex-col">
@@ -84,7 +107,7 @@ export default function PoolPieChart() {
                             y={viewBox.cy}
                             className="fill-foreground text-3xl font-bold"
                           >
-                            {MustBigNumber(totalScaledReserves).toNumber().toLocaleString()}
+                            {tvl}
                           </tspan>
                           <tspan
                             x={viewBox.cx}
