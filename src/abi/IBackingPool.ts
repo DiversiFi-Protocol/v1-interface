@@ -296,7 +296,7 @@ export default [
   },
   {
     inputs: [],
-    name: 'getBenefactor',
+    name: 'getFeeRecipient',
     outputs: [
       {
         internalType: 'address',
@@ -341,7 +341,7 @@ export default [
         type: 'address',
       },
     ],
-    name: 'getSpecificScaledReserves',
+    name: 'getSpecificReservesScaled',
     outputs: [
       {
         internalType: 'uint256',
@@ -354,7 +354,7 @@ export default [
   },
   {
     inputs: [],
-    name: 'getTotalScaledReserves',
+    name: 'getTotalReservesScaled',
     outputs: [
       {
         internalType: 'uint256',
