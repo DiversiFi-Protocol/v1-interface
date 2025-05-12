@@ -1,9 +1,11 @@
+import { useMemo } from 'react';
+
+import { formatUnits } from 'viem';
+import { useReadContract, useReadContracts } from 'wagmi';
+
 import IBackingPool from '@/abi/IBackingPool';
 import { BACKING_POOL_ADDRESS } from '@/constants/contracts';
 import { NORMALIZED_ASSET_DECIMALS, SUPPORTED_RESERVE_ASSETS } from '@/constants/tokens';
-import { useMemo } from 'react';
-import { formatUnits } from 'viem';
-import { useReadContract, useReadContracts } from 'wagmi';
 
 const QUERY_CONFIG = {
   refetchInterval: 10_000,
@@ -16,7 +18,7 @@ export function useGetTotalScaledReserves() {
   const { data, isLoading, isError, isFetching } = useReadContract({
     address: BACKING_POOL_ADDRESS,
     abi: IBackingPool,
-    functionName: 'getTotalScaledReserves',
+    functionName: 'getTotalReservesScaled',
     query: QUERY_CONFIG,
   });
 
@@ -34,7 +36,7 @@ function getSpecificScaledReservesContracts() {
       ({
         address: BACKING_POOL_ADDRESS,
         abi: IBackingPool,
-        functionName: 'getSpecificScaledReserves',
+        functionName: 'getSpecificReservesScaled',
         args: [a.address],
       }) as const
   );
