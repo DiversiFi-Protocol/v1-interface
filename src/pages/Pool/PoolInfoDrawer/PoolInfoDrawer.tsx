@@ -9,6 +9,7 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 
+import AssetCards from '../AssetCards/AssetCards';
 import InsuranceFund from '../InsuranceFund/InsuranceFund';
 import PoolPieChart from '../PoolCharts/PoolPieChart';
 import VolumeAndFeeChart from '../PoolCharts/VolumeAndFeeChart';
@@ -27,6 +28,7 @@ export default function PoolInfoDrawer({ children }: PoolInfoDrawerProps) {
             <DrawerTitle>Pool Info</DrawerTitle>
           </DrawerHeader>
           <PoolPieChart />
+          <AssetCards />
           <VolumeAndFeeChart />
           <InsuranceFund />
         </div>

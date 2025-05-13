@@ -1,11 +1,14 @@
-import { Clipboard } from 'lucide-react';
+import { CheckCircle2, Copy } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { ALL_SUPPORTED_TOKENS, SupportedAsset } from '@/constants/tokens';
+import { SUPPORTED_RESERVE_ASSETS, SupportedAsset } from '@/constants/tokens';
+
+import { useGetAssetParams } from '@/hooks/BackingPool/useAssets';
 
 import AssetIcon from '@/components/AssetIcon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 import { truncateAddress } from '@/lib/addressUtils';
 
@@ -16,12 +19,28 @@ function AssetCard({
   asset: SupportedAsset;
   onCopy: (address: string) => void;
 }) {
+  const assetParams = useGetAssetParams(asset.address);
+  console.log(asset.address, assetParams.data);
   return (
     <Card key={asset.symbol} className="flex-1">
-      <CardHeader className="flex flex-row gap-2">
+      <CardHeader className="flex flex-row items-center gap-2">
         <AssetIcon size="xl" asset={asset.symbol} />
         <div className="flexColumn gap-1">
-          <CardTitle>{asset.symbol}</CardTitle>
+          <CardTitle className="flex flex-row gap-1">
+            {asset.symbol}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger className="row gap-1 hover:border-transparent cursor-help p-0">
+                  <CheckCircle2 className="size-4 text-green-500" />
+                  <CheckCircle2 className="size-4 text-green-500" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Deposits: Enabled</p>
+                  <p>Swaps: Enabled</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </CardTitle>
           <CardDescription className="row gap-1">
             <a href={`https://etherscan.io/address/${asset.address}`} target="_blank">
               {truncateAddress(asset.address)}
@@ -32,16 +51,25 @@ function AssetCard({
               size="icon"
               onClick={() => onCopy(asset.address)}
             >
-              <Clipboard />
+              <Copy />
             </Button>
           </CardDescription>
         </div>
       </CardHeader>
+
       <CardContent>
-        <div className="flexColumn gap-2">
+        <div className="flexColumn gap-2 whitespace-nowrap text-sm">
           <div className="row gap-2 justify-between">
-            <span>Utilization</span>
-            <span>100%</span>
+            <span className="text-muted-foreground">Utilization</span>
+            <span className="font-semibold">100%</span>
+          </div>
+          <div className="row gap-2 justify-between">
+            <span className="text-muted-foreground">Min Allocation</span>
+            <span className="font-semibold">123,321</span>
+          </div>
+          <div className="row gap-2 justify-between">
+            <span className="text-muted-foreground">Max Allocation</span>
+            <span className="font-semibold">333,333</span>
           </div>
         </div>
       </CardContent>
@@ -52,12 +80,13 @@ function AssetCard({
 export default function AssetCards() {
   const onCopy = (address: string) => {
     navigator.clipboard.writeText(address);
-    toast.success('Copied address to clipboard');
+    toast.success('Copied token address to clipboard');
   };
   return (
-    <div className="grid">
-      <div className="row gap-4 overflow-x-auto">
-        {ALL_SUPPORTED_TOKENS.map((asset) => (
+    <div className="grid gap-4">
+      <div className="flexColumn gap-4">
+        <h2 className="text-lg font-semibold">Reserve Assets</h2>
+        {SUPPORTED_RESERVE_ASSETS.map((asset) => (
           <AssetCard key={asset.symbol} asset={asset} onCopy={onCopy} />
         ))}
       </div>
