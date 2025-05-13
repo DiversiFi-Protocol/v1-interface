@@ -11,6 +11,7 @@ import InsuranceFund from './InsuranceFund/InsuranceFund';
 import PoolPieChart from './PoolCharts/PoolPieChart';
 import VolumeAndFeeChart from './PoolCharts/VolumeAndFeeChart';
 import SwapForm from './PoolForms/SwapForm';
+import PoolHeader from './PoolHeader/PoolHeader';
 import PoolInfoDrawer from './PoolInfoDrawer/PoolInfoDrawer';
 
 export default function Pool() {
@@ -20,7 +21,7 @@ export default function Pool() {
     return (
       <SingleColumnLayout>
         <div className="p-4 flexColumn gap-4">
-          <AssetCards />
+          <PoolHeader />
           <SwapForm />
         </div>
 
@@ -41,7 +42,7 @@ export default function Pool() {
     <TwoColumnLayout
       main={
         <div className="p-4 flexColumn gap-4">
-          <AssetCards />
+          <PoolHeader />
           <PoolPieChart />
           <VolumeAndFeeChart />
         </div>
@@ -49,6 +50,8 @@ export default function Pool() {
       sidebar={
         <div className="flexColumn p-4 gap-4">
           <SwapForm />
+          <AssetCards />
+
           <InsuranceFund />
         </div>
       }

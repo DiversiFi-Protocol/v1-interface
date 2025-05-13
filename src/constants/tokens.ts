@@ -1,12 +1,12 @@
-import { chainId } from '@/constants/chain';
 import { Address, zeroAddress } from 'viem';
 import { hardhat, mainnet } from 'viem/chains';
+
+import { chainId } from '@/constants/chain';
 
 export type SupportedAsset = {
   address: Address;
   symbol: string;
   decimals: number;
-  image: string;
 };
 
 const ALL_SUPPORTED_RESERVE_ASSETS: Record<number, SupportedAsset[]> = {
@@ -15,39 +15,33 @@ const ALL_SUPPORTED_RESERVE_ASSETS: Record<number, SupportedAsset[]> = {
       address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
       symbol: 'DAI',
       decimals: 18,
-      image: '/currencies/dai.png',
     },
     {
       address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
       symbol: 'USDC',
       decimals: 6,
-      image: '/currencies/usdc.png',
     },
     {
       address: '0xdAC17f958d2ee523a2206206994597c13d831ec7',
       symbol: 'USDT',
       decimals: 6,
-      image: '/currencies/usdt.png',
     },
   ],
   [hardhat.id]: [
     {
-      address: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+      address: '0x04C89607413713Ec9775E14b954286519d836FEf',
       symbol: 'TEST',
       decimals: 20,
-      image: '/currencies/usdc.png',
     },
     {
-      address: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
+      address: '0x4C4a2f8c81640e47606d3fd77B353E87Ba015584',
       symbol: 'TEST1',
       decimals: 18,
-      image: '/currencies/dai.png',
     },
     {
-      address: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
+      address: '0x21dF544947ba3E8b3c32561399E88B52Dc8b2823',
       symbol: 'TEST2',
       decimals: 6,
-      image: '/currencies/usdt.png',
     },
   ],
 };
@@ -59,13 +53,11 @@ const BACKED_TOKENS: Record<number, SupportedAsset> = {
     address: zeroAddress, // TODO: Add address
     decimals: 18,
     symbol: 'USD1',
-    image: '/currencies/usdc.png',
   },
   [hardhat.id]: {
-    address: '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9',
+    address: '0xD8a5a9b31c3C0232E196d518E89Fd8bF83AcAd43',
     decimals: 18,
     symbol: 'USD1',
-    image: '/currencies/usdc.png',
   },
 };
 

@@ -61,6 +61,7 @@ export default function PoolPieChart() {
           currency: 'USD',
         },
       });
+
     return formatNumber({
       value: tvlBN,
       type: 'fiat',
@@ -89,7 +90,7 @@ export default function PoolPieChart() {
                 data={chartData}
                 dataKey="amount"
                 nameKey="asset"
-                innerRadius={80}
+                innerRadius={90}
                 strokeWidth={5}
               >
                 <Label
