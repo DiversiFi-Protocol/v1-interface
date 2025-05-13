@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom';
+
+import { PageRoutes } from '@/constants/routes';
+
 import ParticlesBackground from '@/components/ParticlesBackground';
 import { Button } from '@/components/ui/button';
-import { PageRoutes } from '@/constants/routes';
-import { Link } from 'react-router-dom';
 
 export default function Home({ particlesReady }: { particlesReady: boolean }) {
   return (
