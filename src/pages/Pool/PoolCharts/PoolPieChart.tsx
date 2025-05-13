@@ -51,7 +51,8 @@ export default function PoolPieChart() {
   const tvl = useMemo(() => {
     const tvlBN = MustBigNumber(totalScaledReserves);
     if (tvlBN.isZero()) return '-';
-    if (tvlBN.gte(1e5))
+
+    if (tvlBN.gte(99_999.99))
       return formatNumber({
         value: tvlBN,
         type: 'compact-fiat',

@@ -1,8 +1,10 @@
-import { Clipboard, Forward } from 'lucide-react';
+import { Copy, Forward } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { BACKING_POOL_ADDRESS } from '@/constants/contracts';
 import { SUPPORTED_RESERVE_ASSETS } from '@/constants/tokens';
+
+import { useBreakpoints } from '@/hooks/useBreakpoints';
 
 import AssetIcon from '@/components/AssetIcon';
 import { Button } from '@/components/ui/button';
@@ -12,14 +14,15 @@ import { truncateAddress } from '@/lib/addressUtils';
 import { cn } from '@/lib/tw';
 
 export default function PoolHeader() {
+  const { isTablet } = useBreakpoints();
   const onCopy = (address: string) => {
     navigator.clipboard.writeText(address);
     toast.success('Copied pool address to clipboard');
   };
 
   return (
-    <Card className="p-6">
-      <div className="row justify-between">
+    <Card className="p-6 gap-2 flexColumn">
+      <div className={cn('row justify-between', isTablet && 'flexColumn items-start gap-2')}>
         <div className="row gap-2">
           <h1 className="text-2xl font-bold">USD1 Pool</h1>
           <a
@@ -35,7 +38,7 @@ export default function PoolHeader() {
             size="icon"
             onClick={() => onCopy(BACKING_POOL_ADDRESS)}
           >
-            <Clipboard />
+            <Copy />
           </Button>
 
           <Button
