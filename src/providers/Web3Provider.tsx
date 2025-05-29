@@ -1,9 +1,13 @@
-import { envVar } from '@/constants/environment';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ConnectKitProvider, getDefaultConfig } from 'connectkit';
 import { ReactNode } from 'react';
+
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ConnectKitProvider, getDefaultConfig } from 'connectkit';
 import { WagmiProvider, createConfig, http } from 'wagmi';
 import { hardhat, mainnet } from 'wagmi/chains';
+
+import { envVar } from '@/constants/environment';
+
+import { queryClient } from '@/lib/queryClient';
 
 const config = createConfig(
   getDefaultConfig({
@@ -22,8 +26,6 @@ const config = createConfig(
     },
   })
 );
-
-const queryClient = new QueryClient();
 
 export default function Web3Provider({ children }: { children: ReactNode }) {
   return (

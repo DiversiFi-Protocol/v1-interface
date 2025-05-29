@@ -29,17 +29,17 @@ const ALL_SUPPORTED_RESERVE_ASSETS: Record<number, SupportedAsset[]> = {
   ],
   [hardhat.id]: [
     {
-      address: '0x04C89607413713Ec9775E14b954286519d836FEf',
+      address: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
       symbol: 'TEST',
       decimals: 20,
     },
     {
-      address: '0x4C4a2f8c81640e47606d3fd77B353E87Ba015584',
+      address: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
       symbol: 'TEST1',
       decimals: 18,
     },
     {
-      address: '0x21dF544947ba3E8b3c32561399E88B52Dc8b2823',
+      address: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
       symbol: 'TEST2',
       decimals: 6,
     },
@@ -55,7 +55,7 @@ const BACKED_TOKENS: Record<number, SupportedAsset> = {
     symbol: 'USD1',
   },
   [hardhat.id]: {
-    address: '0xD8a5a9b31c3C0232E196d518E89Fd8bF83AcAd43',
+    address: '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9',
     decimals: 18,
     symbol: 'USD1',
   },

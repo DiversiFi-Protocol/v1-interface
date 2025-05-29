@@ -69,7 +69,7 @@ export default function SwapForm() {
   const [currentStep, setCurrentStep] = useState(0);
 
   const onSwap = async () => {
-    const steps = stepsQuery.data;
+    const steps = [...(stepsQuery.data ?? [])];
     if (steps == null || steps.length === 0 || !signer.data || !steps[currentStep]) {
       toast.error('Something went wrong');
       return;
@@ -156,7 +156,7 @@ export default function SwapForm() {
           </span>
           <span className="flex-1 flex text-sm text-muted-foreground justify-between">
             <span>Fee</span>
-            <span>TBD - Gimme</span>
+            <span>{swapSimulation.data.fee}</span>
           </span>
         </div>
       )}

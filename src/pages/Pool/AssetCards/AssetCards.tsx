@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 
 import { SUPPORTED_RESERVE_ASSETS, SupportedAsset } from '@/constants/tokens';
 
-import { useGetAssetParams } from '@/hooks/BackingPool/useAssets';
+// import { useGetAssetParams } from '@/hooks/BackingPool/useAssets';
 
 import AssetIcon from '@/components/AssetIcon';
 import { Button } from '@/components/ui/button';
@@ -19,8 +19,8 @@ function AssetCard({
   asset: SupportedAsset;
   onCopy: (address: string) => void;
 }) {
-  const assetParams = useGetAssetParams(asset.address);
-  console.log(asset.address, assetParams.data);
+  // const { data: assetParamsData, isLoading } = useGetAssetParams(asset.address);
+
   return (
     <Card key={asset.symbol} className="flex-1">
       <CardHeader className="flex flex-row items-center gap-2">
