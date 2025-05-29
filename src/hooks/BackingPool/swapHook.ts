@@ -1,13 +1,16 @@
-import IBackingPool from '@/abi/IBackingPool';
-import { chain, chainId } from '@/constants/chain';
-import { envVar } from '@/constants/environment';
-import { SupportedAsset } from '@/constants/tokens';
-import { MustBigNumber } from '@/lib/numbers';
-import { sleep } from '@/lib/sleep';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { erc20Abi, formatGwei, formatUnits, maxUint256, parseUnits, WalletClient } from 'viem';
 import { useAccount, useChainId, usePublicClient } from 'wagmi';
+
+import IBackingPool from '@/abi/IBackingPool';
+import { chain, chainId } from '@/constants/chain';
+import { envVar } from '@/constants/environment';
+import { SupportedAsset } from '@/constants/tokens';
+
+import { MustBigNumber } from '@/lib/numbers';
+import { sleep } from '@/lib/sleep';
+
 import { useEthereumPrice } from '../useEthereumPrice';
 
 export type SwapStep = {
@@ -197,7 +200,7 @@ export function useSwapSteps({
 
   return useQuery({
     enabled: !!client && !!address && amount.trim() !== '',
-    queryKey: [assetInAddress, assetOutAddress, address, amount],
+    queryKey: ['swapSteps', assetInAddress, assetOutAddress, address, amount],
     queryFn: getStepsForSwap,
     refetchInterval: 10_000,
     staleTime: 10_000,
@@ -250,7 +253,8 @@ export function useSimulateSwapGivenIn({
       return undefined;
     }
 
-    const amountOut = formatUnits(simulate.result, assetOutDecimals);
+    const amountOut = formatUnits(simulate.result[0], assetOutDecimals);
+    const fee = formatUnits(simulate.result[1], assetOutDecimals);
 
     return {
       amountIn: amount,
@@ -258,6 +262,7 @@ export function useSimulateSwapGivenIn({
       amountOut,
       assetOut,
       networkCost,
+      fee,
     };
   }
 
@@ -319,7 +324,8 @@ export function useSimulateSwapGivenOut({
       return undefined;
     }
 
-    const amountOut = formatUnits(simulate.result, assetInDecimals);
+    const amountOut = formatUnits(simulate.result[0], assetInDecimals);
+    const fee = formatUnits(simulate.result[1], assetInDecimals);
 
     return {
       amountIn: amount,
@@ -327,6 +333,7 @@ export function useSimulateSwapGivenOut({
       amountOut,
       assetOut,
       networkCost,
+      fee,
     };
   }
 

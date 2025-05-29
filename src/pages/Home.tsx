@@ -16,11 +16,11 @@ export default function Home({ particlesReady }: { particlesReady: boolean }) {
         {/* Hero Section */}
         <section className="py-20 px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
-              USD1 Protocol
+            <h1 className="text-8xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
+              DiversiFi Protocol
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              The next generation decentralized stablecoin protocol
+              The next generation automated market maker and index fund for pegged assets
             </p>
             <Link to={PageRoutes.Pool}>
               <Button variant="default">Swap Now</Button>
@@ -32,15 +32,15 @@ export default function Home({ particlesReady }: { particlesReady: boolean }) {
         <section className="py-20 px-4 bg-card/50 backdrop-blur-sm">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="p-6 rounded-lg border bg-background/50">
-              <h3 className="text-xl font-semibold mb-4">Decentralized</h3>
+              <h3 className="text-xl font-semibold mb-4">Fully Decentralized</h3>
               <p className="text-muted-foreground">
                 Fully decentralized protocol with no central point of failure
               </p>
             </div>
             <div className="p-6 rounded-lg border bg-background/50">
-              <h3 className="text-xl font-semibold mb-4">Secure</h3>
+              <h3 className="text-xl font-semibold mb-4">Mitigate Risks</h3>
               <p className="text-muted-foreground">
-                Battle-tested smart contracts with comprehensive security measures
+                Protect yourself by diversifying your risk exposure to underlying assets
               </p>
             </div>
             <div className="p-6 rounded-lg border bg-background/50">

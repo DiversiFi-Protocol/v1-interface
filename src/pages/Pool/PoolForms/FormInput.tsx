@@ -24,7 +24,7 @@ export default function FormInput({
   label?: string;
   token: string;
   onChange: (value: string) => void;
-  onSelectToken: (token: SupportedAsset) => void;
+  onSelectToken?: (token: SupportedAsset) => void;
   value: string;
   balance?: string;
 }) {
@@ -49,7 +49,17 @@ export default function FormInput({
           className="flex-1 bg-transparent text-2xl focus-visible:outline-none min-w-0"
         />
 
-        <TokenSelectDialog onSelectToken={onSelectToken}>
+        {onSelectToken ? (
+          <TokenSelectDialog onSelectToken={onSelectToken}>
+            <Button className="rounded-3xl" variant="outline">
+              <AssetIcon
+                className="border-background border-solid [border-width:1px]"
+                asset={token}
+              />
+              {token}
+            </Button>
+          </TokenSelectDialog>
+        ) : (
           <Button className="rounded-3xl" variant="outline">
             <AssetIcon
               className="border-background border-solid [border-width:1px]"
@@ -57,7 +67,7 @@ export default function FormInput({
             />
             {token}
           </Button>
-        </TokenSelectDialog>
+        )}
       </div>
 
       <div className="flex flex-row justify-end text-sm text-muted-foreground">

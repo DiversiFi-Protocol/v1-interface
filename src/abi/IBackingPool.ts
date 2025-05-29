@@ -1,197 +1,14 @@
 export default [
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'recipient',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'borrowAsset',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'borrowAmount',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'repayAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'Flash',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'asset',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint16',
-        name: 'targetAllocation',
-        type: 'uint16',
-      },
-      {
-        indexed: false,
-        internalType: 'uint16',
-        name: 'maxAllocation',
-        type: 'uint16',
-      },
-    ],
-    name: 'ParamsUpdate',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'recipient',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'inputAsset',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'outputAsset',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'int256',
-        name: 'deltaInput',
-        type: 'int256',
-      },
-      {
-        indexed: false,
-        internalType: 'int256',
-        name: 'deltaOutput',
-        type: 'int256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'fee',
-        type: 'uint256',
-      },
-    ],
-    name: 'Swap',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'asset',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint8',
-        name: 'tickIndex',
-        type: 'uint8',
-      },
-      {
-        indexed: false,
-        internalType: 'uint16',
-        name: 'allocation',
-        type: 'uint16',
-      },
-      {
-        indexed: false,
-        internalType: 'uint16',
-        name: 'price',
-        type: 'uint16',
-      },
-      {
-        indexed: false,
-        internalType: 'uint16',
-        name: 'increaseFee',
-        type: 'uint16',
-      },
-      {
-        indexed: false,
-        internalType: 'uint32',
-        name: 'priceSlope',
-        type: 'uint32',
-      },
-    ],
-    name: 'TickUpdate',
-    type: 'event',
-  },
-  {
     inputs: [
       {
         internalType: 'uint256',
-        name: '_amount',
+        name: '_burnAmount',
         type: 'uint256',
       },
     ],
     name: 'burn',
     outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_borrowAsset',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_borrowAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'flash',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -253,27 +70,69 @@ export default [
       {
         components: [
           {
-            internalType: 'address',
-            name: 'assetAddress',
-            type: 'address',
-          },
-          {
             internalType: 'uint8',
             name: 'decimals',
             type: 'uint8',
           },
           {
-            internalType: 'uint16',
+            internalType: 'uint32',
             name: 'targetAllocation',
-            type: 'uint16',
+            type: 'uint32',
           },
           {
-            internalType: 'uint16',
+            internalType: 'uint32',
             name: 'maxAllocation',
-            type: 'uint16',
+            type: 'uint32',
+          },
+          {
+            internalType: 'uint32',
+            name: 'minAllocation',
+            type: 'uint32',
+          },
+          {
+            components: [
+              {
+                internalType: 'uint32',
+                name: 'allocation',
+                type: 'uint32',
+              },
+              {
+                internalType: 'uint32',
+                name: 'nextAllocation',
+                type: 'uint32',
+              },
+              {
+                internalType: 'uint32',
+                name: 'price',
+                type: 'uint32',
+              },
+              {
+                internalType: 'uint32',
+                name: 'increaseFee',
+                type: 'uint32',
+              },
+              {
+                internalType: 'uint32',
+                name: 'decreaseFee',
+                type: 'uint32',
+              },
+              {
+                internalType: 'uint48',
+                name: 'priceSlope',
+                type: 'uint48',
+              },
+            ],
+            internalType: 'struct TickData[]',
+            name: 'tickData',
+            type: 'tuple[]',
+          },
+          {
+            internalType: 'uint32[]',
+            name: 'tickBoundaries',
+            type: 'uint32[]',
           },
         ],
-        internalType: 'struct ILiquidityPool.AssetParams',
+        internalType: 'struct AssetParams',
         name: '',
         type: 'tuple',
       },
@@ -283,12 +142,12 @@ export default [
   },
   {
     inputs: [],
-    name: 'getFeeRecipient',
+    name: 'getBurnFeeQ128',
     outputs: [
       {
-        internalType: 'address',
+        internalType: 'uint256',
         name: '',
-        type: 'address',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -296,12 +155,12 @@ export default [
   },
   {
     inputs: [],
-    name: 'getInsuranceFund',
+    name: 'getFeesCollected',
     outputs: [
       {
-        internalType: 'address',
+        internalType: 'uint256',
         name: '',
-        type: 'address',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -309,7 +168,20 @@ export default [
   },
   {
     inputs: [],
-    name: 'getIsFrozen',
+    name: 'getIsDirectMintEnabled',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getIsSwapEnabled',
     outputs: [
       {
         internalType: 'bool',
@@ -328,6 +200,134 @@ export default [
         internalType: 'address',
         name: '',
         type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    name: 'getLowerTick',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint32',
+            name: 'allocation',
+            type: 'uint32',
+          },
+          {
+            internalType: 'uint32',
+            name: 'nextAllocation',
+            type: 'uint32',
+          },
+          {
+            internalType: 'uint32',
+            name: 'price',
+            type: 'uint32',
+          },
+          {
+            internalType: 'uint32',
+            name: 'increaseFee',
+            type: 'uint32',
+          },
+          {
+            internalType: 'uint32',
+            name: 'decreaseFee',
+            type: 'uint32',
+          },
+          {
+            internalType: 'uint48',
+            name: 'priceSlope',
+            type: 'uint48',
+          },
+        ],
+        internalType: 'struct TickData',
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getMaxReservesLimit',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getMaxReservesLimitRatioQ128',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getMintFeeQ128',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    name: 'getPriceQ128',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    name: 'getSpecificReserves',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -372,6 +372,11 @@ export default [
         name: '_mintAmount',
         type: 'uint256',
       },
+      {
+        internalType: 'address',
+        name: '_recipient',
+        type: 'address',
+      },
     ],
     name: 'mint',
     outputs: [],
@@ -381,29 +386,99 @@ export default [
   {
     inputs: [
       {
+        internalType: 'address',
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'recoverFunds',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address[]',
+        name: 'assetAddresses',
+        type: 'address[]',
+      },
+      {
         components: [
-          {
-            internalType: 'address',
-            name: 'assetAddress',
-            type: 'address',
-          },
           {
             internalType: 'uint8',
             name: 'decimals',
             type: 'uint8',
           },
           {
-            internalType: 'uint16',
+            internalType: 'uint32',
             name: 'targetAllocation',
-            type: 'uint16',
+            type: 'uint32',
           },
           {
-            internalType: 'uint16',
+            internalType: 'uint32',
             name: 'maxAllocation',
-            type: 'uint16',
+            type: 'uint32',
+          },
+          {
+            internalType: 'uint32',
+            name: 'minAllocation',
+            type: 'uint32',
+          },
+          {
+            components: [
+              {
+                internalType: 'uint32',
+                name: 'allocation',
+                type: 'uint32',
+              },
+              {
+                internalType: 'uint32',
+                name: 'nextAllocation',
+                type: 'uint32',
+              },
+              {
+                internalType: 'uint32',
+                name: 'price',
+                type: 'uint32',
+              },
+              {
+                internalType: 'uint32',
+                name: 'increaseFee',
+                type: 'uint32',
+              },
+              {
+                internalType: 'uint32',
+                name: 'decreaseFee',
+                type: 'uint32',
+              },
+              {
+                internalType: 'uint48',
+                name: 'priceSlope',
+                type: 'uint48',
+              },
+            ],
+            internalType: 'struct TickData[]',
+            name: 'tickData',
+            type: 'tuple[]',
+          },
+          {
+            internalType: 'uint32[]',
+            name: 'tickBoundaries',
+            type: 'uint32[]',
           },
         ],
-        internalType: 'struct ILiquidityPool.AssetParams[]',
+        internalType: 'struct AssetParams[]',
         name: '_params',
         type: 'tuple[]',
       },
@@ -416,12 +491,77 @@ export default [
   {
     inputs: [
       {
+        internalType: 'uint256',
+        name: '_burnFeeQ128',
+        type: 'uint256',
+      },
+    ],
+    name: 'setBurnFeeQ128',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'bool',
-        name: '_isFrozen',
+        name: '_isDepositEnabled',
         type: 'bool',
       },
     ],
-    name: 'setIsFrozen',
+    name: 'setIsDepositEnabled',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bool',
+        name: '_isDirectMintEnabled',
+        type: 'bool',
+      },
+    ],
+    name: 'setIsDirectMintEnabled',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bool',
+        name: '_isSwapEnabled',
+        type: 'bool',
+      },
+    ],
+    name: 'setIsSwapEnabled',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_mintFeeQ128',
+        type: 'uint256',
+      },
+    ],
+    name: 'setMintFeeQ128',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_publicLimitIncreaseCooldown',
+        type: 'uint256',
+      },
+    ],
+    name: 'setPublicLimitIncreaseCooldown',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -461,6 +601,11 @@ export default [
         name: '',
         type: 'uint256',
       },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -495,6 +640,11 @@ export default [
     ],
     name: 'swapGivenOut',
     outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
       {
         internalType: 'uint256',
         name: '',

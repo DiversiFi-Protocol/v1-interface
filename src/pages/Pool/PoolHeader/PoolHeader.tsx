@@ -15,9 +15,10 @@ import { cn } from '@/lib/tw';
 
 export default function PoolHeader() {
   const { isTablet } = useBreakpoints();
-  const onCopy = (address: string) => {
-    navigator.clipboard.writeText(address);
-    toast.success('Copied pool address to clipboard');
+
+  const onCopy = (value: string, label: string) => {
+    navigator.clipboard.writeText(value);
+    toast.success(`Copied ${label} to clipboard`);
   };
 
   return (
@@ -36,7 +37,7 @@ export default function PoolHeader() {
             className="[&_svg]:size-4 size-5 min-w-5 min-h-5 p-0"
             variant="ghost"
             size="icon"
-            onClick={() => onCopy(BACKING_POOL_ADDRESS)}
+            onClick={() => onCopy(BACKING_POOL_ADDRESS, 'pool address')}
           >
             <Copy />
           </Button>
@@ -45,7 +46,7 @@ export default function PoolHeader() {
             className="[&_svg]:size-5 size-5 min-w-5 min-h-5 p-0"
             variant="ghost"
             size="icon"
-            onClick={() => onCopy(BACKING_POOL_ADDRESS)}
+            onClick={() => onCopy(window.location.href, 'pool link')}
           >
             <Forward />
           </Button>
