@@ -25,6 +25,7 @@ export default function PoolHeader() {
     <Card className="p-6 gap-2 flexColumn">
       <div className={cn('row justify-between', isTablet && 'flexColumn items-start gap-2')}>
         <div className="row gap-2">
+          <AssetIcon asset="USD1" size="lg" />
           <h1 className="text-2xl font-bold">USD1 Pool</h1>
           <a
             className="row gap-1 whitespace-nowrap"

@@ -1,12 +1,23 @@
+import { useMemo } from 'react';
+
 import { ConnectKitButton } from 'connectkit';
 import { Link } from 'react-router-dom';
 
 import { PageRoutes } from '@/constants/routes';
 
+import { useTheme } from '@/providers/ThemeProvider';
+
 import ThemeToggle from './ThemeToggle';
 import { Button } from './ui/button';
 
 export default function Navbar() {
+  const { theme } = useTheme();
+
+  const homeLink = useMemo(
+    () => (theme === 'dark' ? '/brand/diversifi-dark.png' : '/brand/diversifi-light.png'),
+    [theme]
+  );
+
   return (
     <nav className="fixed top-0 left-0 right-0 h-[var(--navbar-height)] text-foreground border-b z-50">
       <div className="flex-1 mx-4 h-full flex items-center justify-between">
@@ -14,9 +25,9 @@ export default function Navbar() {
           <li>
             <Link
               to={PageRoutes.Home}
-              className="text-foreground hover:text-foreground font-bold text-xl"
+              className="row gap-2 text-foreground hover:text-foreground font-bold text-xl"
             >
-              DiversiFi
+              <img src={homeLink} alt="DiversiFi" className="w-auto h-10" />
             </Link>
           </li>
           <li>
