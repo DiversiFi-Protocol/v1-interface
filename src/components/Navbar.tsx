@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { PageRoutes } from '@/constants/routes';
 
+import { useBreakpoints } from '@/hooks/useBreakpoints';
 import { useTheme } from '@/providers/ThemeProvider';
 
 import ThemeToggle from './ThemeToggle';
@@ -12,10 +13,18 @@ import { Button } from './ui/button';
 
 export default function Navbar() {
   const { theme } = useTheme();
+  const { isMobile } = useBreakpoints();
+
+  console.log(isMobile);
 
   const homeLink = useMemo(
-    () => (theme === 'dark' ? '/brand/diversifi-dark.png' : '/brand/diversifi-light.png'),
-    [theme]
+    () =>
+      isMobile
+        ? '/brand/diversifi-logo.png'
+        : theme === 'dark'
+          ? '/brand/diversifi-dark.png'
+          : '/brand/diversifi-light.png',
+    [theme, isMobile]
   );
 
   return (
@@ -27,14 +36,16 @@ export default function Navbar() {
               to={PageRoutes.Home}
               className="row gap-2 text-foreground hover:text-foreground font-bold text-xl"
             >
-              <img src={homeLink} alt="DiversiFi" className="w-auto h-10" />
+              <img src={homeLink} alt="DiversiFi" className="w-auto min-w-10 h-10" />
             </Link>
           </li>
-          <li>
-            <Link to={PageRoutes.Pool} className="text-foreground hover:text-foreground">
-              Swap
-            </Link>
-          </li>
+          {!isMobile && (
+            <li>
+              <Link to={PageRoutes.Pool} className="text-foreground hover:text-foreground">
+                Swap
+              </Link>
+            </li>
+          )}
         </ul>
         <div className="flex items-center gap-2">
           <a href="https://docs.diversifi.tech" target="_blank" rel="noopener noreferrer">
