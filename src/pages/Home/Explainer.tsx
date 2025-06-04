@@ -50,7 +50,7 @@ export function ExplainerSection() {
                   alt={slide.description}
                   className="h-[400px] max-h-[400px]object-cover rounded-lg "
                 />
-                <p className="text-muted-foreground text-center">{slide.description}</p>
+                <p className="text-muted-foreground text-center text-lg">{slide.description}</p>
               </CarouselItem>
             ))}
           </CarouselContent>
