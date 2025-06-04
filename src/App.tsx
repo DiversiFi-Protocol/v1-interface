@@ -9,7 +9,7 @@ import { PageRoutes, PoolRoutes } from './constants/routes';
 import RootLayout from './layouts/RootLayout';
 
 const Allowance = lazy(() => import('./pages/Allowance/Allowance'));
-const Home = lazy(() => import('./pages/Home'));
+const Home = lazy(() => import('./pages/Home/Home'));
 const Pool = lazy(() => import('./pages/Pool/Pool'));
 const Mint = lazy(() => import('./pages/Pool/Mint'));
 const NotFound = lazy(() => import('./pages/NotFound'));
