@@ -1,25 +1,39 @@
+import { DollarSignIcon, LockIcon, ShieldIcon } from 'lucide-react';
+
+const FEATURES = [
+  {
+    title: 'Non-Custodial',
+    description:
+      'There is no central administrator that can access any underlying funds, or mint uncollateralized tokens',
+    icon: <LockIcon />,
+  },
+  {
+    title: 'Risk Mitigation',
+    description:
+      'Users are hedged against the risk of a single collateral failure through simple diversification',
+    icon: <ShieldIcon />,
+  },
+  {
+    title: 'Low Fees',
+    description:
+      'Our simple and efficient protocol has a low overhead enabling us to charge very low fees',
+    icon: <DollarSignIcon />,
+  },
+];
+
 export function FeaturesSection() {
   return (
     <section className="py-20 px-4">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="p-6 rounded-lg border bg-card">
-          <h3 className="text-xl font-semibold mb-4">Fully Decentralized</h3>
-          <p className="text-muted-foreground">
-            Fully decentralized protocol with no central point of failure
-          </p>
-        </div>
-        <div className="p-6 rounded-lg border bg-popover">
-          <h3 className="text-xl font-semibold mb-4">Mitigate Risks</h3>
-          <p className="text-muted-foreground">
-            Protect yourself by diversifying your risk exposure to underlying assets
-          </p>
-        </div>
-        <div className="p-6 rounded-lg border bg-background">
-          <h3 className="text-xl font-semibold mb-4">Efficient</h3>
-          <p className="text-muted-foreground">
-            Optimized for low gas fees and maximum capital efficiency
-          </p>
-        </div>
+        {FEATURES.map((feature) => (
+          <div key="title" className="p-6 rounded-lg bg-card border border-solid border-accent">
+            <h3 className="text-xl font-semibold mb-4 inline-flex items-center gap-2">
+              {feature.title}
+              <span className="inline">{feature.icon}</span>
+            </h3>
+            <p className="text-muted-foreground">{feature.description}</p>
+          </div>
+        ))}
       </div>
     </section>
   );
