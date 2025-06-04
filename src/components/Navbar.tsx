@@ -15,8 +15,6 @@ export default function Navbar() {
   const { theme } = useTheme();
   const { isMobile } = useBreakpoints();
 
-  console.log(isMobile);
-
   const homeLink = useMemo(
     () =>
       isMobile
