@@ -16,7 +16,7 @@ export default function Home({ particlesReady }: { particlesReady: boolean }) {
         <HeroSection />
         <FeaturesSection />
         <ExplainerSection />
-        <RoadmapSection currentPhase={0} />
+        <RoadmapSection currentPhase={1} />
       </div>
     </div>
   );
