@@ -75,7 +75,7 @@ export function RoadmapSection({ currentPhase }: RoadmapProps) {
 
   // Calculate the gradient stop position based on current phase. Update to accept sub-milestones
   const gradientStop = useMemo(() => {
-    const milestoneIndices = milestones.map((m, i) => i);
+    const milestoneIndices = milestones.map((_, i) => i);
     const currentMilestoneIndex = milestoneIndices[currentPhase] ?? 0;
     return (currentMilestoneIndex / (milestones.length - 1)) * 100;
   }, [currentPhase, milestones]);
