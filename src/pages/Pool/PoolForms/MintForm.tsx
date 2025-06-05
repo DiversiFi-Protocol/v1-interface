@@ -172,7 +172,7 @@ export default function MintForm() {
       {mintSimulation?.data && (
         <div className="flex flex-col gap-2">
           <span className="flex-1 flex text-sm text-muted-foreground justify-between">
-            <span>Network Cost</span>
+            <span>Network Cost (est.)</span>
             <span>${mintSimulation.data.networkCost}</span>
           </span>
         </div>

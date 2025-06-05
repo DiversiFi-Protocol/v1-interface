@@ -151,7 +151,7 @@ export default function SwapForm() {
       {swapSimulation?.data && (
         <div className="flex flex-col gap-2">
           <span className="flex-1 flex text-sm text-muted-foreground justify-between">
-            <span>Network Cost</span>
+            <span>Network Cost (est.)</span>
             <span>${swapSimulation.data.networkCost}</span>
           </span>
           <span className="flex-1 flex text-sm text-muted-foreground justify-between">
