@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { toast } from 'sonner';
 import { useWalletClient } from 'wagmi';
@@ -6,7 +6,7 @@ import { useWalletClient } from 'wagmi';
 import { EMPTY_ARR } from '@/constants/objects';
 import { BACKED_TOKEN, SUPPORTED_RESERVE_ASSETS } from '@/constants/tokens';
 
-import { useMintSteps, useSimulateMint } from '@/hooks/BackingPool/mintHook';
+import { MintStep, useMintSteps, useSimulateMint } from '@/hooks/BackingPool/mintHook';
 import { useAssetBalances } from '@/hooks/useAssetBalances';
 import { useDebounce } from '@/hooks/useDebounce';
 
@@ -46,6 +46,44 @@ export default function MintForm() {
     amount: debouncedMintAmount,
   });
 
+  const [currentStep, setCurrentStep] = useState(0);
+  const [mintSteps, setMintSteps] = useState<MintStep[]>();
+  const [stepError, setStepError] = useState<unknown>();
+  const [isAwaitingWalletAction, setIsAwaitingWalletAction] = useState(false);
+
+  useEffect(() => {
+    async function autoPromptSteps() {
+      if (
+        mintSteps == null ||
+        mintSteps.length === 0 ||
+        mintSteps[currentStep] == null ||
+        signer.data == null
+      ) {
+        return;
+      }
+
+      const { success, error } = await mintSteps[currentStep].execute(signer.data);
+
+      if (success && currentStep < mintSteps.length - 1) {
+        setCurrentStep((prev) => prev + 1);
+      }
+
+      if (!success && error) {
+        setStepError(error);
+      }
+    }
+
+    autoPromptSteps();
+  }, [mintSteps, currentStep, signer.data]);
+
+  useEffect(() => {
+    // reset current burn steps if the input has changed
+    setMintSteps(undefined);
+    setCurrentStep(0);
+    setIsAwaitingWalletAction(false);
+    setStepError(undefined);
+  }, [debouncedMintAmount]);
+
   const onMint = async () => {
     const steps = stepsQuery.data;
     const currentStep = steps?.at(0);
@@ -54,11 +92,31 @@ export default function MintForm() {
       return;
     }
 
-    const type = currentStep.type;
-    const { success } = await currentStep.execute(signer.data);
+    setStepError(undefined);
+    setIsAwaitingWalletAction(true);
 
-    if (success && type === 'mint') {
-      setMintAmount('');
+    if (steps.length === 1) {
+      const { success, error } = await currentStep.execute(signer.data);
+      if (success) {
+        setMintAmount('');
+      } else {
+        setIsAwaitingWalletAction(false);
+        setStepError(error);
+      }
+    } else {
+      setMintSteps(steps);
+    }
+  };
+
+  const onRetry = async () => {
+    const step = mintSteps?.[currentStep];
+    if (step == null || signer.data == null) return;
+
+    const { success, error } = await step.execute(signer.data);
+    if (success) {
+      setCurrentStep((prev) => prev + 1);
+    } else {
+      setStepError(error);
     }
   };
 
@@ -81,22 +139,23 @@ export default function MintForm() {
     )
   );
 
-  const isDisabled = !signer || !hasTokensForMint || mintAmount === '';
+  const isDisabled = signer.data == null || !hasTokensForMint || mintAmount === '';
 
-  let buttonText = 'Mint';
-
-  if (mintAmount === '') {
-    buttonText = 'Mint';
-  } else {
-    const currentStep = stepsQuery.data?.at(0);
-    if (currentStep == null && stepsQuery.isFetched) {
-      buttonText = 'Unavailable';
-    } else if (currentStep?.type === 'network') {
-      buttonText = 'Switch Network';
-    } else if (currentStep?.type === 'approve') {
-      buttonText = 'Set Approval';
+  const buttonText = useMemo(() => {
+    if (mintAmount === '') {
+      return 'Enter Amount';
     }
-  }
+
+    if (signer.data == null) {
+      return 'Connect Wallet';
+    }
+
+    if (!hasTokensForMint) {
+      return 'Insufficient Balance';
+    }
+
+    return 'Mint';
+  }, [signer.data, hasTokensForMint, mintAmount]);
 
   const mintButtonAndReceipt = (
     <div className="flex flex-col gap-2 w-full">
@@ -104,16 +163,42 @@ export default function MintForm() {
         variant="ghost"
         onClick={onMint}
         disabled={isDisabled}
+        isLoading={isAwaitingWalletAction || stepsQuery.isFetching}
         className="w-full py-6 text-xl border border-border"
       >
         {buttonText}
       </Button>
+
       {mintSimulation?.data && (
         <div className="flex flex-col gap-2">
           <span className="flex-1 flex text-sm text-muted-foreground justify-between">
             <span>Network Cost</span>
             <span>${mintSimulation.data.networkCost}</span>
           </span>
+        </div>
+      )}
+
+      {mintSteps != null && (
+        <div className="flex flex-col gap-2">
+          {mintSteps?.map((step, i) => {
+            const isCurrentStep = i === currentStep;
+            const error = isCurrentStep ? stepError : undefined;
+
+            return (
+              <span className="flex-1 flex text-sm text-muted-foreground justify-between">
+                <span>
+                  {
+                    {
+                      network: 'Switch Network',
+                      approve: 'Set Approval',
+                      mint: 'Mint',
+                    }[step.type]
+                  }
+                </span>
+                {error != null && <a onClick={onRetry}>Retry</a>}
+              </span>
+            );
+          })}
         </div>
       )}
     </div>

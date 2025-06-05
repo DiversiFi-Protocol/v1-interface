@@ -2,7 +2,7 @@ import { Suspense, lazy, useEffect, useState } from 'react';
 
 import { initParticlesEngine } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import LoadingSpinner from './components/LoadingSpinner';
 import { PageRoutes, PoolRoutes } from './constants/routes';
@@ -10,8 +10,10 @@ import RootLayout from './layouts/RootLayout';
 
 const Allowance = lazy(() => import('./pages/Allowance/Allowance'));
 const Home = lazy(() => import('./pages/Home/Home'));
-const Pool = lazy(() => import('./pages/Pool/Pool'));
+const Swap = lazy(() => import('./pages/Pool/Swap'));
 const Mint = lazy(() => import('./pages/Pool/Mint'));
+const Burn = lazy(() => import('./pages/Pool/Burn'));
+const Pool = lazy(() => import('./pages/Pool/Pool'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function App() {
@@ -36,12 +38,19 @@ function App() {
             </Suspense>
           }
         />
-        <Route path={PageRoutes.Pool}>
+        <Route
+          path={PageRoutes.Pool}
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <Pool />
+            </Suspense>
+          }
+        >
           <Route
-            path={PageRoutes.Pool}
+            path={PoolRoutes.Swap}
             element={
               <Suspense fallback={<LoadingSpinner />}>
-                <Pool />
+                <Swap />
               </Suspense>
             }
           />
@@ -53,6 +62,15 @@ function App() {
               </Suspense>
             }
           />
+          <Route
+            path={PoolRoutes.Burn}
+            element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <Burn />
+              </Suspense>
+            }
+          />
+          <Route path={PageRoutes.Pool} element={<Navigate to={PoolRoutes.Mint} replace />} />
         </Route>
         <Route
           path={PageRoutes.Allowance}

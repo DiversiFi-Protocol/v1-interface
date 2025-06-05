@@ -8,4 +8,6 @@ export enum PageRoutes {
 
 export enum PoolRoutes {
   Mint = '/pool/mint',
+  Burn = '/pool/burn',
+  Swap = '/pool/swap',
 }

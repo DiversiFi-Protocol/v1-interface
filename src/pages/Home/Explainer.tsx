@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { useBreakpoints } from '@/hooks/useBreakpoints';
+
 import {
   Carousel,
   CarouselContent,
@@ -8,7 +10,10 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 
+import { cn } from '@/lib/tw';
+
 export function ExplainerSection() {
+  const { isMobile } = useBreakpoints();
   const slides = useMemo(
     () => [
       {
@@ -36,14 +41,14 @@ export function ExplainerSection() {
 
   return (
     <section className="py-20 px-4">
-      <div className="max-w-6xl mx-auto grid gap-8">
-        <Carousel>
+      <div className="max-w-[100vh] mx-auto grid gap-8">
+        <Carousel orientation={isMobile ? 'vertical' : 'horizontal'}>
           <CarouselPrevious />
-          <CarouselContent className="w-full">
+          <CarouselContent className={cn('w-full', isMobile && 'h-[600px]')}>
             {slides.map((slide, index) => (
               <CarouselItem
                 key={index}
-                className="w-full h-[600px] max-h-[600px] flex flex-col items-center justify-center gap-4"
+                className="h-[600px] max-h-[600px] flex flex-col items-center justify-center gap-4"
               >
                 <img
                   src={slide.src}

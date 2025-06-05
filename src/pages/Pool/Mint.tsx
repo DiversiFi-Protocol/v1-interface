@@ -5,7 +5,7 @@ import MintForm from './PoolForms/MintForm';
 export default function Mint() {
   return (
     <SingleColumnLayout>
-      <div className="flexColumn w-[500px] mt-[10vh] pb-4 mx-auto">
+      <div className="flexColumn w-[500px] pb-4 mx-auto">
         <MintForm />
       </div>
     </SingleColumnLayout>
