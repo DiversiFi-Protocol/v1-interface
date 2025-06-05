@@ -185,7 +185,10 @@ export default function BurnForm() {
             const error = isCurrentStep ? stepError : undefined;
 
             return (
-              <span className="flex-1 flex text-sm text-muted-foreground justify-between">
+              <span
+                key={step.type}
+                className="flex-1 flex text-sm text-muted-foreground justify-between"
+              >
                 <span>
                   {
                     {
