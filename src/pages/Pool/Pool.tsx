@@ -1,60 +1,37 @@
-import SingleColumnLayout from '@/layouts/SingleColumnLayout';
-import TwoColumnLayout from '@/layouts/TwoColumnLayout';
-import { InfoIcon } from 'lucide-react';
+import { Outlet, useMatch } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import { useBreakpoints } from '@/hooks/useBreakpoints';
+import { PoolRoutes } from '@/constants/routes';
 
-import { Button } from '@/components/ui/button';
-
-import AssetCards from './AssetCards/AssetCards';
-import InsuranceFund from './InsuranceFund/InsuranceFund';
-import PoolPieChart from './PoolCharts/PoolPieChart';
-import VolumeAndFeeChart from './PoolCharts/VolumeAndFeeChart';
-import SwapForm from './PoolForms/SwapForm';
-import PoolHeader from './PoolHeader/PoolHeader';
-import PoolInfoDrawer from './PoolInfoDrawer/PoolInfoDrawer';
+import { cn } from '@/lib/tw';
 
 export default function Pool() {
-  const { isTablet } = useBreakpoints();
+  const match = useMatch(PoolRoutes.Swap);
 
-  if (isTablet) {
+  if (match == null) {
     return (
-      <SingleColumnLayout>
-        <div className="p-4 flexColumn gap-4">
-          <PoolHeader />
-          <SwapForm />
-        </div>
-
-        <PoolInfoDrawer>
-          <Button
-            variant="secondary"
-            size="icon"
-            className="absolute bottom-4 right-4 rounded-[50%]"
-          >
-            <InfoIcon />
-          </Button>
-        </PoolInfoDrawer>
-      </SingleColumnLayout>
+      <>
+        {
+          <div className="justify-start mb-6 ml-auto mr-auto w-[500px] row gap-4 text-2xl font-bold [&_a]:hover:no-underline">
+            <NavLink to={PoolRoutes.Mint} className={navLinkClass}>
+              Mint
+            </NavLink>
+            <NavLink to={PoolRoutes.Burn} className={navLinkClass}>
+              Burn
+            </NavLink>
+          </div>
+        }
+        <Outlet />
+      </>
     );
   }
 
-  return (
-    <TwoColumnLayout
-      main={
-        <div className="p-4 flexColumn gap-4">
-          <PoolHeader />
-          <PoolPieChart />
-          <VolumeAndFeeChart />
-        </div>
-      }
-      sidebar={
-        <div className="flexColumn p-4 gap-4">
-          <SwapForm />
-          <AssetCards />
+  return <Outlet />;
+}
 
-          <InsuranceFund />
-        </div>
-      }
-    />
+function navLinkClass({ isActive }: { isActive: boolean }) {
+  return cn(
+    'text-muted-foreground hover:text-foreground px-6 py-1 rounded-full',
+    isActive && 'text-foreground bg-secondary'
   );
 }

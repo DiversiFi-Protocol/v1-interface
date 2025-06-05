@@ -157,7 +157,6 @@ export function RoadmapSection({ currentPhase }: RoadmapProps) {
               {milestones.map((milestone, index) => {
                 const isAbove = index % 2 === 0;
                 const isExtended = isExtendedIndex(index);
-                console.log(isExtended, index);
                 const lineHeight = isExtended ? 'h-32' : 'h-16';
                 const contentOffset = isExtended
                   ? isAbove

@@ -20,7 +20,7 @@ import { useEthereumPrice } from '../useEthereumPrice';
 
 export type MintStep = {
   type: 'network' | 'approve' | 'mint';
-  execute: (signer: WalletClient) => Promise<void>;
+  execute: (signer: WalletClient) => Promise<{ success: boolean; error?: unknown }>;
 };
 
 export function useMintSteps({
@@ -58,7 +58,7 @@ export function useMintSteps({
   });
 
   async function getStepsForMint() {
-    const steps = [];
+    const steps: MintStep[] = [];
     const notifId = crypto.randomUUID();
 
     if (!address) {
@@ -237,16 +237,9 @@ export function useMintSteps({
   }
 
   return useQuery({
-    enabled:
-      !!client &&
-      !!address &&
-      amount.trim() !== '' &&
-      !Number.isNaN(Number(amount)) &&
-      allowances.data != null,
+    enabled: !!client && !!address && amount.trim() !== '' && !Number.isNaN(Number(amount)),
     queryKey: ['mintSteps', address, amount],
     queryFn: getStepsForMint,
-    refetchInterval: 10_000,
-    staleTime: 10_000,
   });
 }
 
