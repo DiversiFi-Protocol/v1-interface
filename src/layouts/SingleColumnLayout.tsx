@@ -1,8 +1,16 @@
 import { ReactNode } from 'react';
 
-export default function SingleColumnLayout({ children }: { children: ReactNode }) {
+import { cn } from '@/lib/tw';
+
+export default function SingleColumnLayout({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <div className="flex h-full">
+    <div className={cn('flex h-full', className)}>
       <div className="flex-1 h-[calc(100vh-var(--navbar-height))] overflow-y-auto bg-background">
         {children}
       </div>

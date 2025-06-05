@@ -1,3 +1,4 @@
+import SingleColumnLayout from '@/layouts/SingleColumnLayout';
 import { Outlet, useMatch } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
@@ -10,9 +11,9 @@ export default function Pool() {
 
   if (match == null) {
     return (
-      <>
+      <SingleColumnLayout className="px-4">
         {
-          <div className="justify-start mb-6 ml-auto mr-auto w-[500px] row gap-4 text-2xl font-bold [&_a]:hover:no-underline">
+          <div className="justify-start my-6 ml-auto mr-auto max-w-[500px] row gap-4 text-2xl font-bold [&_a]:hover:no-underline">
             <NavLink to={PoolRoutes.Mint} className={navLinkClass}>
               Mint
             </NavLink>
@@ -22,11 +23,15 @@ export default function Pool() {
           </div>
         }
         <Outlet />
-      </>
+      </SingleColumnLayout>
     );
   }
 
-  return <Outlet />;
+  return (
+    <SingleColumnLayout>
+      <Outlet />
+    </SingleColumnLayout>
+  );
 }
 
 function navLinkClass({ isActive }: { isActive: boolean }) {
