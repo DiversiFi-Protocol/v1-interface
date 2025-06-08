@@ -7,9 +7,12 @@ import { useAccount, useChainId, usePublicClient, useReadContracts } from 'wagmi
 
 import IBackingPool from '@/abi/IBackingPool';
 import { chain, chainId } from '@/constants/chain';
-import { envVar } from '@/constants/environment';
+import { BACKING_POOL_ADDRESS } from '@/constants/contracts';
 import { EMPTY_ARR } from '@/constants/objects';
 import { BACKED_TOKEN, SUPPORTED_RESERVE_ASSETS } from '@/constants/tokens';
+
+import { useAppSelector } from '@/state/appTypes';
+import { selectShouldAllowMaxApprovals } from '@/state/formSettingsSelector';
 
 import { isTruthy } from '@/lib/isTruthy';
 import { MustBigNumber } from '@/lib/numbers';
@@ -23,25 +26,21 @@ export type MintStep = {
   execute: (signer: WalletClient) => Promise<{ success: boolean; error?: unknown }>;
 };
 
-export function useMintSteps({
-  amount,
-  allowMaxApproval,
-}: {
-  amount: string;
-  allowMaxApproval?: boolean;
-}) {
+export function useMintSteps({ amount }: { amount: string }) {
   const walletChainId = useChainId();
   const { address } = useAccount();
   const client = usePublicClient({
     chainId,
   });
 
+  const allowMaxApproval = useAppSelector(selectShouldAllowMaxApprovals);
+
   const allowanceContracts = useMemo(() => {
     return SUPPORTED_RESERVE_ASSETS.map((asset) => ({
       address: asset.address,
       abi: erc20Abi,
       functionName: 'allowance',
-      args: [address, envVar.backingPoolAddress],
+      args: [address, BACKING_POOL_ADDRESS],
     }));
   }, [address]);
 
@@ -139,10 +138,7 @@ export function useMintSteps({
                 address: asset.address,
                 abi: erc20Abi,
                 functionName: 'approve',
-                args: [
-                  envVar.backingPoolAddress,
-                  allowMaxApproval ? maxUint256 : amountNeededBigInt,
-                ],
+                args: [BACKING_POOL_ADDRESS, allowMaxApproval ? maxUint256 : amountNeededBigInt],
                 chain,
                 account: address,
               });
@@ -193,7 +189,7 @@ export function useMintSteps({
         try {
           // Execute the mint
           const txHash = await signer.writeContract({
-            address: envVar.backingPoolAddress,
+            address: BACKING_POOL_ADDRESS,
             abi: IBackingPool,
             functionName: 'mint',
             args: [amountBigInt, address],
@@ -259,7 +255,7 @@ export function useSimulateMint({ amount }: { amount: string }) {
     const amountBigInt = parseUnits(amount, BACKED_TOKEN.decimals);
 
     const gas = await client.estimateContractGas({
-      address: envVar.backingPoolAddress,
+      address: BACKING_POOL_ADDRESS,
       abi: IBackingPool,
       functionName: 'mint',
       args: [amountBigInt, address],

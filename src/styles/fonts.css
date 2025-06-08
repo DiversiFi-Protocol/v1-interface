@@ -1,0 +1,14 @@
+jetbrains-mono-base {
+  font-family: 'JetBrains Mono', monospace;
+  font-optical-sizing: auto;
+  font-weight: 450;
+  font-style: normal;
+}
+
+roboto-base {
+  font-family: 'Roboto', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 450;
+  font-style: normal;
+  font-variation-settings: 'wdth' 100;
+}
