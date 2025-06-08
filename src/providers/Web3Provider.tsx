@@ -31,9 +31,9 @@ const wagmiConfig: Pick<Parameters<typeof createConfig>[0], 'chains' | 'transpor
 const config = createConfig(
   getDefaultConfig({
     // Your dApp's info
-    appName: 'USD1 Interface',
+    appName: 'DiversiFi Interface',
     // Optional links
-    appDescription: 'USD1 Interface',
+    appDescription: 'DiversiFi Interface',
     appUrl: '',
     // Your alchemy/infura api key
     walletConnectProjectId: envVar.walletConnectProjectId || '',
