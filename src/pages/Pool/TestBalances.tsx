@@ -11,25 +11,25 @@ export default function MultiTokenBalances() {
   return (
     <div>
       <TokenBalance
-        tokenAddress="0x6B175474E89094C44Da98b954EedeAC495271d0F" // DAI
+        tokenAddress="0x2cEe63EFE079630b420Ed8fdF53c0a5c9aa880F2" // DAI
         walletAddress={address}
         symbol="DFiUSD"
         decimals={18}
       />
       <TokenBalance
-        tokenAddress="0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48" // USDC
+        tokenAddress="0xa814D1722125151c1BcD363E79a60d59BFb8F53e" // USDC
         walletAddress={address}
         symbol="TK0"
         decimals={18}
       />
       <TokenBalance
-        tokenAddress="0xdAC17F958D2ee523a2206206994597C13D831ec7" // USDT
+        tokenAddress="0x1537e0CD1eAC6Dc732d0847139d9eACAEc323Db0" // USDT
         walletAddress={address}
         symbol="TK1"
         decimals={20}
       />
       <TokenBalance
-        tokenAddress="0xC02aaA39b223FE8D0A0E5C4F27eAD9083C756Cc2" // WETH
+        tokenAddress="0x8E9c43c72ab3a49Fdd242e5BB44B337e94979dd1" // WETH
         walletAddress={address}
         symbol="TK2"
         decimals={6}
