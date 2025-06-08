@@ -25,8 +25,8 @@ export default function PoolHeader() {
     <Card className="p-6 gap-2 flexColumn">
       <div className={cn('row justify-between', isTablet && 'flexColumn items-start gap-2')}>
         <div className="row gap-2">
-          <AssetIcon asset="DFIUSD" size="lg" />
-          <h1 className="text-2xl font-bold">DFIUSD Pool</h1>
+          <AssetIcon asset="DFiUSD" size="lg" />
+          <h1 className="text-2xl font-bold">DFiUSD Pool</h1>
           <a
             className="row gap-1 whitespace-nowrap"
             href={`https://etherscan.io/address/${BACKING_POOL_ADDRESS}`}
