@@ -16,7 +16,7 @@ const wagmiConfig: Pick<Parameters<typeof createConfig>[0], 'chains' | 'transpor
       chains: [mainnet, sepolia, hardhat],
       transports: {
         [mainnet.id]: http(),
-        [sepolia.id]: http(),
+        [sepolia.id]: http('https://eth-sepolia.g.alchemy.com/v2/7GwBcdnuSTJywivj2pPW4'),
         [hardhat.id]: http('http://127.0.0.1:8545/'),
       },
     }
@@ -24,7 +24,7 @@ const wagmiConfig: Pick<Parameters<typeof createConfig>[0], 'chains' | 'transpor
       chains: [mainnet, sepolia],
       transports: {
         [mainnet.id]: http(),
-        [sepolia.id]: http(),
+        [sepolia.id]: http('https://eth-sepolia.g.alchemy.com/v2/7GwBcdnuSTJywivj2pPW4'),
       },
     };
 
