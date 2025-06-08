@@ -24,7 +24,7 @@ export default function AssetIcon({ asset, size = 'sm', className }: AssetIconPr
         return '/currencies/usdt.png';
       case 'DAI':
         return '/currencies/dai.png';
-      case 'DFIUSD':
+      case 'DFiUSD':
         return '/currencies/dfiusd.png';
       default:
         return null;
