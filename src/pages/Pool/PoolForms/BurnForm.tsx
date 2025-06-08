@@ -134,10 +134,8 @@ export default function BurnForm() {
     </div>
   );
 
-  const hasTokensForBurn = SUPPORTED_RESERVE_ASSETS.every((asset) =>
-    MustBigNumber(mapOfBalances[asset.address]?.balance).gte(
-      MustBigNumber(debouncedBurnAmount).div(3)
-    )
+  const hasTokensForBurn = MustBigNumber(mapOfBalances[BACKED_TOKEN.address]?.balance).gte(
+    MustBigNumber(debouncedBurnAmount).div(3)
   );
 
   const isDisabled = signer.data == null || !hasTokensForBurn || burnAmount === '';
