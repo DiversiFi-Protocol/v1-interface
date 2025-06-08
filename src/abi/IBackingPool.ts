@@ -1,670 +1,854 @@
 export default [
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'uint256',
-        name: '_burnAmount',
-        type: 'uint256',
+        "internalType": "address",
+        "name": "_admin",
+        "type": "address"
       },
+      {
+        "internalType": "address",
+        "name": "_indexToken",
+        "type": "address"
+      }
     ],
-    name: 'burn',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
-    inputs: [],
-    name: 'getAdmin',
-    outputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
+        "indexed": false,
+        "internalType": "address",
+        "name": "admin",
+        "type": "address"
+      }
     ],
-    stateMutability: 'view',
-    type: 'function',
+    "name": "AdminChange",
+    "type": "event"
   },
   {
-    inputs: [],
-    name: 'getAllAssets',
-    outputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        internalType: 'address[]',
-        name: '',
-        type: 'address[]',
+        "indexed": true,
+        "internalType": "address",
+        "name": "asset",
+        "type": "address"
       },
+      {
+        "indexed": false,
+        "internalType": "uint88",
+        "name": "targetAllocation",
+        "type": "uint88"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "decimals",
+        "type": "uint8"
+      }
     ],
-    stateMutability: 'view',
-    type: 'function',
+    "name": "AssetParamsChange",
+    "type": "event"
   },
   {
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        internalType: 'uint256',
-        name: 'index',
-        type: 'uint256',
-      },
+        "indexed": true,
+        "internalType": "address",
+        "name": "asset",
+        "type": "address"
+      }
     ],
-    name: 'getAsset',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
+    "name": "AssetRetired",
+    "type": "event"
   },
   {
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        internalType: 'address',
-        name: 'asset',
-        type: 'address',
+        "indexed": true,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
       },
-    ],
-    name: 'getAssetParams',
-    outputs: [
       {
-        components: [
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "burnAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "scaledReserves",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "feesPaid",
+        "type": "uint256"
+      }
+    ],
+    "name": "Burn",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "burnFeeQ128_",
+        "type": "uint256"
+      }
+    ],
+    "name": "BurnFeeChange",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "int256[]",
+        "name": "deltasScaled",
+        "type": "int256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "bountyPaid",
+        "type": "uint256"
+      }
+    ],
+    "name": "Equalization",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "equalizationBounty",
+        "type": "uint256"
+      }
+    ],
+    "name": "EqualizationBountySet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "feesCollected",
+        "type": "uint256"
+      }
+    ],
+    "name": "FeesCollected",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isMintEnabled",
+        "type": "bool"
+      }
+    ],
+    "name": "IsMintEnabledChange",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maxReserves",
+        "type": "uint256"
+      }
+    ],
+    "name": "MaxReservesChange",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "publicMaxReservesIncreaseCooldown",
+        "type": "uint256"
+      }
+    ],
+    "name": "MaxReservesIncreaseCooldownChange",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maxReservesIncreaseRateQ128_",
+        "type": "uint256"
+      }
+    ],
+    "name": "MaxReservesIncreaseRateChange",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "mintAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "scaledReserves",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "feesPaid",
+        "type": "uint256"
+      }
+    ],
+    "name": "Mint",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "mintFeeQ128_",
+        "type": "uint256"
+      }
+    ],
+    "name": "MintFeeChange",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "asset",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "delta",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "bountyPaid",
+        "type": "uint256"
+      }
+    ],
+    "name": "Swap",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "DECIMAL_SCALE",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_burnAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "burn",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "equalizeToTarget",
+    "outputs": [
+      {
+        "internalType": "int256[]",
+        "name": "",
+        "type": "int256[]"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAdmin",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllAssets",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "asset",
+        "type": "address"
+      }
+    ],
+    "name": "getAssetParams",
+    "outputs": [
+      {
+        "components": [
           {
-            internalType: 'uint8',
-            name: 'decimals',
-            type: 'uint8',
+            "internalType": "address",
+            "name": "assetAddress",
+            "type": "address"
           },
           {
-            internalType: 'uint32',
-            name: 'targetAllocation',
-            type: 'uint32',
+            "internalType": "uint88",
+            "name": "targetAllocation",
+            "type": "uint88"
           },
           {
-            internalType: 'uint32',
-            name: 'maxAllocation',
-            type: 'uint32',
-          },
-          {
-            internalType: 'uint32',
-            name: 'minAllocation',
-            type: 'uint32',
-          },
-          {
-            components: [
-              {
-                internalType: 'uint32',
-                name: 'allocation',
-                type: 'uint32',
-              },
-              {
-                internalType: 'uint32',
-                name: 'nextAllocation',
-                type: 'uint32',
-              },
-              {
-                internalType: 'uint32',
-                name: 'price',
-                type: 'uint32',
-              },
-              {
-                internalType: 'uint32',
-                name: 'increaseFee',
-                type: 'uint32',
-              },
-              {
-                internalType: 'uint32',
-                name: 'decreaseFee',
-                type: 'uint32',
-              },
-              {
-                internalType: 'uint48',
-                name: 'priceSlope',
-                type: 'uint48',
-              },
-            ],
-            internalType: 'struct TickData[]',
-            name: 'tickData',
-            type: 'tuple[]',
-          },
-          {
-            internalType: 'uint32[]',
-            name: 'tickBoundaries',
-            type: 'uint32[]',
-          },
+            "internalType": "uint8",
+            "name": "decimals",
+            "type": "uint8"
+          }
         ],
-        internalType: 'struct AssetParams',
-        name: '',
-        type: 'tuple',
-      },
+        "internalType": "struct AssetParams",
+        "name": "",
+        "type": "tuple"
+      }
     ],
-    stateMutability: 'view',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: 'getBurnFeeQ128',
-    outputs: [
+    "inputs": [],
+    "name": "getBurnFeeQ128",
+    "outputs": [
       {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    stateMutability: 'view',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: 'getFeesCollected',
-    outputs: [
+    "inputs": [],
+    "name": "getCurrentAssetParams",
+    "outputs": [
       {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'getIsDirectMintEnabled',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'getIsSwapEnabled',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'getLiquidityToken',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    name: 'getLowerTick',
-    outputs: [
-      {
-        components: [
+        "components": [
           {
-            internalType: 'uint32',
-            name: 'allocation',
-            type: 'uint32',
+            "internalType": "address",
+            "name": "assetAddress",
+            "type": "address"
           },
           {
-            internalType: 'uint32',
-            name: 'nextAllocation',
-            type: 'uint32',
+            "internalType": "uint88",
+            "name": "targetAllocation",
+            "type": "uint88"
           },
           {
-            internalType: 'uint32',
-            name: 'price',
-            type: 'uint32',
-          },
-          {
-            internalType: 'uint32',
-            name: 'increaseFee',
-            type: 'uint32',
-          },
-          {
-            internalType: 'uint32',
-            name: 'decreaseFee',
-            type: 'uint32',
-          },
-          {
-            internalType: 'uint48',
-            name: 'priceSlope',
-            type: 'uint48',
-          },
+            "internalType": "uint8",
+            "name": "decimals",
+            "type": "uint8"
+          }
         ],
-        internalType: 'struct TickData',
-        name: '',
-        type: 'tuple',
-      },
+        "internalType": "struct AssetParams[]",
+        "name": "",
+        "type": "tuple[]"
+      }
     ],
-    stateMutability: 'view',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: 'getMaxReservesLimit',
-    outputs: [
+    "inputs": [],
+    "name": "getEqualizationBounty",
+    "outputs": [
       {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    stateMutability: 'view',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: 'getMaxReservesLimitRatioQ128',
-    outputs: [
+    "inputs": [],
+    "name": "getEqualizationVectorScaled",
+    "outputs": [
       {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
+        "internalType": "int256[]",
+        "name": "deltasScaled",
+        "type": "int256[]"
+      }
     ],
-    stateMutability: 'view',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: 'getMintFeeQ128',
-    outputs: [
+    "inputs": [],
+    "name": "getFeesCollected",
+    "outputs": [
       {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    stateMutability: 'view',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "getIndexToken",
+    "outputs": [
       {
-        internalType: 'address',
-        name: '_asset',
-        type: 'address',
-      },
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
-    name: 'getPriceQ128',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "getIsEqualized",
+    "outputs": [
       {
-        internalType: 'address',
-        name: '_asset',
-        type: 'address',
-      },
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
     ],
-    name: 'getSpecificReserves',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "getIsMintEnabled",
+    "outputs": [
       {
-        internalType: 'address',
-        name: 'asset',
-        type: 'address',
-      },
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
     ],
-    name: 'getSpecificReservesScaled',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: 'getTotalReservesScaled',
-    outputs: [
+    "inputs": [],
+    "name": "getLastMaxReservesChangeTimestamp",
+    "outputs": [
       {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    stateMutability: 'view',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "getMaxReserves",
+    "outputs": [
       {
-        internalType: 'uint256',
-        name: '_mintAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    name: 'mint',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "getMaxReservesIncreaseCooldown",
+    "outputs": [
       {
-        internalType: 'address',
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    name: 'recoverFunds',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "getMaxReservesIncreaseRateQ128",
+    "outputs": [
       {
-        internalType: 'address[]',
-        name: 'assetAddresses',
-        type: 'address[]',
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMintFeeQ128",
+    "outputs": [
       {
-        components: [
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_asset",
+        "type": "address"
+      }
+    ],
+    "name": "getSpecificReserves",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "asset",
+        "type": "address"
+      }
+    ],
+    "name": "getSpecificReservesScaled",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTargetAssetParams",
+    "outputs": [
+      {
+        "components": [
           {
-            internalType: 'uint8',
-            name: 'decimals',
-            type: 'uint8',
+            "internalType": "address",
+            "name": "assetAddress",
+            "type": "address"
           },
           {
-            internalType: 'uint32',
-            name: 'targetAllocation',
-            type: 'uint32',
+            "internalType": "uint88",
+            "name": "targetAllocation",
+            "type": "uint88"
           },
           {
-            internalType: 'uint32',
-            name: 'maxAllocation',
-            type: 'uint32',
-          },
-          {
-            internalType: 'uint32',
-            name: 'minAllocation',
-            type: 'uint32',
-          },
-          {
-            components: [
-              {
-                internalType: 'uint32',
-                name: 'allocation',
-                type: 'uint32',
-              },
-              {
-                internalType: 'uint32',
-                name: 'nextAllocation',
-                type: 'uint32',
-              },
-              {
-                internalType: 'uint32',
-                name: 'price',
-                type: 'uint32',
-              },
-              {
-                internalType: 'uint32',
-                name: 'increaseFee',
-                type: 'uint32',
-              },
-              {
-                internalType: 'uint32',
-                name: 'decreaseFee',
-                type: 'uint32',
-              },
-              {
-                internalType: 'uint48',
-                name: 'priceSlope',
-                type: 'uint48',
-              },
-            ],
-            internalType: 'struct TickData[]',
-            name: 'tickData',
-            type: 'tuple[]',
-          },
-          {
-            internalType: 'uint32[]',
-            name: 'tickBoundaries',
-            type: 'uint32[]',
-          },
+            "internalType": "uint8",
+            "name": "decimals",
+            "type": "uint8"
+          }
         ],
-        internalType: 'struct AssetParams[]',
-        name: '_params',
-        type: 'tuple[]',
-      },
+        "internalType": "struct AssetParams[]",
+        "name": "",
+        "type": "tuple[]"
+      }
     ],
-    name: 'setAssetParams',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "getTotalReservesDiscrepencyScaled",
+    "outputs": [
       {
-        internalType: 'uint256',
-        name: '_burnFeeQ128',
-        type: 'uint256',
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    name: 'setBurnFeeQ128',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "getTotalReservesScaled",
+    "outputs": [
       {
-        internalType: 'bool',
-        name: '_isDepositEnabled',
-        type: 'bool',
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    name: 'setIsDepositEnabled',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'bool',
-        name: '_isDirectMintEnabled',
-        type: 'bool',
+        "internalType": "uint256",
+        "name": "_mintAmount",
+        "type": "uint256"
       },
+      {
+        "internalType": "address",
+        "name": "_recipient",
+        "type": "address"
+      }
     ],
-    name: 'setIsDirectMintEnabled',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "name": "mint",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'bool',
-        name: '_isSwapEnabled',
-        type: 'bool',
-      },
+        "internalType": "address",
+        "name": "_newAdmin",
+        "type": "address"
+      }
     ],
-    name: 'setIsSwapEnabled',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "name": "setAdmin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'uint256',
-        name: '_mintFeeQ128',
-        type: 'uint256',
-      },
+        "internalType": "uint256",
+        "name": "_burnFeeQ128",
+        "type": "uint256"
+      }
     ],
-    name: 'setMintFeeQ128',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "name": "setBurnFeeQ128",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'uint256',
-        name: '_publicLimitIncreaseCooldown',
-        type: 'uint256',
-      },
+        "internalType": "uint256",
+        "name": "_equalizationBounty",
+        "type": "uint256"
+      }
     ],
-    name: 'setPublicLimitIncreaseCooldown',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "name": "setEqualizationBounty",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_inputAsset',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_outputAsset',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_inputAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_minOutput',
-        type: 'uint256',
-      },
+        "internalType": "bool",
+        "name": "_isMintEnabled",
+        "type": "bool"
+      }
     ],
-    name: 'swapGivenIn',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "name": "setIsMintEnabled",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_inputAsset',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_outputAsset',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_outputAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_maxInput',
-        type: 'uint256',
-      },
+        "internalType": "uint256",
+        "name": "_maxReserves",
+        "type": "uint256"
+      }
     ],
-    name: 'swapGivenOut',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "name": "setMaxReserves",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
+        "internalType": "uint256",
+        "name": "_maxReservesIncreaseCooldown",
+        "type": "uint256"
+      }
     ],
-    name: 'withdrawFees',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "name": "setMaxReservesIncreaseCooldown",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_maxReservesIncreaseRateQ128",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMaxReservesIncreaseRateQ128",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_mintFeeQ128",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMintFeeQ128",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "assetAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "uint88",
+            "name": "targetAllocation",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint8",
+            "name": "decimals",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct AssetParams[]",
+        "name": "_params",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "setTargetAssetParams",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_asset",
+        "type": "address"
+      },
+      {
+        "internalType": "int256",
+        "name": "_delta",
+        "type": "int256"
+      }
+    ],
+    "name": "swapTowardsTarget",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "reservesTransfer",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "indexTransfer",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_recipient",
+        "type": "address"
+      }
+    ],
+    "name": "withdrawFees",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
 ] as const;
