@@ -143,7 +143,7 @@ export default function MintForm() {
   const isDisabled = signer.data == null || !hasTokensForMint || mintAmount === '';
 
   const buttonText = useMemo(() => {
-    if (mintAmount === '') {
+    if (debouncedMintAmount === '') {
       return 'Enter Amount';
     }
 
@@ -156,7 +156,7 @@ export default function MintForm() {
     }
 
     return 'Mint';
-  }, [signer.data, hasTokensForMint, mintAmount]);
+  }, [signer.data, hasTokensForMint, debouncedMintAmount]);
 
   const mintButtonAndReceipt = (
     <div className="flex flex-col gap-2 w-full">

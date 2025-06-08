@@ -143,7 +143,7 @@ export default function BurnForm() {
   const isDisabled = signer.data == null || !hasTokensForBurn || burnAmount === '';
 
   const buttonText = useMemo(() => {
-    if (burnAmount === '') {
+    if (debouncedBurnAmount === '') {
       return 'Enter Amount';
     }
 
@@ -156,7 +156,7 @@ export default function BurnForm() {
     }
 
     return 'Burn';
-  }, [signer.data, hasTokensForBurn, burnAmount]);
+  }, [signer.data, hasTokensForBurn, debouncedBurnAmount]);
 
   const burnButtonAndReceipt = (
     <div className="flex flex-col gap-2 w-full">
