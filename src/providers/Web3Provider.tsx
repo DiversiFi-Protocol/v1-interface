@@ -3,11 +3,30 @@ import { ReactNode } from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit';
 import { WagmiProvider, createConfig, http } from 'wagmi';
-import { hardhat, mainnet } from 'wagmi/chains';
+import { hardhat, mainnet, sepolia } from 'wagmi/chains';
 
 import { envVar } from '@/constants/environment';
 
 import { queryClient } from '@/lib/queryClient';
+
+const showHarhat = import.meta.env.MODE === 'development';
+
+const wagmiConfig: Pick<Parameters<typeof createConfig>[0], 'chains' | 'transports'> = showHarhat
+  ? {
+      chains: [mainnet, sepolia, hardhat],
+      transports: {
+        [mainnet.id]: http(),
+        [sepolia.id]: http(),
+        [hardhat.id]: http('http://127.0.0.1:8545/'),
+      },
+    }
+  : {
+      chains: [mainnet, sepolia],
+      transports: {
+        [mainnet.id]: http(),
+        [sepolia.id]: http(),
+      },
+    };
 
 const config = createConfig(
   getDefaultConfig({
@@ -16,14 +35,9 @@ const config = createConfig(
     // Optional links
     appDescription: 'USD1 Interface',
     appUrl: '',
-    // Chains you want to support
-    chains: [mainnet, hardhat],
     // Your alchemy/infura api key
     walletConnectProjectId: envVar.walletConnectProjectId || '',
-    transports: {
-      [mainnet.id]: http(),
-      [hardhat.id]: http('http://127.0.0.1:8545/'),
-    },
+    ...wagmiConfig,
   })
 );
 
