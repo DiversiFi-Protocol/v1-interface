@@ -7,7 +7,7 @@ import { useAccount, useChainId, usePublicClient, useReadContracts } from 'wagmi
 
 import IBackingPool from '@/abi/IBackingPool';
 import { chain, chainId } from '@/constants/chain';
-import { envVar } from '@/constants/environment';
+import { BACKING_POOL_ADDRESS } from '@/constants/contracts';
 import { EMPTY_ARR } from '@/constants/objects';
 import { BACKED_TOKEN, SUPPORTED_RESERVE_ASSETS } from '@/constants/tokens';
 
@@ -41,7 +41,7 @@ export function useMintSteps({
       address: asset.address,
       abi: erc20Abi,
       functionName: 'allowance',
-      args: [address, envVar.backingPoolAddress],
+      args: [address, BACKING_POOL_ADDRESS],
     }));
   }, [address]);
 
@@ -139,10 +139,7 @@ export function useMintSteps({
                 address: asset.address,
                 abi: erc20Abi,
                 functionName: 'approve',
-                args: [
-                  envVar.backingPoolAddress,
-                  allowMaxApproval ? maxUint256 : amountNeededBigInt,
-                ],
+                args: [BACKING_POOL_ADDRESS, allowMaxApproval ? maxUint256 : amountNeededBigInt],
                 chain,
                 account: address,
               });
@@ -193,7 +190,7 @@ export function useMintSteps({
         try {
           // Execute the mint
           const txHash = await signer.writeContract({
-            address: envVar.backingPoolAddress,
+            address: BACKING_POOL_ADDRESS,
             abi: IBackingPool,
             functionName: 'mint',
             args: [amountBigInt, address],
@@ -259,7 +256,7 @@ export function useSimulateMint({ amount }: { amount: string }) {
     const amountBigInt = parseUnits(amount, BACKED_TOKEN.decimals);
 
     const gas = await client.estimateContractGas({
-      address: envVar.backingPoolAddress,
+      address: BACKING_POOL_ADDRESS,
       abi: IBackingPool,
       functionName: 'mint',
       args: [amountBigInt, address],
