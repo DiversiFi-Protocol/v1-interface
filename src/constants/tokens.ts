@@ -69,17 +69,17 @@ const BACKED_TOKENS: Record<number, SupportedAsset> = {
   [mainnet.id]: {
     address: zeroAddress, // TODO: Add address
     decimals: 18,
-    symbol: 'USD1',
+    symbol: 'DFiUSD',
   },
   [sepolia.id]: {
     address: '0x2cEe63EFE079630b420Ed8fdF53c0a5c9aa880F2',
     decimals: 18,
-    symbol: 'USD1',
+    symbol: 'DFiUSD',
   },
   [hardhat.id]: {
     address: '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9',
     decimals: 18,
-    symbol: 'USD1',
+    symbol: 'DFiUSD',
   },
 };
 

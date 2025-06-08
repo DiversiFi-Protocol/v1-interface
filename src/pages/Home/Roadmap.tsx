@@ -101,7 +101,7 @@ export function RoadmapSection({ currentPhase }: RoadmapProps) {
       )}
     >
       <div className="flexColumn">
-        <h2 className="text-4xl font-bold text-center mb-12">Roadmap</h2>
+        <h2 className="text-4xl font-bold text-center mb-12 roboto-base">Roadmap</h2>
 
         {/* Milestones Container */}
         <div
@@ -111,7 +111,7 @@ export function RoadmapSection({ currentPhase }: RoadmapProps) {
             <div className="flexColumn justify-center relative mb-4">
               <div className="row justify-between">
                 <div className="px-4 rounded-xl bg-accent w-fit">
-                  <b>{label}</b>
+                  <b className="jetbrains-mono-base">{label}</b>
                 </div>
                 <div className="row gap-2">
                   <Button
@@ -135,9 +135,13 @@ export function RoadmapSection({ currentPhase }: RoadmapProps) {
                 </div>
               </div>
               {milestones[viewedPhase].title && (
-                <h4 className="text-2xl font-bold text-left">{milestones[viewedPhase].title}</h4>
+                <h4 className="text-2xl font-bold text-left roboto-base">
+                  {milestones[viewedPhase].title}
+                </h4>
               )}
-              <p className="text-muted-foreground">{milestones[viewedPhase].description}</p>
+              <p className="text-muted-foreground jetbrains-mono-base">
+                {milestones[viewedPhase].description}
+              </p>
             </div>
           )}
           {/* Progress Line */}
@@ -210,11 +214,15 @@ export function RoadmapSection({ currentPhase }: RoadmapProps) {
                     >
                       {milestone.type === 'milestone' ? (
                         <>
-                          <h3 className="text-xl font-semibold">{milestone.title}</h3>
-                          <p className="text-muted-foreground">{milestone.description}</p>
+                          <h3 className="text-xl font-semibold roboto-base">{milestone.title}</h3>
+                          <p className="text-muted-foreground jetbrains-mono-base">
+                            {milestone.description}
+                          </p>
                         </>
                       ) : (
-                        <p className="text-muted-foreground">{milestone.description}</p>
+                        <p className="text-muted-foreground jetbrains-mono-base">
+                          {milestone.description}
+                        </p>
                       )}
                     </div>
                   </div>

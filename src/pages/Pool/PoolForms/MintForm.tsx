@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
+import { CheckIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { useWalletClient } from 'wagmi';
 
@@ -142,7 +143,7 @@ export default function MintForm() {
   const isDisabled = signer.data == null || !hasTokensForMint || mintAmount === '';
 
   const buttonText = useMemo(() => {
-    if (mintAmount === '') {
+    if (debouncedMintAmount === '') {
       return 'Enter Amount';
     }
 
@@ -155,12 +156,12 @@ export default function MintForm() {
     }
 
     return 'Mint';
-  }, [signer.data, hasTokensForMint, mintAmount]);
+  }, [signer.data, hasTokensForMint, debouncedMintAmount]);
 
   const mintButtonAndReceipt = (
     <div className="flex flex-col gap-2 w-full">
       <Button
-        variant="ghost"
+        variant="outline"
         onClick={onMint}
         disabled={isDisabled}
         isLoading={isAwaitingWalletAction || stepsQuery.isFetching}
@@ -180,8 +181,11 @@ export default function MintForm() {
 
       {mintSteps != null && (
         <div className="flex flex-col gap-2">
+          <span>Steps:</span>
+
           {mintSteps?.map((step, i) => {
             const isCurrentStep = i === currentStep;
+            const stepNumber = i + 1;
             const error = isCurrentStep ? stepError : undefined;
 
             return (
@@ -190,6 +194,7 @@ export default function MintForm() {
                 className="flex-1 flex text-sm text-muted-foreground justify-between"
               >
                 <span>
+                  {stepNumber}.{' '}
                   {
                     {
                       network: 'Switch Network',
@@ -198,7 +203,18 @@ export default function MintForm() {
                     }[step.type]
                   }
                 </span>
-                {error != null && <a onClick={onRetry}>Retry</a>}
+
+                {isCurrentStep ? (
+                  error == null ? (
+                    <span>pending...</span>
+                  ) : (
+                    <a className="hover:underline cursor-pointer" onClick={onRetry}>
+                      Retry
+                    </a>
+                  )
+                ) : i < currentStep ? (
+                  <CheckIcon className="size-3 text-green-500" />
+                ) : null}
               </span>
             );
           })}

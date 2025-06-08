@@ -137,7 +137,7 @@ export default function VolumeAndFeeChart() {
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
           <CardTitle>Historical Pool Information</CardTitle>
-          <CardDescription>View the volume and fees for the USD1 pool</CardDescription>
+          <CardDescription>View the volume and fees for the DFiUSD pool</CardDescription>
         </div>
         <div className="flex mx-2">
           {['volume', 'fee'].map((key) => {

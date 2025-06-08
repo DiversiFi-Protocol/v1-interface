@@ -10,7 +10,7 @@ import RootLayout from './layouts/RootLayout';
 
 const Allowance = lazy(() => import('./pages/Allowance/Allowance'));
 const Home = lazy(() => import('./pages/Home/Home'));
-const Swap = lazy(() => import('./pages/Pool/Swap'));
+// const Swap = lazy(() => import('./pages/Pool/Swap'));
 const Mint = lazy(() => import('./pages/Pool/Mint'));
 const Burn = lazy(() => import('./pages/Pool/Burn'));
 const Pool = lazy(() => import('./pages/Pool/Pool'));
@@ -46,14 +46,14 @@ function App() {
             </Suspense>
           }
         >
-          <Route
+          {/* <Route
             path={PoolRoutes.Swap}
             element={
               <Suspense fallback={<LoadingSpinner />}>
                 <Swap />
               </Suspense>
             }
-          />
+          /> */}
           <Route
             path={PoolRoutes.Mint}
             element={
