@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import { useWalletClient } from 'wagmi';
 
 import { EMPTY_ARR } from '@/constants/objects';
-import { BACKED_TOKEN, SUPPORTED_RESERVE_ASSETS } from '@/constants/tokens';
+import { BACKED_TOKEN, /* SUPPORTED_RESERVE_ASSETS */ } from '@/constants/tokens';
 
 import { BurnStep, useBurnSteps, useSimulateBurn } from '@/hooks/BackingPool/burnHook';
 import { useAssetBalances } from '@/hooks/useAssetBalances';
