@@ -13,7 +13,7 @@ export default function Pool() {
     return (
       <SingleColumnLayout className="px-4">
         {
-          <div className="justify-start my-6 ml-auto mr-auto max-w-[500px] row gap-4 text-2xl font-bold [&_a]:hover:no-underline">
+          <div className="justify-start my-2 ml-auto mr-auto max-w-[500px] row text-2xl font-bold [&_a]:hover:no-underline">
             <NavLink to={PoolRoutes.Mint} className={navLinkClass}>
               Mint
             </NavLink>
@@ -36,7 +36,7 @@ export default function Pool() {
 
 function navLinkClass({ isActive }: { isActive: boolean }) {
   return cn(
-    'text-muted-foreground hover:text-foreground px-6 py-1 rounded-full',
-    isActive && 'text-foreground bg-secondary'
+    'text-muted-foreground hover:text-foreground px-6 py-1',
+    isActive && 'text-foreground border-b-[2px] border-accent border-solid'
   );
 }

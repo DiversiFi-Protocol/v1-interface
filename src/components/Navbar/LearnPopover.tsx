@@ -7,7 +7,7 @@ export function LearnPopover() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button className="rounded-3xl" variant="ghost">
+        <Button variant="ghost" className="hover:underline">
           Learn
         </Button>
       </PopoverTrigger>
