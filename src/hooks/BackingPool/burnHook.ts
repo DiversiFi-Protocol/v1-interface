@@ -11,6 +11,9 @@ import { BACKING_POOL_ADDRESS } from '@/constants/contracts';
 import { EMPTY_ARR } from '@/constants/objects';
 import { BACKED_TOKEN, SUPPORTED_RESERVE_ASSETS } from '@/constants/tokens';
 
+import { useAppSelector } from '@/state/appTypes';
+import { selectShouldAllowMaxApprovals } from '@/state/formSettingsSelector';
+
 import { isTruthy } from '@/lib/isTruthy';
 import { MustBigNumber } from '@/lib/numbers';
 import { queryClient } from '@/lib/queryClient';
@@ -23,18 +26,14 @@ export type BurnStep = {
   execute: (signer: WalletClient) => Promise<{ success: boolean; error?: unknown }>;
 };
 
-export function useBurnSteps({
-  amount,
-  allowMaxApproval,
-}: {
-  amount: string;
-  allowMaxApproval?: boolean;
-}) {
+export function useBurnSteps({ amount }: { amount: string }) {
   const walletChainId = useChainId();
   const { address } = useAccount();
   const client = usePublicClient({
     chainId,
   });
+
+  const allowMaxApproval = useAppSelector(selectShouldAllowMaxApprovals);
 
   const allowanceContracts = useMemo(() => {
     return SUPPORTED_RESERVE_ASSETS.map((asset) => ({

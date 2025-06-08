@@ -4,7 +4,11 @@ import { NavLink } from 'react-router-dom';
 
 import { PoolRoutes } from '@/constants/routes';
 
+import { Checkbox } from '@/components/ui/checkbox';
+
 import { cn } from '@/lib/tw';
+
+import { FormSettings } from './FormSettings';
 
 export default function Pool() {
   const match = useMatch(PoolRoutes.Swap);
@@ -20,6 +24,7 @@ export default function Pool() {
             <NavLink to={PoolRoutes.Burn} className={navLinkClass}>
               Burn
             </NavLink>
+            <FormSettings className="ml-auto" />
           </div>
         }
         <Outlet />
