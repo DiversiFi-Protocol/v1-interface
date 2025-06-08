@@ -9,9 +9,9 @@ import { envVar } from '@/constants/environment';
 
 import { queryClient } from '@/lib/queryClient';
 
-const showHarhat = import.meta.env.MODE === 'development';
+const showHardhat = import.meta.env.MODE === 'development';
 
-const wagmiConfig: Pick<Parameters<typeof createConfig>[0], 'chains' | 'transports'> = showHarhat
+const wagmiConfig: Pick<Parameters<typeof createConfig>[0], 'chains' | 'transports'> = showHardhat
   ? {
       chains: [mainnet, sepolia, hardhat],
       transports: {

@@ -161,7 +161,7 @@ export default function BurnForm() {
   const burnButtonAndReceipt = (
     <div className="flex flex-col gap-2 w-full">
       <Button
-        variant="ghost"
+        variant="outline"
         onClick={onBurn}
         disabled={isDisabled}
         isLoading={isAwaitingWalletAction || stepsQuery.isFetching}
