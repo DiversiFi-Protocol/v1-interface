@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import { Address, erc20Abi, formatUnits, maxUint256 } from 'viem';
 import { useAccount, useReadContracts, useWalletClient } from 'wagmi';
 
-import { envVar } from '@/constants/environment';
+import { BACKING_POOL_ADDRESS } from '@/constants/contracts';
 import { TOKEN_DECIMALS } from '@/constants/numbers';
 import { EMPTY_ARR } from '@/constants/objects';
 import { ALL_SUPPORTED_TOKENS } from '@/constants/tokens';
@@ -32,7 +32,7 @@ export default function AllowancePage() {
       address: asset.address,
       abi: erc20Abi,
       functionName: 'allowance',
-      args: [address, envVar.backingPoolAddress],
+      args: [address, BACKING_POOL_ADDRESS],
     }));
   }, [address]);
 
@@ -94,7 +94,7 @@ export default function AllowancePage() {
       address: assetAddress,
       abi: erc20Abi,
       functionName: 'approve',
-      args: [envVar.backingPoolAddress, 0n],
+      args: [BACKING_POOL_ADDRESS, 0n],
     });
 
     toast.success('Allowance revoked', {
