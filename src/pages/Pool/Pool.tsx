@@ -4,8 +4,6 @@ import { NavLink } from 'react-router-dom';
 
 import { PoolRoutes } from '@/constants/routes';
 
-import { Checkbox } from '@/components/ui/checkbox';
-
 import { cn } from '@/lib/tw';
 
 import { FormSettings } from './FormSettings';
