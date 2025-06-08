@@ -3,7 +3,6 @@ import { hardhat, mainnet, sepolia } from 'viem/chains';
 export class EnvVar {
   private WALLETCONNECT_PROJECT_ID = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID;
   private CHAIN_ID = import.meta.env.VITE_CHAIN_ID;
-  private APP_ALCHEMY_KEY = import.meta.env.VITE_APP_ALCHEMY_KEY;
 
   get walletConnectProjectId() {
     return this.WALLETCONNECT_PROJECT_ID;
@@ -21,14 +20,6 @@ export class EnvVar {
     }
 
     return parseInt(this.CHAIN_ID, 10) as 1 | 31337 | 11155111;
-  }
-
-  get alchemyKey() {
-    if (!this.APP_ALCHEMY_KEY) {
-      throw new Error('APP_ALCHEMY_KEY is missing from environment variables');
-    }
-
-    return this.APP_ALCHEMY_KEY;
   }
 }
 
