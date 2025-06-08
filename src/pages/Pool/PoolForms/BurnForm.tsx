@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
+import { CheckIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { useWalletClient } from 'wagmi';
 
@@ -180,8 +181,11 @@ export default function BurnForm() {
 
       {burnSteps != null && (
         <div className="flex flex-col gap-2">
+          <span>Steps:</span>
+
           {burnSteps?.map((step, i) => {
             const isCurrentStep = i === currentStep;
+            const stepNumber = i + 1;
             const error = isCurrentStep ? stepError : undefined;
 
             return (
@@ -190,6 +194,7 @@ export default function BurnForm() {
                 className="flex-1 flex text-sm text-muted-foreground justify-between"
               >
                 <span>
+                  {stepNumber}.{' '}
                   {
                     {
                       network: 'Switch Network',
@@ -198,7 +203,18 @@ export default function BurnForm() {
                     }[step.type]
                   }
                 </span>
-                {error != null && <a onClick={onRetry}>Retry</a>}
+
+                {isCurrentStep ? (
+                  error == null ? (
+                    <span>pending...</span>
+                  ) : (
+                    <a className="hover:underline cursor-pointer" onClick={onRetry}>
+                      Retry
+                    </a>
+                  )
+                ) : i < currentStep ? (
+                  <CheckIcon className="size-3 text-green-500" />
+                ) : null}
               </span>
             );
           })}
