@@ -9,7 +9,7 @@ export type SupportedAsset = {
   decimals: number;
 };
 
-const ALL_SUPPORTED_RESERVE_ASSETS: Record<number, SupportedAsset[]> = {
+const ALL_SUPPORTED_RESERVE_ASSETS: Record = {
   [mainnet.id]: [
     {
       address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
@@ -65,14 +65,14 @@ const ALL_SUPPORTED_RESERVE_ASSETS: Record<number, SupportedAsset[]> = {
 
 export const SUPPORTED_RESERVE_ASSETS = ALL_SUPPORTED_RESERVE_ASSETS[chainId];
 
-const BACKED_TOKENS: Record<number, SupportedAsset> = {
+const BACKED_TOKENS: Record = {
   [mainnet.id]: {
     address: zeroAddress, // TODO: Add address
     decimals: 18,
     symbol: 'DFiUSD',
   },
   [sepolia.id]: {
-    address: '0x2cEe63EFE079630b420Ed8fdF53c0a5c9aa880F2',
+    address: '0xd9597245f3454D35AD5799F52fbBC9534Ca93433',
     decimals: 18,
     symbol: 'DFiUSD',
   },
