@@ -20,6 +20,7 @@ import { queryClient } from '@/lib/queryClient';
 import { sleep } from '@/lib/sleep';
 
 import { useEthereumPrice } from '../useEthereumPrice';
+import { useGetAssetParamsForAllAssets } from './useAssets';
 
 export type MintStep = {
   type: 'network' | 'approve' | 'mint';
@@ -279,4 +280,35 @@ export function useSimulateMint({ amount }: { amount: string }) {
     staleTime: 20_000,
     refetchInterval: 20_000,
   });
+}
+
+export function useMintDepositAmounts({ amount }: { amount: string }) {
+  const { data: assetParamsData } = useGetAssetParamsForAllAssets();
+
+  return useMemo(() => {
+    if (assetParamsData == null) {
+      return undefined;
+    }
+
+    const assetParams = assetParamsData.map((assetParam) => {
+      if (assetParam == null) {
+        return undefined;
+      }
+
+      const asset = SUPPORTED_RESERVE_ASSETS.find((a) => a.address === assetParam.assetAddress);
+
+      if (asset == null) {
+        return undefined;
+      }
+
+      const depositAmount = MustBigNumber(amount).times(assetParam.targetAllocation).toFixed(4);
+
+      return {
+        ...asset,
+        depositAmount,
+      };
+    });
+
+    return assetParams.filter(isTruthy);
+  }, [amount, assetParamsData]);
 }

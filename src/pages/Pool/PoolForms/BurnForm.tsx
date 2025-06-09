@@ -7,7 +7,12 @@ import { useWalletClient } from 'wagmi';
 import { EMPTY_ARR } from '@/constants/objects';
 import { BACKED_TOKEN } from '@/constants/tokens';
 
-import { BurnStep, useBurnSteps, useSimulateBurn } from '@/hooks/BackingPool/burnHook';
+import {
+  BurnStep,
+  useBurnSteps,
+  useBurnWithdrawalAmounts,
+  useSimulateBurn,
+} from '@/hooks/BackingPool/burnHook';
 import { useAssetBalances } from '@/hooks/useAssetBalances';
 import { useDebounce } from '@/hooks/useDebounce';
 
@@ -40,6 +45,10 @@ export default function BurnForm() {
 
   const burnSimulation = useSimulateBurn({
     amount: debouncedBurnAmount,
+  });
+
+  const withdrawalAmounts = useBurnWithdrawalAmounts({
+    burnAmount: debouncedBurnAmount,
   });
 
   const signer = useWalletClient();
@@ -173,14 +182,35 @@ export default function BurnForm() {
         {buttonText}
       </Button>
 
-      {burnSimulation?.data && (
-        <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2">
+        {debouncedBurnAmount.trim() !== '' && (
+          <>
+            {withdrawalAmounts?.map((withdrawal) => (
+              <span className="flex-1 flex text-sm text-muted-foreground justify-between">
+                <span>{withdrawal.symbol}</span>
+                <span className="font-mono">
+                  <span className="text-green-600">+</span>
+                  {withdrawal.withdrawalAmount}
+                </span>
+              </span>
+            ))}
+            <span className="flex-1 flex text-sm text-muted-foreground justify-between">
+              <span>{BACKED_TOKEN.symbol} (withdrawal)</span>
+              <span className="font-mono">
+                <span className="text-destructive">-</span>
+                {debouncedBurnAmount}
+              </span>
+            </span>
+          </>
+        )}
+
+        {burnSimulation?.data && (
           <span className="flex-1 flex text-sm text-muted-foreground justify-between">
             <span>Network Cost (est.)</span>
             <span>${burnSimulation.data.networkCost}</span>
           </span>
-        </div>
-      )}
+        )}
+      </div>
 
       {burnSteps != null && (
         <div className="flex flex-col gap-2">
