@@ -259,6 +259,7 @@ export function useSimulateBurn({ amount }: { amount: string }) {
       abi: IBackingPool,
       functionName: 'burn',
       args: [amountBigInt],
+      account: address,
     });
 
     const networkCost = ethPrice.price

@@ -41,6 +41,8 @@ export default function MintForm() {
     amount: debouncedMintAmount,
   });
 
+  console.log(mintSimulation);
+
   const signer = useWalletClient();
 
   const stepsQuery = useMintSteps({
@@ -67,6 +69,8 @@ export default function MintForm() {
 
       if (success && currentStep < mintSteps.length - 1) {
         setCurrentStep((prev) => prev + 1);
+      } else if (success) {
+        setMintAmount('');
       }
 
       if (!success && error) {

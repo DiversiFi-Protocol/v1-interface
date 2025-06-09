@@ -259,6 +259,7 @@ export function useSimulateMint({ amount }: { amount: string }) {
       abi: IBackingPool,
       functionName: 'mint',
       args: [amountBigInt, address],
+      account: address,
     });
 
     const networkCost = ethPrice.price
