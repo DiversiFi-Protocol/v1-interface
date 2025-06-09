@@ -67,8 +67,8 @@ export default {
       },
       keyframes: {
         'loading-dots': {
-          '0%': { width: '60px', aspectRatio: '4' },
-          '100%': { width: '25px', aspectRatio: '1' },
+          '0%': { width: 'var(--loading-dots-width-0, 60px)', aspectRatio: '4' },
+          '100%': { width: 'var(--loading-dots-width-1, 25px)', aspectRatio: '1' },
         },
       },
     },

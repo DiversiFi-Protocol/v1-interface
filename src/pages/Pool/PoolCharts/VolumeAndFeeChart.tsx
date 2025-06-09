@@ -146,7 +146,7 @@ export default function VolumeAndFeeChart() {
               <button
                 key={chart}
                 data-active={activeChart === chart}
-                className="focus:outline-none active:outline-none relative rounded-none z-30 flex flex-1 flex-col justify-center gap-1 text-left border-0 data-[active=true]:border-b-2"
+                className="focus:outline-none active:outline-none font-mono px-4 relative rounded-none z-30 flex flex-1 flex-col justify-center gap-1 text-left border-0 data-[active=true]:border-b-2"
                 style={{
                   borderBottomColor: chartConfig[chart].color,
                 }}

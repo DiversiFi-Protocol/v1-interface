@@ -1,12 +1,16 @@
 import SingleColumnLayout from '@/layouts/SingleColumnLayout';
+import { InfoIcon } from 'lucide-react';
 import { Outlet, useMatch } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
 import { PoolRoutes } from '@/constants/routes';
 
+import { Button } from '@/components/ui/button';
+
 import { cn } from '@/lib/tw';
 
 import { FormSettingsPopover } from './FormSettingsPopover';
+import PoolInfoDrawer from './PoolInfoDrawer/PoolInfoDrawer';
 
 export default function Pool() {
   const match = useMatch(PoolRoutes.Swap);
@@ -26,7 +30,18 @@ export default function Pool() {
             <FormSettingsPopover className="ml-auto" />
           </div>
         }
+
         <Outlet />
+
+        <PoolInfoDrawer>
+          <Button
+            variant="secondary"
+            size="icon"
+            className="absolute bottom-4 right-4 rounded-[50%]"
+          >
+            <InfoIcon />
+          </Button>
+        </PoolInfoDrawer>
       </SingleColumnLayout>
     );
   }
