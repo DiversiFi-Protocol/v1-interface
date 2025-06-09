@@ -195,7 +195,7 @@ export default function BurnForm() {
               </span>
             ))}
             <span className="flex-1 flex text-sm text-muted-foreground justify-between">
-              <span>{BACKED_TOKEN.symbol} (withdrawal)</span>
+              <span>{BACKED_TOKEN.symbol}</span>
               <span className="font-mono">
                 <span className="text-destructive">-</span>
                 {debouncedBurnAmount}
