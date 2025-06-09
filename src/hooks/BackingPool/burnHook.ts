@@ -20,6 +20,7 @@ import { queryClient } from '@/lib/queryClient';
 import { sleep } from '@/lib/sleep';
 
 import { useEthereumPrice } from '../useEthereumPrice';
+import { useAllAssetScaledReserves, useGetTotalScaledReserves } from './usePoolReserves';
 
 export type BurnStep = {
   type: 'network' | 'approve' | 'burn';
@@ -279,4 +280,29 @@ export function useSimulateBurn({ amount }: { amount: string }) {
     staleTime: 20_000,
     refetchInterval: 20_000,
   });
+}
+
+export function useBurnWithdrawalAmounts({ burnAmount }: { burnAmount: string }) {
+  const { totalScaledReserves } = useGetTotalScaledReserves();
+  const { scaledReserves } = useAllAssetScaledReserves();
+
+  return useMemo(() => {
+    if (totalScaledReserves == null || scaledReserves == null) {
+      return undefined;
+    }
+
+    return scaledReserves.map(({ amount, address, decimals, symbol }) => {
+      const withdrawalAmount = MustBigNumber(burnAmount)
+        .times(amount)
+        .div(totalScaledReserves)
+        .toFixed(4);
+
+      return {
+        address,
+        decimals,
+        symbol,
+        withdrawalAmount,
+      };
+    });
+  }, [burnAmount, totalScaledReserves, scaledReserves]);
 }

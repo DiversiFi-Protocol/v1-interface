@@ -7,7 +7,12 @@ import { useWalletClient } from 'wagmi';
 import { EMPTY_ARR } from '@/constants/objects';
 import { BACKED_TOKEN, SUPPORTED_RESERVE_ASSETS } from '@/constants/tokens';
 
-import { MintStep, useMintSteps, useSimulateMint } from '@/hooks/BackingPool/mintHook';
+import {
+  MintStep,
+  useMintDepositAmounts,
+  useMintSteps,
+  useSimulateMint,
+} from '@/hooks/BackingPool/mintHook';
 import { useAssetBalances } from '@/hooks/useAssetBalances';
 import { useDebounce } from '@/hooks/useDebounce';
 
@@ -38,11 +43,13 @@ export default function MintForm() {
     }
   );
 
-  const mintSimulation = useSimulateMint({
+  const mintDepositAmounts = useMintDepositAmounts({
     amount: debouncedMintAmount,
   });
 
-  console.log(mintSimulation);
+  const mintSimulation = useSimulateMint({
+    amount: debouncedMintAmount,
+  });
 
   const signer = useWalletClient();
 
@@ -177,14 +184,35 @@ export default function MintForm() {
         {buttonText}
       </Button>
 
-      {mintSimulation?.data && (
-        <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2">
+        {debouncedMintAmount.trim() !== '' && (
+          <>
+            {mintDepositAmounts?.map((deposit) => (
+              <span className="flex-1 flex text-sm text-muted-foreground justify-between">
+                <span>{deposit.symbol}</span>
+                <span className="font-mono">
+                  <span className="text-destructive">-</span>
+                  {deposit.depositAmount}
+                </span>
+              </span>
+            ))}
+            <span className="flex-1 flex text-sm text-muted-foreground justify-between">
+              <span>{BACKED_TOKEN.symbol}</span>
+              <span className="font-mono">
+                <span className="text-green-600">+</span>
+                {debouncedMintAmount}
+              </span>
+            </span>
+          </>
+        )}
+
+        {mintSimulation?.data && (
           <span className="flex-1 flex text-sm text-muted-foreground justify-between">
             <span>Network Cost (est.)</span>
-            <span>${mintSimulation.data.networkCost}</span>
+            <span className="font-mono">${mintSimulation.data.networkCost}</span>
           </span>
-        </div>
-      )}
+        )}
+      </div>
 
       {mintSteps != null && (
         <div className="flex flex-col gap-2">
