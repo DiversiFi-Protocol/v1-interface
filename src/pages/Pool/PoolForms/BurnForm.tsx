@@ -67,6 +67,8 @@ export default function BurnForm() {
 
       if (success && currentStep < burnSteps.length - 1) {
         setCurrentStep((prev) => prev + 1);
+      } else if (success) {
+        setBurnAmount('');
       }
 
       if (!success && error) {
