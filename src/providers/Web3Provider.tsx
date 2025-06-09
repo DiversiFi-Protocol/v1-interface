@@ -11,20 +11,20 @@ import { queryClient } from '@/lib/queryClient';
 
 const showHardhat = import.meta.env.MODE === 'development';
 
-const wagmiConfig: Pick<Parameters<typeof createConfig>[0], 'chains' | 'transports'> = showHardhat
+const wagmiConfig: Pick = showHardhat
   ? {
       chains: [mainnet, sepolia, hardhat],
       transports: {
-        [mainnet.id]: http(),
-        [sepolia.id]: http('https://eth-sepolia.g.alchemy.com/v2/'),
         [hardhat.id]: http('http://127.0.0.1:8545/'),
+        [sepolia.id]: http('https://eth-sepolia.g.alchemy.com/v2/'),
+        [mainnet.id]: http(),
       },
     }
   : {
       chains: [mainnet, sepolia],
       transports: {
-        [mainnet.id]: http(),
         [sepolia.id]: http('https://eth-sepolia.g.alchemy.com/v2/'),
+        [mainnet.id]: http(),
       },
     };
 
