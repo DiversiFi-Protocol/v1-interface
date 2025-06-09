@@ -1,7 +1,10 @@
-import { CheckCircle2, Copy } from 'lucide-react';
+import { CheckCircle2, Copy, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { formatUnits } from 'viem';
 
 import { SUPPORTED_RESERVE_ASSETS, SupportedAsset } from '@/constants/tokens';
+
+import { useGetAssetParams } from '@/hooks/BackingPool/useAssets';
 
 // import { useGetAssetParams } from '@/hooks/BackingPool/useAssets';
 
@@ -11,6 +14,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 import { truncateAddress } from '@/lib/addressUtils';
+import { formatNumber } from '@/lib/numbers';
 
 function AssetCard({
   asset,
@@ -19,7 +23,21 @@ function AssetCard({
   asset: SupportedAsset;
   onCopy: (address: string) => void;
 }) {
-  // const { data: assetParamsData, isLoading } = useGetAssetParams(asset.address);
+  const { data: assetParamsData, isLoading } = useGetAssetParams(asset.address);
+
+  const targetAllocation = formatUnits(
+    assetParamsData?.targetAllocation ?? 0n,
+    assetParamsData?.decimals ?? 0
+  );
+  const formattedTargetAllocation = formatNumber({
+    value: targetAllocation,
+    type: 'number',
+    options: {
+      useGrouping: true,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    },
+  });
 
   return (
     <Card key={asset.symbol} className="flex-1">
@@ -60,16 +78,10 @@ function AssetCard({
       <CardContent>
         <div className="flexColumn gap-2 whitespace-nowrap text-sm">
           <div className="row gap-2 justify-between">
-            <span className="text-muted-foreground">Utilization</span>
-            <span className="font-semibold">100%</span>
-          </div>
-          <div className="row gap-2 justify-between">
-            <span className="text-muted-foreground">Min Allocation</span>
-            <span className="font-semibold">123,321</span>
-          </div>
-          <div className="row gap-2 justify-between">
-            <span className="text-muted-foreground">Max Allocation</span>
-            <span className="font-semibold">333,333</span>
+            <span className="text-muted-foreground">Target Allocation</span>
+            <span className="font-semibold font-mono">
+              {isLoading ? <Loader2 className="size-4 animate-spin" /> : formattedTargetAllocation}
+            </span>
           </div>
         </div>
       </CardContent>

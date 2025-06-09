@@ -10,9 +10,10 @@ import {
 } from '@/components/ui/drawer';
 
 import AssetCards from '../AssetCards/AssetCards';
-import InsuranceFund from '../InsuranceFund/InsuranceFund';
 import PoolPieChart from '../PoolCharts/PoolPieChart';
-import VolumeAndFeeChart from '../PoolCharts/VolumeAndFeeChart';
+
+// import InsuranceFund from '../InsuranceFund/InsuranceFund';
+// import VolumeAndFeeChart from '../PoolCharts/VolumeAndFeeChart';
 
 interface PoolInfoDrawerProps {
   children: React.ReactNode;
@@ -29,8 +30,8 @@ export default function PoolInfoDrawer({ children }: PoolInfoDrawerProps) {
           </DrawerHeader>
           <PoolPieChart />
           <AssetCards />
-          <VolumeAndFeeChart />
-          <InsuranceFund />
+          {/* <VolumeAndFeeChart /> */}
+          {/* <InsuranceFund /> */}
         </div>
 
         <DrawerFooter>
