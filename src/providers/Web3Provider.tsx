@@ -13,7 +13,7 @@ const showHardhat = import.meta.env.MODE === 'development';
 
 const wagmiConfig: Pick<Parameters<typeof createConfig>[0], 'chains' | 'transports'> = showHardhat
   ? {
-      chains: [mainnet, sepolia, hardhat],
+      chains: [hardhat, sepolia, mainnet],
       transports: {
         [hardhat.id]: http('http://127.0.0.1:8545/'),
         [sepolia.id]: http('https://eth-sepolia.g.alchemy.com/v2/7GwBcdnuSTJywivj2pPW4'),
@@ -21,7 +21,7 @@ const wagmiConfig: Pick<Parameters<typeof createConfig>[0], 'chains' | 'transpor
       },
     }
   : {
-      chains: [mainnet, sepolia],
+      chains: [sepolia, mainnet],
       transports: {
         [sepolia.id]: http('https://eth-sepolia.g.alchemy.com/v2/7GwBcdnuSTJywivj2pPW4'),
         [mainnet.id]: http(),
