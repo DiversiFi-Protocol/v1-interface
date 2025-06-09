@@ -113,7 +113,9 @@ export default function MintForm() {
     const step = mintSteps?.[currentStep];
     if (step == null || signer.data == null) return;
 
+    setStepError(undefined);
     const { success, error } = await step.execute(signer.data);
+
     if (success) {
       setCurrentStep((prev) => prev + 1);
     } else {
