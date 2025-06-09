@@ -207,7 +207,7 @@ export default function BurnForm() {
         {burnSimulation?.data && (
           <span className="flex-1 flex text-sm text-muted-foreground justify-between">
             <span>Network Cost (est.)</span>
-            <span>${burnSimulation.data.networkCost}</span>
+            <span className="font-mono">${burnSimulation.data.networkCost}</span>
           </span>
         )}
       </div>
