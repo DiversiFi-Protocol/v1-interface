@@ -6,8 +6,7 @@ import { PoolRoutes } from '@/constants/routes';
 
 import { cn } from '@/lib/tw';
 
-import { FormSettings } from './FormSettings';
-import TestBalances from './TestBalances';
+import { FormSettingsPopover } from './FormSettingsPopover';
 
 export default function Pool() {
   const match = useMatch(PoolRoutes.Swap);
@@ -23,11 +22,11 @@ export default function Pool() {
             <NavLink to={PoolRoutes.Burn} className={navLinkClass}>
               Burn
             </NavLink>
-            <FormSettings className="ml-auto" />
+
+            <FormSettingsPopover className="ml-auto" />
           </div>
         }
         <Outlet />
-        <TestBalances />
       </SingleColumnLayout>
     );
   }

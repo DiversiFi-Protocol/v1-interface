@@ -17,6 +17,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { MustBigNumber } from '@/lib/numbers';
 import { objectFromEntries } from '@/lib/objectHelpers';
 
+import { InventoryPopover } from '../InventoryPopover';
 import FormInput from './FormInput';
 
 export default function BurnForm() {
@@ -228,7 +229,12 @@ export default function BurnForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Burn</CardTitle>
+        <CardTitle>
+          <div className="row gap-2 justify-between">
+            Burn
+            <InventoryPopover />
+          </div>
+        </CardTitle>
       </CardHeader>
       <CardContent className="flexColumn gap-1">{content}</CardContent>
       <CardFooter>{burnButtonAndReceipt}</CardFooter>

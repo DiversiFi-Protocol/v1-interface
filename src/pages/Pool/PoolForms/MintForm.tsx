@@ -17,6 +17,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { MustBigNumber } from '@/lib/numbers';
 import { objectFromEntries } from '@/lib/objectHelpers';
 
+import { InventoryPopover } from '../InventoryPopover';
 import FormInput from './FormInput';
 
 export default function MintForm() {
@@ -232,7 +233,12 @@ export default function MintForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Mint</CardTitle>
+        <CardTitle>
+          <div className="row gap-2 justify-between">
+            Mint
+            <InventoryPopover />
+          </div>
+        </CardTitle>
       </CardHeader>
       <CardContent className="flexColumn gap-1">{content}</CardContent>
       <CardFooter>{mintButtonAndReceipt}</CardFooter>
