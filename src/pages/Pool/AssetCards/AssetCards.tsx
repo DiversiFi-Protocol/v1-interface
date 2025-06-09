@@ -15,7 +15,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 import { truncateAddress } from '@/lib/addressUtils';
-import { formatNumber } from '@/lib/numbers';
+import { formatNumber, MustBigNumber } from '@/lib/numbers';
 
 function AssetCard({
   asset,
@@ -29,7 +29,7 @@ function AssetCard({
 
   const scaledReserve = scaledReserves?.find(({ symbol }) => symbol === asset.symbol);
   const scaledReserveAmount = scaledReserve?.amount;
-
+  const scaledReserveAmountBN = MustBigNumber(scaledReserveAmount);
   const scaledReserveAmountFormatted = formatNumber({
     value: scaledReserveAmount,
     type: 'number',
@@ -44,6 +44,7 @@ function AssetCard({
     assetParamsData?.targetAllocation ?? 0n,
     assetParamsData?.decimals ?? 0
   );
+  const targetAllocationBN = MustBigNumber(targetAllocation);
 
   const formattedTargetAllocation = formatNumber({
     value: targetAllocation,
@@ -54,6 +55,10 @@ function AssetCard({
       maximumFractionDigits: 2,
     },
   });
+
+  const percentage = targetAllocationBN.isZero()
+    ? '-'
+    : scaledReserveAmountBN.div(targetAllocationBN).times(100)?.toFixed(2);
 
   return (
     <Card key={asset.symbol} className="flex-1">
@@ -99,7 +104,7 @@ function AssetCard({
               {scaledReservesLoading ? (
                 <Loader2 className="size-4 animate-spin" />
               ) : (
-                scaledReserveAmountFormatted
+                `${scaledReserveAmountFormatted} (${percentage}%)`
               )}
             </span>
           </div>
