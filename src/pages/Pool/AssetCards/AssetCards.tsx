@@ -1,6 +1,5 @@
 import { CheckCircle2, Copy, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
-import { formatUnits } from 'viem';
 
 import { SUPPORTED_RESERVE_ASSETS, SupportedAsset } from '@/constants/tokens';
 
