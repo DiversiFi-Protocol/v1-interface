@@ -5,6 +5,7 @@ import { formatUnits } from 'viem';
 import { SUPPORTED_RESERVE_ASSETS, SupportedAsset } from '@/constants/tokens';
 
 import { useGetAssetParams } from '@/hooks/BackingPool/useAssets';
+import { useAllAssetScaledReserves } from '@/hooks/BackingPool/usePoolReserves';
 
 // import { useGetAssetParams } from '@/hooks/BackingPool/useAssets';
 
@@ -24,11 +25,26 @@ function AssetCard({
   onCopy: (address: string) => void;
 }) {
   const { data: assetParamsData, isLoading } = useGetAssetParams(asset.address);
+  const { scaledReserves, isLoading: scaledReservesLoading } = useAllAssetScaledReserves();
+
+  const scaledReserve = scaledReserves?.find(({ symbol }) => symbol === asset.symbol);
+  const scaledReserveAmount = scaledReserve?.amount;
+
+  const scaledReserveAmountFormatted = formatNumber({
+    value: scaledReserveAmount,
+    type: 'number',
+    options: {
+      useGrouping: true,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    },
+  });
 
   const targetAllocation = formatUnits(
     assetParamsData?.targetAllocation ?? 0n,
     assetParamsData?.decimals ?? 0
   );
+
   const formattedTargetAllocation = formatNumber({
     value: targetAllocation,
     type: 'number',
@@ -77,6 +93,17 @@ function AssetCard({
 
       <CardContent>
         <div className="flexColumn gap-2 whitespace-nowrap text-sm">
+          <div className="row gap-2 justify-between">
+            <span className="text-muted-foreground">Current Allocation</span>
+            <span className="font-semibold font-mono">
+              {scaledReservesLoading ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                scaledReserveAmountFormatted
+              )}
+            </span>
+          </div>
+
           <div className="row gap-2 justify-between">
             <span className="text-muted-foreground">Target Allocation</span>
             <span className="font-semibold font-mono">
