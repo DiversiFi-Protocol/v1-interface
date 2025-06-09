@@ -28,7 +28,7 @@ export function InventoryPopover({ className }: { className?: string }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button className={className} variant="ghost">
+        <Button className={className} disabled={balances == null} variant="ghost">
           <BackpackIcon />
         </Button>
       </PopoverTrigger>
