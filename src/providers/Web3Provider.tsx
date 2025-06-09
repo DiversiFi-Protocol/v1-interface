@@ -11,7 +11,7 @@ import { queryClient } from '@/lib/queryClient';
 
 const showHardhat = import.meta.env.MODE === 'development';
 
-const wagmiConfig: Pick = showHardhat
+const wagmiConfig: Pick<Parameters<typeof createConfig>[0], 'chains' | 'transports'> = showHardhat
   ? {
       chains: [mainnet, sepolia, hardhat],
       transports: {
