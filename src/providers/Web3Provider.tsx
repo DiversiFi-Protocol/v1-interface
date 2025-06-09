@@ -1,45 +1,47 @@
 import { ReactNode } from 'react';
 
 import { QueryClientProvider } from '@tanstack/react-query';
-import { ConnectKitProvider, getDefaultConfig } from 'connectkit';
+import { ConnectKitProvider } from 'connectkit';
 import { WagmiProvider, createConfig, http } from 'wagmi';
-import { hardhat, mainnet, sepolia } from 'wagmi/chains';
+import { mainnet, sepolia, hardhat } from 'wagmi/chains';
+
+import { injected, metaMask, walletConnect } from 'wagmi/connectors';
 
 import { envVar } from '@/constants/environment';
-
 import { queryClient } from '@/lib/queryClient';
 
 const showHardhat = import.meta.env.MODE === 'development';
 
-const wagmiConfig: Pick<Parameters<typeof createConfig>[0], 'chains' | 'transports'> = showHardhat
-  ? {
-      chains: [hardhat, sepolia, mainnet],
-      transports: {
-        [hardhat.id]: http('http://127.0.0.1:8545/'),
-        [sepolia.id]: http('https://eth-sepolia.g.alchemy.com/v2/7GwBcdnuSTJywivj2pPW4'),
-        [mainnet.id]: http(),
-      },
-    }
-  : {
-      chains: [sepolia, mainnet],
-      transports: {
-        [sepolia.id]: http('https://eth-sepolia.g.alchemy.com/v2/7GwBcdnuSTJywivj2pPW4'),
-        [mainnet.id]: http(),
-      },
-    };
+const alchemyMainnet = 'https://eth-mainnet.g.alchemy.com/v2/YOUR_MAINNET_KEY';
+const alchemySepolia = 'https://eth-sepolia.g.alchemy.com/v2/7GwBcdnuSTJywivj2pPW4';
 
-const config = createConfig(
-  getDefaultConfig({
-    // Your dApp's info
-    appName: 'DiversiFi Interface',
-    // Optional links
-    appDescription: 'DiversiFi Interface',
-    appUrl: '',
-    // Your alchemy/infura api key
-    walletConnectProjectId: envVar.walletConnectProjectId || '',
-    ...wagmiConfig,
-  })
-);
+const chains = showHardhat
+  ? ([hardhat, sepolia, mainnet] as const)
+  : ([sepolia, mainnet] as const);
+
+// ✅ Custom wallet connectors (manual)
+const connectors = [
+  injected(),
+  metaMask(),
+  walletConnect({
+    projectId: envVar.walletConnectProjectId || '',
+  }),
+];
+
+// ✅ Custom transports per chain
+const transports = {
+  [hardhat.id]: http('http://127.0.0.1:8545/'),
+  [sepolia.id]: http(alchemySepolia),
+  [mainnet.id]: http(alchemyMainnet),
+};
+
+// ✅ Final Wagmi config
+const config = createConfig({
+  chains,
+  connectors,
+  transports,
+  ssr: true,
+});
 
 export default function Web3Provider({ children }: { children: ReactNode }) {
   return (
