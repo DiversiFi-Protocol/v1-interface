@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const FormSettingsSlice = createSlice({
   name: 'formSettings',
   initialState: {
-    allowMaxApproval: false,
+    allowMaxApproval: true,
   },
   reducers: {
     setAllowMaxApproval: (state, action) => {
