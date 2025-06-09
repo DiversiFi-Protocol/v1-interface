@@ -202,7 +202,7 @@ export function useBurnSteps({ amount }: { amount: string }) {
             throw new Error('burnHook: burn failed');
           }
 
-          toast.success('burn has been submitted', {
+          toast.success('Burn has been submitted', {
             id: notifId,
             action: {
               label: 'View tx',
@@ -217,7 +217,7 @@ export function useBurnSteps({ amount }: { amount: string }) {
           };
         } catch (error) {
           console.error(error);
-          toast.error('burn has failed', {
+          toast.error('Burn has failed', {
             id: notifId,
           });
 
