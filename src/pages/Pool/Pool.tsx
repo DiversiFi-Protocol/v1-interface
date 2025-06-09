@@ -7,6 +7,7 @@ import { PoolRoutes } from '@/constants/routes';
 import { cn } from '@/lib/tw';
 
 import { FormSettings } from './FormSettings';
+import TestBalances from './TestBalances';
 
 export default function Pool() {
   const match = useMatch(PoolRoutes.Swap);
@@ -26,6 +27,7 @@ export default function Pool() {
           </div>
         }
         <Outlet />
+        <TestBalances />
       </SingleColumnLayout>
     );
   }
