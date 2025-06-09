@@ -19,7 +19,6 @@ const chains = showHardhat
   ? ([hardhat, sepolia, mainnet] as const)
   : ([sepolia, mainnet] as const);
 
-// ✅ Custom wallet connectors (manual)
 const connectors = [
   injected(),
   metaMask(),
@@ -28,14 +27,12 @@ const connectors = [
   }),
 ];
 
-// ✅ Custom transports per chain
 const transports = {
   [hardhat.id]: http('http://127.0.0.1:8545/'),
   [sepolia.id]: http(alchemySepolia),
   [mainnet.id]: http(alchemyMainnet),
 };
 
-// ✅ Final Wagmi config
 const config = createConfig({
   chains,
   connectors,
