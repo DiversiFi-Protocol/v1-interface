@@ -19,7 +19,7 @@ import { cn } from '@/lib/tw';
 
 const popoverRotateSvg = '[&[data-state=open]_svg]:rotate-90 [&_svg]:transition-transform';
 
-export function FormSettings({ className }: { className?: string }) {
+export function FormSettingsPopover({ className }: { className?: string }) {
   const dispatch = useAppDispatch();
   const allowMaxApproval = useAppSelector(selectShouldAllowMaxApprovals);
 
