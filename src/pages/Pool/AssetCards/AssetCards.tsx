@@ -29,7 +29,6 @@ function AssetCard({
 
   const scaledReserve = scaledReserves?.find(({ symbol }) => symbol === asset.symbol);
   const scaledReserveAmount = scaledReserve?.amount;
-  const scaledReserveAmountBN = MustBigNumber(scaledReserveAmount);
   const scaledReserveAmountFormatted = formatNumber({
     value: scaledReserveAmount,
     type: 'number',
@@ -40,25 +39,12 @@ function AssetCard({
     },
   });
 
-  const targetAllocation = formatUnits(
-    assetParamsData?.targetAllocation ?? 0n,
-    assetParamsData?.decimals ?? 0
-  );
+  const targetAllocation = assetParamsData?.targetAllocation
+    ? Number(assetParamsData.targetAllocation) / 2 ** 88
+    : 0;
+
   const targetAllocationBN = MustBigNumber(targetAllocation);
-
-  const formattedTargetAllocation = formatNumber({
-    value: targetAllocation,
-    type: 'number',
-    options: {
-      useGrouping: true,
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    },
-  });
-
-  const percentage = targetAllocationBN.isZero()
-    ? '-'
-    : scaledReserveAmountBN.div(targetAllocationBN).times(100)?.toFixed(2);
+  const targetAllocationFormatted = targetAllocationBN.times(100).toFixed(2);
 
   return (
     <Card key={asset.symbol} className="flex-1">
@@ -99,20 +85,24 @@ function AssetCard({
       <CardContent>
         <div className="flexColumn gap-2 whitespace-nowrap text-sm">
           <div className="row gap-2 justify-between">
-            <span className="text-muted-foreground">Current Allocation</span>
+            <span className="text-muted-foreground">Current Reserve</span>
             <span className="font-semibold font-mono">
               {scaledReservesLoading ? (
                 <Loader2 className="size-4 animate-spin" />
               ) : (
-                `${scaledReserveAmountFormatted} (${percentage}%)`
+                `${scaledReserveAmountFormatted}`
               )}
             </span>
           </div>
 
           <div className="row gap-2 justify-between">
-            <span className="text-muted-foreground">Target Allocation</span>
+            <span className="text-muted-foreground">Target Pool Allocation</span>
             <span className="font-semibold font-mono">
-              {isLoading ? <Loader2 className="size-4 animate-spin" /> : formattedTargetAllocation}
+              {isLoading ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                `${targetAllocationFormatted}%`
+              )}
             </span>
           </div>
         </div>
