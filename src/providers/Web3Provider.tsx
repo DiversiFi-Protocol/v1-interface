@@ -24,7 +24,7 @@ const wagmiConfig: Pick<Parameters<typeof createConfig>[0], 'chains' | 'transpor
       },
     }
   : {
-      chains: [sepolia, mainnet],
+      chains: [sepolia],
       transports: {
         [sepolia.id]: http(alchemySepolia),
       },
