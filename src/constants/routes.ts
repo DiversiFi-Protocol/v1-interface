@@ -3,6 +3,7 @@ export enum PageRoutes {
   About = '/about',
   Pool = '/pool',
   Allowance = '/allowance',
+  Terms = '/terms',
   NotFound = '*',
 }
 

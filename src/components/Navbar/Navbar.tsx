@@ -26,7 +26,7 @@ export default function Navbar() {
   );
 
   return (
-    <nav className="fixed top-0 left-0 right-0 h-[var(--navbar-height)] text-foreground border-b z-50">
+    <nav className="fixed top-0 left-0 right-0 h-[var(--navbar-height)] bg-background text-foreground border-b z-50">
       <div className="flex-1 mx-4 h-full flex items-center">
         <ul className="row space-x-4 flex-1">
           <li>

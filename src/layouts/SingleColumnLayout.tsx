@@ -11,7 +11,7 @@ export default function SingleColumnLayout({
 }) {
   return (
     <div className={cn('flex h-full', className)}>
-      <div className="flex-1 h-[calc(100vh-var(--navbar-height))] overflow-y-auto bg-background">
+      <div className="flex-1 h-[var(--main-height)] overflow-y-auto bg-background relative">
         {children}
       </div>
     </div>
