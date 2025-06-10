@@ -31,7 +31,7 @@ export function Footer() {
         <div>
           <ChainSelectorPopover />
         </div>
-        <div className="row px-6 text-sm gap-4">
+        <div className="row px-6 text-xs gap-4">
           <a href="https://discord.gg/wcCvAmwpy5" target="_blank" rel="noopener noreferrer">
             {isMobile ? <DiscordIcon className="size-4" /> : 'Discord'}
           </a>
