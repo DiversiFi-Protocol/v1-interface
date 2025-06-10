@@ -19,10 +19,11 @@ export function ChainSelectorPopover() {
             <Button
               variant="popover"
               size="lg"
+              disabled={chain.id === 1}
               key={chain.id}
               onClick={() => switchChain({ chainId: chain.id })}
             >
-              {chain.name}
+              {chain.id === 1 ? 'Mainnet - Unsupported' : chain.name}
             </Button>
           ))}
         </div>
