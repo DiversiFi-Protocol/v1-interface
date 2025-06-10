@@ -57,6 +57,10 @@ export function useMintSteps({ amount }: { amount: string }) {
     },
   });
 
+  const mintDepositAmounts = useMintDepositAmounts({
+    amount: amount,
+  });
+
   async function getStepsForMint() {
     const steps: MintStep[] = [];
     const notifId = crypto.randomUUID();
@@ -117,7 +121,10 @@ export function useMintSteps({ amount }: { amount: string }) {
 
         const currentAllowance = allowance.result as bigint;
         const asset = SUPPORTED_RESERVE_ASSETS[idx];
-        const amountNeededBN = MustBigNumber(amount).div(3);
+        const amountNeededBN = MustBigNumber(
+          mintDepositAmounts?.find((a) => a.address === asset.address)?.depositAmount
+        );
+
         const amountNeededBigInt = parseUnits(amountNeededBN.toString(), asset.decimals);
 
         if (currentAllowance < amountNeededBigInt) {
