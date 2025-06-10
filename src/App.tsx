@@ -7,6 +7,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import LoadingSpinner from './components/LoadingSpinner';
 import { PageRoutes, PoolRoutes } from './constants/routes';
 import RootLayout from './layouts/RootLayout';
+import Terms from './pages/Terms/Terms';
 
 const Allowance = lazy(() => import('./pages/Allowance/Allowance'));
 const Home = lazy(() => import('./pages/Home/Home'));
@@ -77,6 +78,14 @@ function App() {
           element={
             <Suspense fallback={<LoadingSpinner />}>
               <Allowance />
+            </Suspense>
+          }
+        />
+        <Route
+          path={PageRoutes.Terms}
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <Terms />
             </Suspense>
           }
         />
