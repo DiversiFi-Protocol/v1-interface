@@ -25,10 +25,14 @@ export function InventoryPopover({ className }: { className?: string }) {
     </div>
   );
 
+  if (balances == null) {
+    return null;
+  }
+
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button className={className} disabled={balances == null} variant="ghost">
+        <Button size="sm" className={className} disabled={balances == null} variant="ghost">
           <BackpackIcon />
         </Button>
       </PopoverTrigger>
