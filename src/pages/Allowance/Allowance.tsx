@@ -130,6 +130,10 @@ export default function AllowancePage() {
           <div className="flex justify-center items-center h-full">
             <Loader2 className="w-10 h-10 animate-spin" />
           </div>
+        ) : data.length === 0 ? (
+          <div className="flex justify-center items-center h-full py-16">
+            <p className="text-sm text-muted-foreground">No token allowances granted</p>
+          </div>
         ) : (
           data.map((d) => (
             <div

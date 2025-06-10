@@ -262,7 +262,7 @@ export default function MintForm() {
     <Card>
       <CardHeader>
         <CardTitle>
-          <div className="row gap-2 justify-between">
+          <div className="row gap-2 h-8 justify-between">
             Mint
             <InventoryPopover />
           </div>
