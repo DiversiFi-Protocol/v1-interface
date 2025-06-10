@@ -215,8 +215,8 @@ export default function MintForm() {
       </div>
 
       {mintSteps != null && (
-        <div className="flex flex-col gap-2">
-          <span>Steps:</span>
+        <div className="flex flex-col gap-2 border-t-[1px] border-border pt-2 mt-1 border-solid">
+          <span className="text-sm text-muted-foreground">Steps:</span>
 
           {mintSteps?.map((step, i) => {
             const isCurrentStep = i === currentStep;
