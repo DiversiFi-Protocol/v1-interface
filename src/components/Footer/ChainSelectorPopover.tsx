@@ -9,7 +9,7 @@ export function ChainSelectorPopover() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="hover:brightness-110 h-[2rem] border-none">
+        <Button variant="outline" className="hover:brightness-110 h-[2rem] border-none text-xs">
           {supportedChains.find((c) => c.id === chain)?.name}
         </Button>
       </PopoverTrigger>
@@ -18,7 +18,7 @@ export function ChainSelectorPopover() {
           {supportedChains.map((chain) => (
             <Button
               variant="popover"
-              size="lg"
+              className="text-xs"
               disabled={chain.id === 1}
               key={chain.id}
               onClick={() => switchChain({ chainId: chain.id })}
