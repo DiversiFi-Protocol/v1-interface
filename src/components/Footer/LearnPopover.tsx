@@ -11,9 +11,9 @@ export function LearnPopover() {
           Learn
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="border border-solid border-accent p-1 w-fit">
+      <PopoverContent className="border border-solid border-accent p-0 w-fit rounded-md">
         <a
-          className="row gap-4 w-full text-popover-foreground hover:text-popover-foreground hover:bg-foreground/10 p-2 rounded-sm hover:no-underline"
+          className="row gap-4 w-full text-popover-foreground hover:text-popover-foreground hover:bg-foreground/10 p-2 hover:no-underline"
           href="https://docs.diversifi.tech"
           target="_blank"
           rel="noopener noreferrer"
@@ -22,7 +22,7 @@ export function LearnPopover() {
           Documentation
         </a>
         <a
-          className="row gap-4 w-full text-popover-foreground hover:text-popover-foreground hover:bg-foreground/10 p-2 rounded-sm hover:no-underline"
+          className="row gap-4 w-full text-popover-foreground hover:text-popover-foreground hover:bg-foreground/10 p-2 hover:no-underline"
           href="/docs/whitepaper.pdf"
           target="_blank"
           rel="noopener noreferrer"

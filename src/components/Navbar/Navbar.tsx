@@ -9,7 +9,6 @@ import { useBreakpoints } from '@/hooks/useBreakpoints';
 import { useTheme } from '@/providers/ThemeProvider';
 
 import ThemeToggle from '../ThemeToggle';
-import { LearnPopover } from './LearnPopover';
 
 export default function Navbar() {
   const { theme } = useTheme();
@@ -40,7 +39,6 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2 flex-1 justify-end">
-          <LearnPopover />
           <ThemeToggle />
           <ConnectKitButton />
         </div>
