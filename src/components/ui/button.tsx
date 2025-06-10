@@ -18,6 +18,7 @@ const buttonVariants = cva(
           'border border-input border-solid bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
         secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
         ghost: 'hover:brightness-110',
+        popover: 'bg-popover border-none rounded-none justify-start hover:brightness-110',
         link: 'text-primary underline-offset-4 hover:underline',
         'gradient-primary':
           'bg-gradient-to-r from-green-500 via-teal-500 to-blue-500 text-primary-foreground shadow hover:bg-primary/90 border-input',
@@ -25,7 +26,7 @@ const buttonVariants = cva(
       size: {
         default: 'rounded-md h-9 px-4 py-2',
         sm: 'h-8 rounded-sm px-3 text-xs',
-        lg: 'h-10 rounded-md px-8',
+        lg: 'h-10 rounded-md px-8 text-lg',
         icon: 'rounded-sm h-9 w-9',
       },
     },
