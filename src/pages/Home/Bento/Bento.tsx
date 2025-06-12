@@ -15,20 +15,20 @@ export function BentoSection() {
 
   const b = (
     <div className={cn(styles.section, styles.b)}>
-      <h2>Community Driven</h2>
+      <h2>Risk Mitigation</h2>
       <p>
-        With DiversiFi governance, the community curates DFiUSD's underlying portfolio, giving users peace of mind for long term stability.
+        Simple Diversification protects users from total loss via any individual depeg.
+        Governance is incentivized to prioritize risk mitigation above all else via a system of
+        rewards and punishments for selecting good and bad assets.
       </p>
     </div>
   );
 
   const c = (
     <div className={cn(styles.section, styles.c)}>
-      <h2>Risk Mitigation</h2>
+      <h2>Community Driven</h2>
       <p>
-        Simple Diversification protects users from total loss via any individual depeg.
-        Governance is incentivized to prioritize risk mitigation above all else via a system of
-        rewards and punishments for selecting good and bad assets.
+        With DiversiFi governance, the community curates DFiUSD's underlying portfolio, giving users peace of mind for long term stability.
       </p>
     </div>
   );
@@ -62,7 +62,7 @@ export function BentoSection() {
       </p>
     </div>
   );
-  
+
   const g = (
     <div className={cn(styles.section, styles.g)}>
       <h2>Seamless Disaster Recovery</h2>
