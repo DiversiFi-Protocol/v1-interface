@@ -68,7 +68,7 @@ export function BentoSection() {
       <h2>Seamless Disaster Recovery</h2>
       <p>
         In a worst case disaster scenario, a simple rebasement mechanism allows our token to recover from depegs without a token contract migration.
-        Users can simply set it and forget it for very long timescales with no need for outside interaction.
+        Users can simply set it and forget it for very long timescales with no need for outside interaction - even in the worst possible scenario.
       </p>
     </div>
   );
