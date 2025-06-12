@@ -18,8 +18,7 @@ export function BentoSection() {
       <h2>Risk Mitigation</h2>
       <p>
         Simple Diversification protects users from total loss via any individual depeg.
-        Governance is incentivized to prioritize risk mitigation above all else via a system of
-        rewards and punishments for selecting good and bad assets.
+        Governance is incentivized to prioritize risk mitigation above all else when selecting underlying asset allocations.
       </p>
     </div>
   );
@@ -39,7 +38,7 @@ export function BentoSection() {
       <h2>Additional Security</h2>
       <p>
         All future protocol revenue goes directly into an insurance fund for bailing out bad assets.
-        Governance can only tap into fee revenue if insurance is fully funded.
+        Governance can only tap into revenue if insurance is fully funded.
       </p>
     </div>
   );
