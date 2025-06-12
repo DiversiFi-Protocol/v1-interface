@@ -37,7 +37,7 @@ export function BentoSection() {
     <div className={cn(styles.section, styles.d)}>
       <h2>Additional Security</h2>
       <p>
-        All future protocol revenue goes directly into an insurance fund for bailing out bad assets.
+        All protocol revenue goes directly into an insurance fund for bailing out bad assets.
         Governance can only tap into revenue if insurance is fully funded.
       </p>
     </div>
