@@ -15,20 +15,20 @@ export function BentoSection() {
 
   const b = (
     <div className={cn(styles.section, styles.b)}>
-      <h2>Risk Mitigation</h2>
+      <h2>Community Driven</h2>
       <p>
-        Users are hedged against the risk of a single collateral failure through simple
-        diversification.
+        With DiversiFi governance, the community can create a portfolio of like kind
+        assets, giving users peace of mind for long term stability.
       </p>
     </div>
   );
 
   const c = (
     <div className={cn(styles.section, styles.c)}>
-      <h2>Protecting Assets & Peace of Mind</h2>
+      <h2>Risk Mitigation</h2>
       <p>
-        With DiversiFi governance, the community can create a portfolio of like kind
-        assets, giving users peace of mind for long term stability.
+        Governance is incentivized to prioritize risk mitigation above all else via a system of
+        rewards and punishments for selecting good and bad assets.
       </p>
     </div>
   );
