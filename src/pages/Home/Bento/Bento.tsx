@@ -7,18 +7,18 @@ export function BentoSection() {
     <div className={cn(styles.section, styles.a)}>
       <h2>Introducing DFiUSD</h2>
       <p>
-        DFiUSD is a stablecoin that is backed by a basket of USD pegged stablecoins. It is designed
-        to be a long-term, sustainable token that can be used with your favorite DeFi protocols.
+        DFiUSD is a stablecoin that is backed by a basket of USD stablecoins. It is designed
+        to be a long-term, sustainable substitute for the wild selection of USD stablecoins on the market.
       </p>
     </div>
   );
 
   const b = (
-    <div className={cn(styles.section, styles.b)}>
-      <h2>Perfect Equilibrium</h2>
+    <div className={cn(styles.section, styles.g)}>
+      <h2>Risk Mitigation</h2>
       <p>
-        DFiUSD can be redeemed 1:1 for any underlying asset in the index, and any index asset can be
-        swapped for DFiUSD at the same rate.
+        Users are hedged against the risk of a single collateral failure through simple
+        diversification.
       </p>
     </div>
   );
@@ -27,7 +27,7 @@ export function BentoSection() {
     <div className={cn(styles.section, styles.c)}>
       <h2>Protecting Assets & Peace of Mind</h2>
       <p>
-        With DiversiFi governance, the community will be able to create a portfolio of like kind
+        With DiversiFi governance, the community can create a portfolio of like kind
         assets, giving users peace of mind for long term stability.
       </p>
     </div>
@@ -37,17 +37,18 @@ export function BentoSection() {
     <div className={cn(styles.section, styles.d)}>
       <h2>Additional Security</h2>
       <p>
-        A portion of swap fees that are generated from different DiversiFi pools are added to an
-        insurance fund to be used to cover any losses from a bad underlying asset.
+        All future protocol revenue goes directly into an insurance fund for bailing out bad assets.
+        Governance can only tap into fee revenue if insurance is fully funded.
       </p>
     </div>
   );
 
   const e = (
     <div className={cn(styles.section, styles.e)}>
-      <h2>Low Fees</h2>
+      <h2>Seamless Disaster Recovery</h2>
       <p>
-        Our simple and efficient protocol has a low overhead enabling us to charge very low fees.
+        A simple rebasement mechanism allows our token to recover from depegs without a token contract migration.
+        Users can simply set it and forget it for very long timescales with no need for outside interaction.
       </p>
     </div>
   );
@@ -62,11 +63,11 @@ export function BentoSection() {
     </div>
   );
   const g = (
-    <div className={cn(styles.section, styles.g)}>
-      <h2>Risk Mitigation</h2>
+    <div className={cn(styles.section, styles.b)}>
+      <h2>Perfect Equilibrium</h2>
       <p>
-        Users are hedged against the risk of a single collateral failure through simple
-        diversification.
+        DFiUSD is backed and redeemable 1:1 by all USD stablecoin assets in the pool. 
+        The pool's target allocations can be updated on the fly and the pool will always trend towards it.
       </p>
     </div>
   );
