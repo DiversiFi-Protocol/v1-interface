@@ -61,8 +61,8 @@ export function BentoSection() {
         to get safe exposure to USD. DiversiFi takes on this job of curating a risk adjusted stablecoin portfolio on the user's behalf.
       </p>
     </div>
-
   );
+  
   const g = (
     <div className={cn(styles.section, styles.g)}>
       <h2>Seamless Disaster Recovery</h2>
