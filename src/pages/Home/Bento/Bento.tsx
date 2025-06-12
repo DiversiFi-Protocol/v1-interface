@@ -45,22 +45,23 @@ export function BentoSection() {
 
   const e = (
     <div className={cn(styles.section, styles.e)}>
-      <h2>Simplification</h2>
-      <p>
-        The stablecoin market is extremely complicated and constantly changing. Users should not need industry level knowledge in finance and technology
-        to get safe exposure to USD. DiversiFi takes on this job of curating a risk adjusted stablecoin portfolio on the user's behalf.
-      </p>
-    </div>
-  );
-
-  const f = (
-    <div className={cn(styles.section, styles.f)}>
       <h2>Non-Custodial</h2>
       <p>
         No central administrator can access any underlying funds, or mint
         uncollateralized tokens.
       </p>
     </div>
+  );
+
+  const f = (
+    <div className={cn(styles.section, styles.f)}>
+      <h2>Simplification</h2>
+      <p>
+        The stablecoin market is extremely complicated and constantly changing. Users should not need industry level knowledge in finance and technology
+        to get safe exposure to USD. DiversiFi takes on this job of curating a risk adjusted stablecoin portfolio on the user's behalf.
+      </p>
+    </div>
+
   );
   const g = (
     <div className={cn(styles.section, styles.g)}>
