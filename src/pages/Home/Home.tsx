@@ -1,7 +1,6 @@
 import ParticlesBackground from '@/components/ParticlesBackground';
 
-// import { ExplainerSection } from './Explainer';
-import { FeaturesSection } from './Features';
+import { BentoSection } from './Bento/Bento';
 import { HeroSection } from './Hero';
 import { RoadmapSection } from './Roadmap';
 
@@ -14,8 +13,7 @@ export default function Home({ particlesReady }: { particlesReady: boolean }) {
 
       <div className="relative z-10 mb-10">
         <HeroSection />
-        <FeaturesSection />
-        {/* <ExplainerSection /> */}
+        <BentoSection />
         <RoadmapSection currentPhase={1} />
       </div>
     </div>
