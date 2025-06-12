@@ -14,7 +14,7 @@ export function BentoSection() {
   );
 
   const b = (
-    <div className={cn(styles.section, styles.g)}>
+    <div className={cn(styles.section, styles.b)}>
       <h2>Risk Mitigation</h2>
       <p>
         Users are hedged against the risk of a single collateral failure through simple
@@ -63,7 +63,7 @@ export function BentoSection() {
     </div>
   );
   const g = (
-    <div className={cn(styles.section, styles.b)}>
+    <div className={cn(styles.section, styles.g)}>
       <h2>Perfect Equilibrium</h2>
       <p>
         DFiUSD is backed and redeemable 1:1 by all USD stablecoin assets in the pool. 
