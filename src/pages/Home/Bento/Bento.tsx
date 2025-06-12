@@ -7,7 +7,7 @@ export function BentoSection() {
     <div className={cn(styles.section, styles.a)}>
       <h2>Introducing DFiUSD</h2>
       <p>
-        DFiUSD is a stablecoin that is backed by a basket of USD stablecoins. It is designed
+        DFiUSD is a new type of stablecoin backed by a diverse basket of USD stablecoins. It is designed
         to be a long-term, sustainable substitute for the wild selection of USD stablecoins on the market.
       </p>
     </div>
@@ -26,7 +26,7 @@ export function BentoSection() {
     <div className={cn(styles.section, styles.c)}>
       <h2>Risk Mitigation</h2>
       <p>
-        Simple Diversification protects users from t
+        Simple Diversification protects users from total loss from any individual reserve failure.
         Governance is incentivized to prioritize risk mitigation above all else via a system of
         rewards and punishments for selecting good and bad assets.
       </p>
@@ -45,10 +45,10 @@ export function BentoSection() {
 
   const e = (
     <div className={cn(styles.section, styles.e)}>
-      <h2>Perfect Equilibrium</h2>
+      <h2>Simplification</h2>
       <p>
-        DFiUSD is backed and redeemable 1:1 by all USD stablecoin assets in the pool. 
-        The pool's target allocations can be updated on the fly and the pool will always trend towards it.
+        The stablecoin market is constantly changing. Users should not need industry level knowledge of finance and technology
+        to get safe exposure to USD. DiversiFi takes on the job of curating a risk adjusted stablecoin portfolio on the user's behalf.
       </p>
     </div>
   );
