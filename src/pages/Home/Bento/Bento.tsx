@@ -28,7 +28,7 @@ export function BentoSection() {
       <h2>Simplification</h2>
       <p>
         The stablecoin market is extremely complicated and constantly changing. Users should not need industry level knowledge in finance and technology
-        to get safe exposure to USD. DiversiFi takes on this job of curating a risk adjusted stablecoin portfolio on the user's behalf.
+        to get safe exposure to USD. DiversiFi takes this job of curating a risk adjusted stablecoin portfolio on the user's behalf.
       </p>
     </div>
   );
