@@ -10,7 +10,7 @@ export default function SingleColumnLayout({
   className?: string;
 }) {
   return (
-    <div className={cn('flex h-full', className)}>
+    <div className={cn('flex h-[var(--main-height)]', className)}>
       <div className="flex-1 h-[var(--main-height)] overflow-y-auto bg-background relative">
         {children}
       </div>
