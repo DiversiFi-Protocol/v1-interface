@@ -17,7 +17,7 @@ export function BentoSection() {
     <div className={cn(styles.section, styles.b)}>
       <h2>Risk Mitigation</h2>
       <p>
-        Simple Diversification protects users from total loss via any individual depeg.
+        Simple Diversification protects users from total loss via any individual depeg.<br/>
         Governance is incentivized to prioritize risk mitigation above all else when selecting underlying asset allocations.
       </p>
     </div>
