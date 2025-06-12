@@ -26,6 +26,7 @@ export function BentoSection() {
     <div className={cn(styles.section, styles.c)}>
       <h2>Risk Mitigation</h2>
       <p>
+        Simple Diversification protects users from t
         Governance is incentivized to prioritize risk mitigation above all else via a system of
         rewards and punishments for selecting good and bad assets.
       </p>
@@ -44,10 +45,10 @@ export function BentoSection() {
 
   const e = (
     <div className={cn(styles.section, styles.e)}>
-      <h2>Seamless Disaster Recovery</h2>
+      <h2>Perfect Equilibrium</h2>
       <p>
-        In a worst case disaster scenario, a simple rebasement mechanism allows our token to recover from depegs without a token contract migration.
-        Users can simply set it and forget it for very long timescales with no need for outside interaction.
+        DFiUSD is backed and redeemable 1:1 by all USD stablecoin assets in the pool. 
+        The pool's target allocations can be updated on the fly and the pool will always trend towards it.
       </p>
     </div>
   );
@@ -63,10 +64,10 @@ export function BentoSection() {
   );
   const g = (
     <div className={cn(styles.section, styles.g)}>
-      <h2>Perfect Equilibrium</h2>
+      <h2>Seamless Disaster Recovery</h2>
       <p>
-        DFiUSD is backed and redeemable 1:1 by all USD stablecoin assets in the pool. 
-        The pool's target allocations can be updated on the fly and the pool will always trend towards it.
+        In a worst case disaster scenario, a simple rebasement mechanism allows our token to recover from depegs without a token contract migration.
+        Users can simply set it and forget it for very long timescales with no need for outside interaction.
       </p>
     </div>
   );
