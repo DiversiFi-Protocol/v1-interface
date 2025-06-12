@@ -39,7 +39,7 @@ export function BentoSection() {
       <h2>Additional Security</h2>
       <p>
         All protocol revenue goes directly into an insurance fund, to be used for bailing out bad assets if the need arises.
-        Governance can only access revenue once the insurance fund is fully capitalized.
+        Governance can only access revenue while the insurance fund is fully capitalized.
       </p>
     </div>
   );
