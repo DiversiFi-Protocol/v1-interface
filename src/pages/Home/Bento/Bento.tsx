@@ -26,9 +26,10 @@ export function BentoSection() {
 
   const c = (
     <div className={cn(styles.section, styles.c)}>
-      <h2>Community Driven</h2>
+      <h2>Simplification</h2>
       <p>
-        With DiversiFi governance, the community curates DFiUSD's underlying portfolio, giving users peace of mind for long term stability.
+        The stablecoin market is extremely complicated and constantly changing. Users should not need industry level knowledge in finance and technology
+        to get safe exposure to USD. DiversiFi takes on this job of curating a risk adjusted stablecoin portfolio on the user's behalf.
       </p>
     </div>
   );
@@ -55,10 +56,9 @@ export function BentoSection() {
 
   const f = (
     <div className={cn(styles.section, styles.f)}>
-      <h2>Simplification</h2>
+      <h2>Community Driven</h2>
       <p>
-        The stablecoin market is extremely complicated and constantly changing. Users should not need industry level knowledge in finance and technology
-        to get safe exposure to USD. DiversiFi takes on this job of curating a risk adjusted stablecoin portfolio on the user's behalf.
+        With DiversiFi governance, the community curates DFiUSD's underlying portfolio, giving users peace of mind for long term stability.
       </p>
     </div>
   );
