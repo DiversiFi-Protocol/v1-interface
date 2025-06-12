@@ -12,7 +12,7 @@ export function HeroSection() {
           DiversiFi
         </h1>
         <p className="text-xl text-muted-foreground mb-8">
-          Protocol for tokenizing curated portfolios of pegged assets
+          Tokenizing diversified portfolios of pegged assets
         </p>
         <Link to={PageRoutes.Pool}>
           <Button variant="gradient-primary">Swap Now</Button>
