@@ -5,6 +5,7 @@ import { PageRoutes } from '@/constants/routes';
 import { useBreakpoints } from '@/hooks/useBreakpoints';
 
 import DiscordIcon from '@/assets/social/discord.svg';
+import XIcon from '@/assets/social/x.svg';
 
 import { ChainSelectorPopover } from './ChainSelectorPopover';
 import { LearnPopover } from './LearnPopover';
@@ -32,6 +33,9 @@ export function Footer() {
           <ChainSelectorPopover />
         </div>
         <div className="row px-6 text-xs gap-4">
+          <a href="https://https://x.com/0xDiversiFi" target="_blank" rel="noopener noreferrer">
+            {isMobile ? <XIcon className="size-4" /> : 'X/Twitter'}
+          </a>
           <a href="https://discord.gg/wcCvAmwpy5" target="_blank" rel="noopener noreferrer">
             {isMobile ? <DiscordIcon className="size-4" /> : 'Discord'}
           </a>
