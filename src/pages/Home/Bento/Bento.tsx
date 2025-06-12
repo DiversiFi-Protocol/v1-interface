@@ -47,8 +47,8 @@ export function BentoSection() {
     <div className={cn(styles.section, styles.e)}>
       <h2>Simplification</h2>
       <p>
-        The stablecoin market is constantly changing. Users should not need industry level knowledge of finance and technology
-        to get safe exposure to USD. DiversiFi takes on the job of curating a risk adjusted stablecoin portfolio on the user's behalf.
+        The stablecoin market is extremely complicated and constantly changing. Users should not need industry level knowledge in finance and technology
+        to get safe exposure to USD. DiversiFi takes on this job of curating a risk adjusted stablecoin portfolio on the user's behalf.
       </p>
     </div>
   );
