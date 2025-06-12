@@ -26,7 +26,7 @@ export function BentoSection() {
     <div className={cn(styles.section, styles.c)}>
       <h2>Risk Mitigation</h2>
       <p>
-        Simple Diversification protects users from total loss from any individual reserve failure.
+        Simple Diversification protects users from total loss via any individual depeg.
         Governance is incentivized to prioritize risk mitigation above all else via a system of
         rewards and punishments for selecting good and bad assets.
       </p>
