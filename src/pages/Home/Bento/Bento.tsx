@@ -7,7 +7,7 @@ export function BentoSection() {
     <div className={cn(styles.section, styles.a)}>
       <h2>Introducing DFiUSD</h2>
       <p>
-        DFiUSD is a new type of stablecoin backed 1:1 by a diverse basket of USD stablecoins. It is designed
+        DFiUSD is a new type of stablecoin backed 1:1 by a diverse pool of USD stablecoins. It is designed
         to be a long-term, sustainable substitute for the wild selection of USD stablecoins on the market.
       </p>
     </div>
