@@ -46,7 +46,7 @@ export function BentoSection() {
     <div className={cn(styles.section, styles.e)}>
       <h2>Seamless Disaster Recovery</h2>
       <p>
-        A simple rebasement mechanism allows our token to recover from depegs without a token contract migration.
+        In a worst case disaster scenario, a simple rebasement mechanism allows our token to recover from depegs without a token contract migration.
         Users can simply set it and forget it for very long timescales with no need for outside interaction.
       </p>
     </div>
