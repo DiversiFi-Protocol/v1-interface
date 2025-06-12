@@ -57,7 +57,7 @@ export function BentoSection() {
     <div className={cn(styles.section, styles.f)}>
       <h2>Non-Custodial</h2>
       <p>
-        There is no central administrator that can access any underlying funds, or mint
+        No central administrator can access any underlying funds, or mint
         uncollateralized tokens.
       </p>
     </div>
