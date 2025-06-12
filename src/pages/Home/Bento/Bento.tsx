@@ -17,8 +17,7 @@ export function BentoSection() {
     <div className={cn(styles.section, styles.b)}>
       <h2>Community Driven</h2>
       <p>
-        With DiversiFi governance, the community can create a portfolio of like kind
-        assets, giving users peace of mind for long term stability.
+        With DiversiFi governance, the community curates the pool's portfolio, giving users peace of mind for long term stability.
       </p>
     </div>
   );
