@@ -34,7 +34,7 @@ export function Footer() {
         </div>
         <div className="row px-6 text-xs gap-4">
           <a href="https://x.com/0xDiversiFi" target="_blank" rel="noopener noreferrer">
-            {isMobile ? <XIcon className="size-4" /> : 'X/Twitter'}
+            {isMobile ? 'X/Twitter'/*<XIcon className="size-4" />*/ : 'X/Twitter'}
           </a>
           <a href="https://discord.gg/wcCvAmwpy5" target="_blank" rel="noopener noreferrer">
             {isMobile ? <DiscordIcon className="size-4" /> : 'Discord'}
