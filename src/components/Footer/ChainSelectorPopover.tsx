@@ -13,7 +13,7 @@ export function ChainSelectorPopover() {
           {supportedChains.find((c) => c.id === chain)?.name}
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="start" className="p-0 w-fit">
+      <PopoverContent align="start" className="border border-solid border-accent p-0 w-fit">
         <div className="flexColumn flex-col rounded-md overflow-hidden w-fit">
           {supportedChains.map((chain) => (
             <Button
