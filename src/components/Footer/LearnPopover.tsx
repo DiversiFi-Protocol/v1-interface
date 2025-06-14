@@ -18,7 +18,7 @@ export function LearnPopover() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <TerminalSquareIcon className="text-muted-foreground w-6 h-6" />
+          <TerminalSquareIcon className="text-muted-foreground w-4 h-4" />
           Documentation
         </a>
         <a
@@ -27,7 +27,7 @@ export function LearnPopover() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <ScrollIcon className="text-muted-foreground w-6 h-6" />
+          <ScrollIcon className="text-muted-foreground w-4 h-4" />
           Whitepaper
         </a>
       </PopoverContent>
