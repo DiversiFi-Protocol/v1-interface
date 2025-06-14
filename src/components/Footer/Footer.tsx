@@ -33,10 +33,20 @@ export function Footer() {
           <ChainSelectorPopover />
         </div>
         <div className="row px-6 text-xs gap-4">
-          <a href="https://x.com/0xDiversiFi" target="_blank" rel="noopener noreferrer">
-            {isMobile ? 'X/Twitter'/*<XIcon className="size-4" />*/ : 'X/Twitter'}
+          <a
+            className="px-2 py-1"
+            href="https://x.com/0xDiversiFi"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {isMobile ? <XIcon className="size-4" /> : 'X/Twitter'}
           </a>
-          <a href="https://discord.gg/wcCvAmwpy5" target="_blank" rel="noopener noreferrer">
+          <a
+            className="px-2 py-1"
+            href="https://discord.gg/wcCvAmwpy5"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {isMobile ? <DiscordIcon className="size-4" /> : 'Discord'}
           </a>
           {learnMore}
