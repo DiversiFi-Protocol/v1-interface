@@ -28,20 +28,15 @@ export default function Pool() {
             </NavLink>
 
             <FormSettingsPopover className="ml-auto" />
+            <PoolInfoDrawer>
+              <Button variant="secondary" size="icon" className="rounded-[50%]">
+                <InfoIcon />
+              </Button>
+            </PoolInfoDrawer>
           </div>
         }
 
         <Outlet />
-
-        <PoolInfoDrawer>
-          <Button
-            variant="secondary"
-            size="icon"
-            className="absolute bottom-4 right-4 rounded-[50%]"
-          >
-            <InfoIcon />
-          </Button>
-        </PoolInfoDrawer>
       </SingleColumnLayout>
     );
   }
