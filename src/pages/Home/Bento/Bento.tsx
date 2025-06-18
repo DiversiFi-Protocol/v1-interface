@@ -8,7 +8,7 @@ export function BentoSection() {
       <h2>Introducing DFiUSD</h2>
       <p>
         DFiUSD is a new type of stablecoin, backed 1:1 by a diverse pool of USD stablecoins. 
-        It is designed to be a long-term, sustainable alternative to the wide array of USD stablecoins currently on the market.
+        It is designed to be a long-term, sustainable alternative to the wild selection of USD stablecoins currently on the market.
       </p>
     </div>
   );
