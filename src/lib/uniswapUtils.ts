@@ -62,6 +62,12 @@ export const FEE_TO_TICK_SPACING: Record<number, number> = {
   10000:  200,  // 1.0% fee
 };
 
+function compareAddresses(a: Address, b: Address): number {
+  const aBig = BigInt(a)
+  const bBig = BigInt(b)
+  return aBig < bBig ? -1 : aBig > bBig ? 1 : 0
+}
+
 export function getPoolKey(
   token0:Address,
   token1:Address,
@@ -322,10 +328,4 @@ export function prepareSwapExactOutputSingle(
     args: [toHex(commands), input, deadline],
     account: caller
   }
-}
-
-function compareAddresses(a: Address, b: Address): number {
-  const aBig = BigInt(a)
-  const bBig = BigInt(b)
-  return aBig < bBig ? -1 : aBig > bBig ? 1 : 0
 }
