@@ -32,8 +32,20 @@ export type singleQuoteCall = {
   address: Address,
   abi: Abi,
   functionName: string,
-  args: (string | bigint | boolean | poolKey)[]
+  args: {
+    poolKey: poolKey,
+    zeroForOne: boolean,
+    exactAmount: bigint,
+    hookData: string
+  }[]
 }
+
+/*
+		PoolKey: poolKey,
+		ZeroForOne: zeroForOne,
+		ExactAmount: exactAmountOut,
+		HookData: []byte{},
+*/
 
 export type singleSwapWrite = {
   address: Address,
@@ -129,12 +141,12 @@ export function prepareQuoteExactInputSingle(
 ):singleQuoteCall {
   const poolKey = getPoolKey(inputToken, outputToken, fee, hooks)
   const zeroForOne = compareAddresses(inputToken, outputToken) < 0
-  const singleQuoteArgs = [
+  const singleQuoteArgs = [{
     poolKey,
     zeroForOne,
-    exactInput,
-    '0x'
-  ]
+    exactAmount: exactInput,
+    hookData: '0x'
+  }]
 
   return {
     address: UNISWAP_V4_QUOTER_ADDRESS,
@@ -157,12 +169,12 @@ export function prepareQuoteExactOutputSingle(
 ):singleQuoteCall {
   const poolKey = getPoolKey(inputToken, outputToken, fee, hooks)
   const zeroForOne = compareAddresses(inputToken, outputToken) < 0
-  const singleQuoteArgs = [
+  const singleQuoteArgs = [{
     poolKey,
     zeroForOne,
-    exactOutput,
-    '0x'
-  ]
+    exactAmount: exactOutput,
+    hookData: '0x'
+  }]
 
   return {
     address: UNISWAP_V4_QUOTER_ADDRESS,
