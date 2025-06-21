@@ -40,13 +40,6 @@ export type singleQuoteCall = {
   }[]
 }
 
-/*
-		PoolKey: poolKey,
-		ZeroForOne: zeroForOne,
-		ExactAmount: exactAmountOut,
-		HookData: []byte{},
-*/
-
 export type singleSwapWrite = {
   address: Address,
   abi: Abi,
@@ -55,17 +48,6 @@ export type singleSwapWrite = {
   chain: Chain,
   account: Address
 }
-
-/*
-  const txHash = await signer.writeContract({
-    address: asset.address,
-    abi: erc20Abi,
-    functionName: 'approve',
-    args: [BACKING_POOL_ADDRESS, allowMaxApproval ? maxUint256 : amountNeededBigInt],
-    chain,
-    account: address,
-  });
-*/
 
 export const FEE_TO_TICK_SPACING: Record<number, number> = {
   100:    1,    // 0.01% fee
