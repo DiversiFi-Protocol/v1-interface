@@ -193,7 +193,7 @@ export function useBurnSteps({ amount }: { amount: string }) {
             address: BACKING_POOL_ADDRESS,
             abi: IBackingPool,
             functionName: 'burn',
-            args: [amountBigInt, "0x"],
+            args: [amountBigInt, '0x'],
             chain,
             account: address,
           });
@@ -259,7 +259,7 @@ export function useSimulateBurn({ amount }: { amount: string }) {
       address: BACKING_POOL_ADDRESS,
       abi: IBackingPool,
       functionName: 'burn',
-      args: [amountBigInt, "0x"],
+      args: [amountBigInt, '0x'],
       account: address,
     });
 
