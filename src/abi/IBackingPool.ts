@@ -1,182 +1,66 @@
 export default [
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: '_admin',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_indexToken',
-        type: 'address',
-      },
+      { internalType: 'address', name: '_admin', type: 'address' },
+      { internalType: 'address', name: '_indexToken', type: 'address' },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
   },
   {
     anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'admin',
-        type: 'address',
-      },
-    ],
+    inputs: [{ indexed: false, internalType: 'address', name: 'admin', type: 'address' }],
     name: 'AdminChange',
     type: 'event',
   },
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'asset',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint88',
-        name: 'targetAllocation',
-        type: 'uint88',
-      },
-      {
-        indexed: false,
-        internalType: 'uint8',
-        name: 'decimals',
-        type: 'uint8',
-      },
-    ],
-    name: 'AssetParamsChange',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'asset',
-        type: 'address',
-      },
-    ],
-    name: 'AssetRetired',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'recipient',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'burnAmount',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256[]',
-        name: 'scaledReserves',
-        type: 'uint256[]',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'feesPaid',
-        type: 'uint256',
-      },
+      { indexed: true, internalType: 'address', name: 'recipient', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'burnAmount', type: 'uint256' },
+      { indexed: false, internalType: 'uint256[]', name: 'scaledReserves', type: 'uint256[]' },
+      { indexed: false, internalType: 'uint256', name: 'feesPaid', type: 'uint256' },
     ],
     name: 'Burn',
     type: 'event',
   },
   {
     anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'burnFeeQ128_',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ indexed: false, internalType: 'uint256', name: 'burnFeeQ128_', type: 'uint256' }],
     name: 'BurnFeeChange',
     type: 'event',
   },
   {
     anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'int256[]',
-        name: 'deltasScaled',
-        type: 'int256[]',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'bountyPaid',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ indexed: false, internalType: 'int256[]', name: 'deltasScaled', type: 'int256[]' }],
     name: 'Equalization',
     type: 'event',
   },
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'equalizationBounty',
-        type: 'uint256',
-      },
+      { indexed: false, internalType: 'uint256', name: 'equalizationBounty', type: 'uint256' },
     ],
     name: 'EqualizationBountySet',
     type: 'event',
   },
   {
     anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'feesCollected',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ indexed: false, internalType: 'uint256', name: 'feesCollected', type: 'uint256' }],
     name: 'FeesCollected',
     type: 'event',
   },
   {
     anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'bool',
-        name: 'isMintEnabled',
-        type: 'bool',
-      },
-    ],
+    inputs: [{ indexed: false, internalType: 'bool', name: 'isMintEnabled', type: 'bool' }],
     name: 'IsMintEnabledChange',
     type: 'event',
   },
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'maxReserves',
-        type: 'uint256',
-      },
+      { indexed: false, internalType: 'uint256', name: 'maxReserves', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'blockTime', type: 'uint256' },
     ],
     name: 'MaxReservesChange',
     type: 'event',
@@ -187,7 +71,7 @@ export default [
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'publicMaxReservesIncreaseCooldown',
+        name: 'maxReservesIncreaseCooldown',
         type: 'uint256',
       },
     ],
@@ -210,92 +94,51 @@ export default [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'recipient',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'mintAmount',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256[]',
-        name: 'scaledReserves',
-        type: 'uint256[]',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'feesPaid',
-        type: 'uint256',
-      },
+      { indexed: true, internalType: 'address', name: 'recipient', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'mintAmount', type: 'uint256' },
+      { indexed: false, internalType: 'uint256[]', name: 'scaledReserves', type: 'uint256[]' },
+      { indexed: false, internalType: 'uint256', name: 'feesPaid', type: 'uint256' },
     ],
     name: 'Mint',
     type: 'event',
   },
   {
     anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'mintFeeQ128_',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ indexed: false, internalType: 'uint256', name: 'mintFeeQ128_', type: 'uint256' }],
     name: 'MintFeeChange',
     type: 'event',
   },
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'asset',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'int256',
-        name: 'delta',
-        type: 'int256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'bountyPaid',
-        type: 'uint256',
-      },
+      { indexed: true, internalType: 'address', name: 'asset', type: 'address' },
+      { indexed: false, internalType: 'int256', name: 'deltaScaled', type: 'int256' },
+      { indexed: false, internalType: 'uint256', name: 'bountyPaid', type: 'uint256' },
     ],
     name: 'Swap',
     type: 'event',
   },
   {
+    anonymous: false,
+    inputs: [
+      { indexed: false, internalType: 'address[]', name: 'assetAddresses', type: 'address[]' },
+      { indexed: false, internalType: 'uint88[]', name: 'targetAllocations', type: 'uint88[]' },
+      { indexed: false, internalType: 'uint8[]', name: 'decimals', type: 'uint8[]' },
+    ],
+    name: 'TargetAssetParamsChange',
+    type: 'event',
+  },
+  {
     inputs: [],
     name: 'DECIMAL_SCALE',
-    outputs: [
-      {
-        internalType: 'uint8',
-        name: '',
-        type: 'uint8',
-      },
-    ],
+    outputs: [{ internalType: 'uint8', name: '', type: 'uint8' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
-      {
-        internalType: 'uint256',
-        name: '_burnAmount',
-        type: 'uint256',
-      },
+      { internalType: 'uint256', name: '_burnAmount', type: 'uint256' },
+      { internalType: 'bytes', name: '_forwardData', type: 'bytes' },
     ],
     name: 'burn',
     outputs: [],
@@ -305,69 +148,33 @@ export default [
   {
     inputs: [],
     name: 'equalizeToTarget',
-    outputs: [
-      {
-        internalType: 'int256[]',
-        name: '',
-        type: 'int256[]',
-      },
-    ],
+    outputs: [{ internalType: 'int256[]', name: '', type: 'int256[]' }],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
     name: 'getAdmin',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'getAllAssets',
-    outputs: [
-      {
-        internalType: 'address[]',
-        name: '',
-        type: 'address[]',
-      },
-    ],
+    outputs: [{ internalType: 'address[]', name: '', type: 'address[]' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'asset',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: 'asset', type: 'address' }],
     name: 'getAssetParams',
     outputs: [
       {
         components: [
-          {
-            internalType: 'address',
-            name: 'assetAddress',
-            type: 'address',
-          },
-          {
-            internalType: 'uint88',
-            name: 'targetAllocation',
-            type: 'uint88',
-          },
-          {
-            internalType: 'uint8',
-            name: 'decimals',
-            type: 'uint8',
-          },
+          { internalType: 'address', name: 'assetAddress', type: 'address' },
+          { internalType: 'uint88', name: 'targetAllocation', type: 'uint88' },
+          { internalType: 'uint8', name: 'decimals', type: 'uint8' },
         ],
         internalType: 'struct AssetParams',
         name: '',
@@ -380,13 +187,7 @@ export default [
   {
     inputs: [],
     name: 'getBurnFeeQ128',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -396,21 +197,9 @@ export default [
     outputs: [
       {
         components: [
-          {
-            internalType: 'address',
-            name: 'assetAddress',
-            type: 'address',
-          },
-          {
-            internalType: 'uint88',
-            name: 'targetAllocation',
-            type: 'uint88',
-          },
-          {
-            internalType: 'uint8',
-            name: 'decimals',
-            type: 'uint8',
-          },
+          { internalType: 'address', name: 'assetAddress', type: 'address' },
+          { internalType: 'uint88', name: 'targetAllocation', type: 'uint88' },
+          { internalType: 'uint8', name: 'decimals', type: 'uint8' },
         ],
         internalType: 'struct AssetParams[]',
         name: '',
@@ -423,181 +212,91 @@ export default [
   {
     inputs: [],
     name: 'getEqualizationBounty',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'getEqualizationVectorScaled',
-    outputs: [
-      {
-        internalType: 'int256[]',
-        name: 'deltasScaled',
-        type: 'int256[]',
-      },
-    ],
+    outputs: [{ internalType: 'int256[]', name: 'deltasScaled', type: 'int256[]' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'getFeesCollected',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'getIndexToken',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'getIsEqualized',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'getIsMintEnabled',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'getLastMaxReservesChangeTimestamp',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'getMaxReserves',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'getMaxReservesIncreaseCooldown',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'getMaxReservesIncreaseRateQ128',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'getMintFeeQ128',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_asset',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: '_asset', type: 'address' }],
     name: 'getSpecificReserves',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'asset',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: 'asset', type: 'address' }],
     name: 'getSpecificReservesScaled',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -607,21 +306,9 @@ export default [
     outputs: [
       {
         components: [
-          {
-            internalType: 'address',
-            name: 'assetAddress',
-            type: 'address',
-          },
-          {
-            internalType: 'uint88',
-            name: 'targetAllocation',
-            type: 'uint88',
-          },
-          {
-            internalType: 'uint8',
-            name: 'decimals',
-            type: 'uint8',
-          },
+          { internalType: 'address', name: 'assetAddress', type: 'address' },
+          { internalType: 'uint88', name: 'targetAllocation', type: 'uint88' },
+          { internalType: 'uint8', name: 'decimals', type: 'uint8' },
         ],
         internalType: 'struct AssetParams[]',
         name: '',
@@ -634,41 +321,21 @@ export default [
   {
     inputs: [],
     name: 'getTotalReservesDiscrepencyScaled',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'getTotalReservesScaled',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
-      {
-        internalType: 'uint256',
-        name: '_mintAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
+      { internalType: 'uint256', name: '_mintAmount', type: 'uint256' },
+      { internalType: 'bytes', name: '_forwardData', type: 'bytes' },
     ],
     name: 'mint',
     outputs: [],
@@ -676,104 +343,56 @@ export default [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_newAdmin',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: '_newAdmin', type: 'address' }],
     name: 'setAdmin',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_burnFeeQ128',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: '_burnFeeQ128', type: 'uint256' }],
     name: 'setBurnFeeQ128',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_equalizationBounty',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: '_equalizationBounty', type: 'uint256' }],
     name: 'setEqualizationBounty',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'bool',
-        name: '_isMintEnabled',
-        type: 'bool',
-      },
-    ],
+    inputs: [{ internalType: 'bool', name: '_isMintEnabled', type: 'bool' }],
     name: 'setIsMintEnabled',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_maxReserves',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: '_maxReserves', type: 'uint256' }],
     name: 'setMaxReserves',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_maxReservesIncreaseCooldown',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: '_maxReservesIncreaseCooldown', type: 'uint256' }],
     name: 'setMaxReservesIncreaseCooldown',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_maxReservesIncreaseRateQ128',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: '_maxReservesIncreaseRateQ128', type: 'uint256' }],
     name: 'setMaxReservesIncreaseRateQ128',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_mintFeeQ128',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: '_mintFeeQ128', type: 'uint256' }],
     name: 'setMintFeeQ128',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -783,21 +402,9 @@ export default [
     inputs: [
       {
         components: [
-          {
-            internalType: 'address',
-            name: 'assetAddress',
-            type: 'address',
-          },
-          {
-            internalType: 'uint88',
-            name: 'targetAllocation',
-            type: 'uint88',
-          },
-          {
-            internalType: 'uint8',
-            name: 'decimals',
-            type: 'uint8',
-          },
+          { internalType: 'address', name: 'assetAddress', type: 'address' },
+          { internalType: 'uint88', name: 'targetAllocation', type: 'uint88' },
+          { internalType: 'uint8', name: 'decimals', type: 'uint8' },
         ],
         internalType: 'struct AssetParams[]',
         name: '_params',
@@ -811,41 +418,19 @@ export default [
   },
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        internalType: 'int256',
-        name: '_delta',
-        type: 'int256',
-      },
+      { internalType: 'address', name: '_asset', type: 'address' },
+      { internalType: 'int256', name: '_delta', type: 'int256' },
     ],
     name: 'swapTowardsTarget',
     outputs: [
-      {
-        internalType: 'uint256',
-        name: 'reservesTransfer',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'indexTransfer',
-        type: 'uint256',
-      },
+      { internalType: 'uint256', name: 'reservesTransfer', type: 'uint256' },
+      { internalType: 'uint256', name: 'indexTransfer', type: 'uint256' },
     ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: '_recipient', type: 'address' }],
     name: 'withdrawFees',
     outputs: [],
     stateMutability: 'nonpayable',
