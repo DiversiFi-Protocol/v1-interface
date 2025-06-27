@@ -72,7 +72,7 @@ const BACKED_TOKENS: Record<number, SupportedAsset> = {
     symbol: 'DFiUSD',
   },
   [sepolia.id]: {
-    address: '0xd9597245f3454D35AD5799F52fbBC9534Ca93433',
+    address: '0x137B574F468406954AFE19b839a4dD7F269fbF06',
     decimals: 18,
     symbol: 'DFiUSD',
   },
