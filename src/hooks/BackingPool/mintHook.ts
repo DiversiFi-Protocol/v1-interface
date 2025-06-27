@@ -200,7 +200,7 @@ export function useMintSteps({ amount }: { amount: string }) {
             address: BACKING_POOL_ADDRESS,
             abi: IBackingPool,
             functionName: 'mint',
-            args: [amountBigInt, address],
+            args: [amountBigInt, '0x'],
             chain,
             account: address,
           });
@@ -266,7 +266,7 @@ export function useSimulateMint({ amount }: { amount: string }) {
       address: BACKING_POOL_ADDRESS,
       abi: IBackingPool,
       functionName: 'mint',
-      args: [amountBigInt, address],
+      args: [amountBigInt, '0x'],
       account: address,
     });
 
