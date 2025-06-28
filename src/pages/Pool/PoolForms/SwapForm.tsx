@@ -7,7 +7,7 @@ import { useWalletClient } from 'wagmi';
 import { EMPTY_ARR } from '@/constants/objects';
 import { BACKED_TOKEN, SUPPORTED_RESERVE_ASSETS, SupportedAsset } from '@/constants/tokens';
 
-import { SwapStep, useSimulateSwapGivenIn, useSwapSteps } from '@/hooks/BackingPool/swapHook';
+import { SwapStep, useGetSwapQuote, useSwapSteps } from '@/hooks/BackingPool/swapHook';
 import { useAssetBalances } from '@/hooks/useAssetBalances';
 import { useDebounce } from '@/hooks/useDebounce';
 
@@ -50,21 +50,19 @@ export default function SwapForm() {
     [inputToken, outputToken, mapOfBalances]
   );
 
-  const swapSimulation = useSimulateSwapGivenIn({
+  const swapQuote = useGetSwapQuote({
     assetIn: inputToken,
     assetOut: outputToken,
     amount: debouncedInputAmount,
   });
 
-  const { amountOut = '' } = swapSimulation?.data ?? {};
-
-  console.log('error', swapSimulation.error);
+  const { amountOutBigInt, amountOut = '' } = swapQuote?.data ?? {};
 
   const stepsQuery = useSwapSteps({
     assetIn: inputToken,
     assetOut: outputToken,
     amount: debouncedInputAmount,
-    minAmountOut: amountOut,
+    minAmountOut: amountOutBigInt,
   });
 
   const signer = useWalletClient();
@@ -210,15 +208,13 @@ export default function SwapForm() {
     }
 
     if (stepsQuery.data?.length === 0) {
-      return 'Insufficient Balance';
+      return 'Retrieving Quote...';
     }
 
     return 'Swap';
   }, [signer.data, stepsQuery.data, debouncedInputAmount]);
 
-  console.log('simdata', swapSimulation.data);
-
-  const swapButton = (
+  const swapButtonAndReceipt = (
     <div className="flex flex-col gap-2 w-full">
       <Button
         variant="outline"
@@ -229,19 +225,38 @@ export default function SwapForm() {
       >
         {buttonText}
       </Button>
-
-      {swapSimulation?.data && (
-        <div className="flex flex-col gap-2">
-          <span className="flex-1 flex text-sm text-muted-foreground justify-between">
-            <span>Network Cost (est.)</span>
-            <span>${swapSimulation.data.networkCost}</span>
-          </span>
-          <span className="flex-1 flex text-sm text-muted-foreground justify-between">
-            <span>Fee</span>
-            <span>{swapSimulation.data.fee}</span>
-          </span>
-        </div>
-      )}
+      <div className="flex flex-col gap-2">
+        {debouncedInputAmount.trim() !== '' && (
+          <>
+            <span className="flex-1 flex text-sm text-muted-foreground justify-between">
+              <span>{inputToken.symbol}</span>
+              <span className="font-mono">
+                <span className="text-destructive">-</span>
+                {MustBigNumber(debouncedInputAmount).toFormat(2)}
+              </span>
+            </span>
+            <span className="flex-1 flex text-sm text-muted-foreground justify-between">
+              <span>{outputToken.symbol}</span>
+              <span className="font-mono">
+                <span className="text-green-600">+</span>
+                {MustBigNumber(amountOut).toFormat(2)}
+              </span>
+            </span>
+          </>
+        )}
+        {swapQuote?.data && (
+          <>
+            <span className="flex-1 flex text-sm text-muted-foreground justify-between">
+              <span>Network Cost (est.)</span>
+              <span>${swapQuote.data.networkCost}</span>
+            </span>
+            <span className="flex-1 flex text-sm text-muted-foreground justify-between">
+              <span>Fee</span>
+              <span>${swapQuote.data.fee}</span>
+            </span>
+          </>
+        )}
+      </div>
 
       {swapSteps != null && (
         <div className="flex flex-col gap-2 border-t-[1px] border-border pt-2 mt-1 border-solid">
@@ -294,7 +309,7 @@ export default function SwapForm() {
       </CardHeader>
 
       <CardContent className="flexColumn gap-1">{swapView}</CardContent>
-      <CardFooter>{swapButton}</CardFooter>
+      <CardFooter>{swapButtonAndReceipt}</CardFooter>
     </Card>
   );
 }

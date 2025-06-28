@@ -7,9 +7,12 @@ import { chain, chainId } from '@/constants/chain';
 import { BACKING_POOL_ADDRESS } from '@/constants/contracts';
 import { SupportedAsset } from '@/constants/tokens';
 
+import { useAppSelector } from '@/state/appTypes';
+import { selectShouldAllowMaxApprovals } from '@/state/formSettingsSelector';
+
 import { MustBigNumber } from '@/lib/numbers';
 import { sleep } from '@/lib/sleep';
-import { prepareSwapExactInputSingle } from '@/lib/uniswapUtils';
+import { prepareQuoteExactInputSingle, prepareSwapExactInputSingle } from '@/lib/uniswapUtils';
 
 import { useEthereumPrice } from '../useEthereumPrice';
 
@@ -22,17 +25,16 @@ export function useSwapSteps({
   assetIn,
   assetOut,
   amount,
-  allowMaxApproval,
   minAmountOut,
 }: {
   assetIn: SupportedAsset;
   assetOut: SupportedAsset;
   amount: string;
-  allowMaxApproval?: boolean;
-  minAmountOut?: string;
+  minAmountOut?: bigint;
 }) {
   const { address: assetInAddress, decimals: assetInDecimals } = assetIn;
-  const { address: assetOutAddress, decimals: assetOutDecimals } = assetOut;
+  const { address: assetOutAddress } = assetOut;
+  const allowMaxApproval = useAppSelector(selectShouldAllowMaxApprovals);
   const walletChainId = useChainId();
   const { address } = useAccount();
   const client = usePublicClient({
@@ -147,15 +149,13 @@ export function useSwapSteps({
     }
 
     // Step 3. Swap
-    const minAmountOutBigInt = minAmountOut ? parseUnits(minAmountOut, assetOutDecimals) : 0n;
-
     const swapData = prepareSwapExactInputSingle({
       caller: address,
       chain,
       inputToken: assetInAddress,
       outputToken: assetOutAddress,
       exactInput: amountBigInt,
-      minimumOutput: minAmountOutBigInt,
+      minimumOutput: minAmountOut ?? 0n, // minAmountOut should never be undefined due to the query's enabled condition
     });
 
     steps.push({
@@ -163,9 +163,7 @@ export function useSwapSteps({
       execute: async (signer: WalletClient) => {
         try {
           // Execute the swap
-          const txHash = await signer.writeContract(
-            swapData,
-          );
+          const txHash = await signer.writeContract(swapData);
 
           const receipt = await client!.waitForTransactionReceipt({ hash: txHash });
           if (receipt.status !== 'success') {
@@ -203,7 +201,7 @@ export function useSwapSteps({
   }
 
   return useQuery({
-    enabled: !!client && !!address && amount.trim() !== '',
+    enabled: !!client && !!address && amount.trim() !== '' && minAmountOut != null,
     queryKey: ['swapSteps', assetInAddress, assetOutAddress, address, amount],
     queryFn: getStepsForSwap,
     refetchInterval: 10_000,
@@ -211,63 +209,38 @@ export function useSwapSteps({
   });
 }
 
-export function useSimulateSwapGivenIn({
+export function useGetSwapQuote({
   assetIn,
   assetOut,
   amount,
-  minAmountOut,
 }: {
   assetIn: SupportedAsset;
   assetOut: SupportedAsset;
   amount: string;
-  minAmountOut?: string;
 }) {
-  const { address: assetInAddress, decimals: assetInDecimals } = assetIn;
-  const { address: assetOutAddress, decimals: assetOutDecimals } = assetOut;
-  const { address } = useAccount();
   const { data: ethPrice } = useEthereumPrice();
-
   const client = usePublicClient({
     chainId,
   });
 
-  async function simulateSwap() {
-    if (!client || !address || amount.trim() === '') {
+  async function getQuote() {
+    if (!client || amount.trim() === '') {
       throw new Error('simulateSwapGivenIn: Invalid input');
     }
 
-    const amountBigInt = parseUnits(amount, assetInDecimals);
-    const minAmountOutBigInt = minAmountOut ? parseUnits(minAmountOut, assetOutDecimals) : 0n;
-
-    console.log("???")
-    const swapData = prepareSwapExactInputSingle({
-      caller: address,
-      chain,
-      inputToken: assetInAddress,
-      outputToken: assetOutAddress,
-      exactInput: amountBigInt,
-      minimumOutput: minAmountOutBigInt,
+    const quoteReadParams = prepareQuoteExactInputSingle({
+      inputToken: assetIn.address,
+      outputToken: assetOut.address,
+      exactInput: parseUnits(amount, assetIn.decimals),
     });
 
-    console.log("swapData", swapData);
-
-    const simulate = await client.simulateContract(
-      swapData,
-    );
-
-    console.log('simulate', simulate);
-    const gas = await client.estimateContractGas(swapData);
+    const quote = await client.readContract(quoteReadParams);
+    const [amountOutBigInt, gasUsedBigInt] = quote as [bigint, bigint];
+    const amountOut = formatUnits(amountOutBigInt, assetOut.decimals);
 
     const networkCost = ethPrice.price
-      ? MustBigNumber(formatGwei(gas)).times(ethPrice.price).toFixed(2)
+      ? MustBigNumber(formatGwei(gasUsedBigInt)).times(ethPrice.price).toFixed(2)
       : undefined;
-
-    if (simulate.result == null) {
-      return undefined;
-    }
-
-    const amountOut = formatUnits(simulate.result[0], assetOutDecimals);
-    const fee = formatUnits(simulate.result[1], assetOutDecimals);
 
     return {
       amountIn: amount,
@@ -275,14 +248,15 @@ export function useSimulateSwapGivenIn({
       amountOut,
       assetOut,
       networkCost,
-      fee,
+      fee: MustBigNumber(amountOut).times(0.0001).toFixed(2),
+      amountOutBigInt,
     };
   }
 
   return useQuery({
     enabled: !!client && amount.trim() !== '',
-    queryKey: ['simulateSwapGivenIn', assetInAddress, assetOutAddress, amount],
-    queryFn: simulateSwap,
+    queryKey: ['swapQuote', assetIn.address, assetOut.address, amount],
+    queryFn: getQuote,
     staleTime: 20_000,
     refetchInterval: 20_000,
   });
