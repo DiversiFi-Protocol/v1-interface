@@ -26,6 +26,9 @@ export default function Pool() {
             <NavLink to={PoolRoutes.Burn} className={navLinkClass}>
               Burn
             </NavLink>
+            <NavLink to={PoolRoutes.Swap} className={navLinkClass}>
+              Swap
+            </NavLink>
 
             <FormSettingsPopover className="ml-auto" />
             <PoolInfoDrawer>

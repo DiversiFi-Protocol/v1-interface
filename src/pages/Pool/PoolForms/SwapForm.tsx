@@ -1,177 +1,296 @@
-// import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-// import { ArrowUpDownIcon } from 'lucide-react';
-// import { toast } from 'sonner';
-// import { useWalletClient } from 'wagmi';
+import { ArrowUpDownIcon, CheckIcon } from 'lucide-react';
+import { toast } from 'sonner';
+import { useWalletClient } from 'wagmi';
 
-// import { EMPTY_ARR } from '@/constants/objects';
-// import { BACKED_TOKEN, SUPPORTED_RESERVE_ASSETS, SupportedAsset } from '@/constants/tokens';
+import { EMPTY_ARR } from '@/constants/objects';
+import { BACKED_TOKEN, SUPPORTED_RESERVE_ASSETS, SupportedAsset } from '@/constants/tokens';
 
-// import { useSimulateSwapGivenIn, useSwapSteps } from '@/hooks/BackingPool/swapHook';
-// import { useAssetBalances } from '@/hooks/useAssetBalances';
-// import { useDebounce } from '@/hooks/useDebounce';
+import { SwapStep, useSimulateSwapGivenIn, useSwapSteps } from '@/hooks/BackingPool/swapHook';
+import { useAssetBalances } from '@/hooks/useAssetBalances';
+import { useDebounce } from '@/hooks/useDebounce';
 
-// import { Button } from '@/components/ui/button';
-// import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
-// import { MustBigNumber } from '@/lib/numbers';
-// import { objectFromEntries } from '@/lib/objectHelpers';
+import { MustBigNumber } from '@/lib/numbers';
+import { objectFromEntries } from '@/lib/objectHelpers';
 
-// import FormInput from './FormInput';
+import FormInput from './FormInput';
 
-// const DEFAULT_INPUT_TOKEN = SUPPORTED_RESERVE_ASSETS[0];
-// const DEFAULT_OUTPUT_TOKEN = BACKED_TOKEN;
+const DEFAULT_INPUT_TOKEN = SUPPORTED_RESERVE_ASSETS[0];
+const DEFAULT_OUTPUT_TOKEN = BACKED_TOKEN;
 
-// export default function SwapForm() {
-//   const [inputAmount, setInputAmount] = useState('');
-//   const [inputToken, setInputToken] = useState<SupportedAsset>(DEFAULT_INPUT_TOKEN);
-//   const debouncedInputAmount = useDebounce(inputAmount);
-//   const [outputToken, setOutputToken] = useState<SupportedAsset>(DEFAULT_OUTPUT_TOKEN);
+export default function SwapForm() {
+  const [inputAmount, setInputAmount] = useState('');
+  const [inputToken, setInputToken] = useState<SupportedAsset>(DEFAULT_INPUT_TOKEN);
+  const debouncedInputAmount = useDebounce(inputAmount);
+  const [outputToken, setOutputToken] = useState<SupportedAsset>(DEFAULT_OUTPUT_TOKEN);
 
-//   const { balances } = useAssetBalances();
+  const { balances } = useAssetBalances();
 
-//   const mapOfBalances = useMemo(() => {
-//     return objectFromEntries((balances ?? EMPTY_ARR).map((a) => [a.address, a]));
-//   }, [balances]);
+  const mapOfBalances = useMemo(() => {
+    return objectFromEntries((balances ?? EMPTY_ARR).map((a) => [a.address, a]));
+  }, [balances]);
 
-//   const { inputWalletBalance, outputWalletBalance } = useMemo(
-//     () => ({
-//       inputWalletBalance: MustBigNumber(mapOfBalances[inputToken.address]?.balance).toFormat(2, {
-//         decimalSeparator: '.',
-//         groupSeparator: ',',
-//         groupSize: 3,
-//       }),
-//       outputWalletBalance: MustBigNumber(mapOfBalances[outputToken.address]?.balance).toFormat(2, {
-//         decimalSeparator: '.',
-//         groupSeparator: ',',
-//         groupSize: 3,
-//       }),
-//     }),
-//     [inputToken, outputToken, mapOfBalances]
-//   );
+  const { inputWalletBalance, outputWalletBalance } = useMemo(
+    () => ({
+      inputWalletBalance: MustBigNumber(mapOfBalances[inputToken.address]?.balance).toFormat(2, {
+        decimalSeparator: '.',
+        groupSeparator: ',',
+        groupSize: 3,
+      }),
+      outputWalletBalance: MustBigNumber(mapOfBalances[outputToken.address]?.balance).toFormat(2, {
+        decimalSeparator: '.',
+        groupSeparator: ',',
+        groupSize: 3,
+      }),
+    }),
+    [inputToken, outputToken, mapOfBalances]
+  );
 
-//   const swapSimulation = useSimulateSwapGivenIn({
-//     assetIn: inputToken,
-//     assetOut: outputToken,
-//     amount: debouncedInputAmount,
-//   });
+  const swapSimulation = useSimulateSwapGivenIn({
+    assetIn: inputToken,
+    assetOut: outputToken,
+    amount: debouncedInputAmount,
+  });
 
-//   const { amountOut = '' } = swapSimulation?.data ?? {};
+  const { amountOut = '' } = swapSimulation?.data ?? {};
 
-//   const stepsQuery = useSwapSteps({
-//     assetIn: inputToken,
-//     assetOut: outputToken,
-//     amount: debouncedInputAmount,
-//     minAmountOut: amountOut,
-//   });
+  const stepsQuery = useSwapSteps({
+    assetIn: inputToken,
+    assetOut: outputToken,
+    amount: debouncedInputAmount,
+    minAmountOut: amountOut,
+  });
 
-//   const signer = useWalletClient();
-//   const [currentStep, setCurrentStep] = useState(0);
+  const signer = useWalletClient();
+  const [currentStepIdx, setCurrentStepIdx] = useState(0);
+  const [swapSteps, setSwapSteps] = useState<SwapStep[]>();
+  const [stepError, setStepError] = useState<unknown>();
+  const [isAwaitingWalletAction, setIsAwaitingWalletAction] = useState(false);
 
-//   const onSwap = async () => {
-//     const steps = [...(stepsQuery.data ?? [])];
-//     if (steps == null || steps.length === 0 || !signer.data || !steps[currentStep]) {
-//       toast.error('Something went wrong');
-//       return;
-//     }
+  useEffect(() => {
+    async function autoPromptSteps() {
+      if (
+        swapSteps == null ||
+        swapSteps.length === 0 ||
+        swapSteps[currentStepIdx] == null ||
+        signer.data == null
+      ) {
+        return;
+      }
 
-//     const { success } = await steps[currentStep].execute(signer.data);
+      const { success, error } = await swapSteps[currentStepIdx].execute(signer.data);
 
-//     if (success && currentStep < steps.length - 1) {
-//       setCurrentStep((prev) => prev + 1);
-//     } else if (success) {
-//       setInputAmount('');
-//       setCurrentStep(0);
-//     }
-//   };
+      if (success && currentStepIdx < swapSteps.length - 1) {
+        setCurrentStepIdx((prev) => prev + 1);
+      } else if (success) {
+        setInputAmount('');
+      }
 
-//   const switchAssetButton = (
-//     <Button
-//       className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-input text-textPrimary border-card border-[3px] rounded-[50%] size-12"
-//       variant="ghost"
-//       onClick={() => {
-//         const tmp = inputToken;
-//         setInputToken(outputToken);
-//         setOutputToken(tmp);
-//       }}
-//     >
-//       <ArrowUpDownIcon className="size-4" />
-//     </Button>
-//   );
+      if (!success && error) {
+        setStepError(error);
+      }
+    }
 
-//   const swapView = (
-//     <div className="flexColumn gap-1 relative">
-//       <FormInput
-//         label="In"
-//         className="hover:brightness-110 [input:focus]:brightness-110"
-//         token={inputToken.symbol}
-//         onChange={setInputAmount}
-//         value={inputAmount}
-//         onSelectToken={(asset) => {
-//           if (asset.address === outputToken.address) {
-//             setOutputToken(inputToken);
-//           }
+    autoPromptSteps();
+  }, [swapSteps, currentStepIdx, signer.data]);
 
-//           setInputToken(asset);
-//         }}
-//         balance={inputWalletBalance}
-//       />
-//       <FormInput
-//         label="Out"
-//         disabled
-//         token={outputToken.symbol}
-//         onChange={() => {}}
-//         value={amountOut}
-//         onSelectToken={(asset) => {
-//           if (asset.address === inputToken.address) {
-//             setInputToken(outputToken);
-//           }
+  useEffect(() => {
+    // reset current burn steps if the input has changed
+    setSwapSteps(undefined);
+    setCurrentStepIdx(0);
+    setIsAwaitingWalletAction(false);
+    setStepError(undefined);
+  }, [debouncedInputAmount]);
 
-//           setOutputToken(asset);
-//         }}
-//         balance={outputWalletBalance}
-//       />
-//       {switchAssetButton}
-//     </div>
-//   );
+  const onSwap = async () => {
+    const steps = stepsQuery.data;
+    const currentStep = steps?.at(0);
+    if (steps == null || steps.length === 0 || !signer.data || !currentStep) {
+      toast.error('Something went wrong');
+      return;
+    }
 
-//   const shouldDisableSwap = stepsQuery.data?.length === 0 || debouncedInputAmount.trim() === '';
+    setStepError(undefined);
+    setIsAwaitingWalletAction(true);
 
-//   const swapButton = (
-//     <div className="flex flex-col gap-2 w-full">
-//       <Button
-//         variant="ghost"
-//         isLoading={stepsQuery.isLoading}
-//         disabled={shouldDisableSwap}
-//         onClick={onSwap}
-//         className="w-full py-6 text-xl border border-border"
-//       >
-//         Swap
-//       </Button>
-//       {swapSimulation?.data && (
-//         <div className="flex flex-col gap-2">
-//           <span className="flex-1 flex text-sm text-muted-foreground justify-between">
-//             <span>Network Cost (est.)</span>
-//             <span>${swapSimulation.data.networkCost}</span>
-//           </span>
-//           <span className="flex-1 flex text-sm text-muted-foreground justify-between">
-//             <span>Fee</span>
-//             <span>{swapSimulation.data.fee}</span>
-//           </span>
-//         </div>
-//       )}
-//     </div>
-//   );
+    if (steps.length === 1) {
+      const { success, error } = await currentStep.execute(signer.data);
+      if (success) {
+        setInputAmount('');
+      } else {
+        setIsAwaitingWalletAction(false);
+        setStepError(error);
+      }
+    } else {
+      setSwapSteps(steps);
+    }
+  };
 
-//   return (
-//     <Card>
-//       <CardHeader>
-//         <CardTitle>Swap</CardTitle>
-//       </CardHeader>
+  const onRetry = async () => {
+    const step = swapSteps?.[currentStepIdx];
+    if (step == null || signer.data == null) return;
 
-//       <CardContent>{swapView}</CardContent>
+    setStepError(undefined);
+    const { success, error } = await step.execute(signer.data);
 
-//       <CardFooter>{swapButton}</CardFooter>
-//     </Card>
-//   );
-// }
+    if (success) {
+      setCurrentStepIdx((prev) => prev + 1);
+    } else {
+      setStepError(error);
+    }
+  };
+
+  const switchAssetButton = (
+    <Button
+      className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-input text-textPrimary border-card border-[3px] border-solid rounded-[50%] size-12"
+      variant="ghost"
+      disabled={isAwaitingWalletAction}
+      onClick={() => {
+        const tmp = inputToken;
+        setInputToken(outputToken);
+        setOutputToken(tmp);
+      }}
+    >
+      <ArrowUpDownIcon className="size-4" />
+    </Button>
+  );
+
+  const swapView = (
+    <div className="flexColumn gap-1 relative">
+      <FormInput
+        label="In"
+        className="hover:brightness-110 [input:focus]:brightness-110"
+        token={inputToken.symbol}
+        onChange={setInputAmount}
+        value={inputAmount}
+        onSelectToken={(asset) => {
+          if (asset.address === outputToken.address) {
+            setOutputToken(inputToken);
+          }
+
+          setInputToken(asset);
+        }}
+        balance={inputWalletBalance}
+      />
+      <FormInput
+        label="Out"
+        disabled
+        token={outputToken.symbol}
+        onChange={() => {}}
+        value={amountOut}
+        onSelectToken={(asset) => {
+          if (asset.address === inputToken.address) {
+            setInputToken(outputToken);
+          }
+
+          setOutputToken(asset);
+        }}
+        balance={outputWalletBalance}
+      />
+      {switchAssetButton}
+    </div>
+  );
+
+  const shouldDisableSwap =
+    signer.data == null || stepsQuery.data?.length === 0 || debouncedInputAmount.trim() === '';
+
+  const buttonText = useMemo(() => {
+    if (debouncedInputAmount === '') {
+      return 'Enter Amount';
+    }
+
+    if (signer.data == null) {
+      return 'Connect Wallet';
+    }
+
+    if (stepsQuery.data?.length === 0) {
+      return 'Insufficient Balance';
+    }
+
+    return 'Swap';
+  }, [signer.data, stepsQuery.data, debouncedInputAmount]);
+
+  const swapButton = (
+    <div className="flex flex-col gap-2 w-full">
+      <Button
+        variant="ghost"
+        isLoading={isAwaitingWalletAction || stepsQuery.isLoading}
+        disabled={shouldDisableSwap}
+        onClick={onSwap}
+        className="w-full py-6 text-xl border border-border"
+      >
+        {buttonText}
+      </Button>
+
+      {swapSimulation?.data && (
+        <div className="flex flex-col gap-2">
+          <span className="flex-1 flex text-sm text-muted-foreground justify-between">
+            <span>Network Cost (est.)</span>
+            <span>${swapSimulation.data.networkCost}</span>
+          </span>
+          <span className="flex-1 flex text-sm text-muted-foreground justify-between">
+            <span>Fee</span>
+            <span>{swapSimulation.data.fee}</span>
+          </span>
+        </div>
+      )}
+
+      {swapSteps != null && (
+        <div className="flex flex-col gap-2 border-t-[1px] border-border pt-2 mt-1 border-solid">
+          <span className="text-sm text-muted-foreground">Steps:</span>
+
+          {swapSteps?.map((step, i) => {
+            const isCurrentStep = i === currentStepIdx;
+            const stepNumber = i + 1;
+            const error = isCurrentStep ? stepError : undefined;
+
+            return (
+              <span
+                key={step.type}
+                className="flex-1 flex text-sm text-muted-foreground justify-between"
+              >
+                <span>
+                  {stepNumber}.{' '}
+                  {
+                    {
+                      network: 'Switch Network',
+                      approve: 'Set Approval',
+                      swap: 'Swap',
+                    }[step.type]
+                  }
+                </span>
+
+                {isCurrentStep ? (
+                  error == null ? (
+                    <span>pending...</span>
+                  ) : (
+                    <a className="hover:underline cursor-pointer" onClick={onRetry}>
+                      Retry
+                    </a>
+                  )
+                ) : i < currentStepIdx ? (
+                  <CheckIcon className="size-3 text-green-500" />
+                ) : null}
+              </span>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Swap</CardTitle>
+      </CardHeader>
+
+      <CardContent className="flexColumn gap-1">{swapView}</CardContent>
+      <CardFooter>{swapButton}</CardFooter>
+    </Card>
+  );
+}

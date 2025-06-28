@@ -116,9 +116,9 @@ export default function AssetCards() {
     toast.success('Copied token address to clipboard');
   };
   return (
-    <div className="grid gap-4">
-      <div className="flexColumn gap-4">
-        <h2 className="text-lg font-semibold">Reserve Assets</h2>
+    <div className="grid gap-1">
+      <div className="flexColumn gap-1">
+        <h2 className="text-lg font-semibold p-1">Reserve Assets</h2>
         {SUPPORTED_RESERVE_ASSETS.map((asset) => (
           <AssetCard key={asset.symbol} asset={asset} onCopy={onCopy} />
         ))}
