@@ -8,7 +8,7 @@ export default function RootLayout() {
     <div className="min-h-screen w-screen overflow-y-auto">
       <Navbar />
       <main className="mt-[var(--navbar-height)] mb-[var(--footer-height)] min-h-[var(--main-height)]">
-        <div className="max-w-[1400px] mx-auto px-4 py-4">
+        <div className="max-w-[1400px] mx-auto px-4">
           <Outlet />
         </div>
       </main>

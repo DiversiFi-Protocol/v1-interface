@@ -44,11 +44,7 @@ export default function Pool() {
     );
   }
 
-  return (
-    <SingleColumnLayout>
-      <Outlet />
-    </SingleColumnLayout>
-  );
+  return <Outlet />;
 }
 
 function navLinkClass({ isActive }: { isActive: boolean }) {

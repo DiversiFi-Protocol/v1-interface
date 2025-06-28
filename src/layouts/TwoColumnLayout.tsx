@@ -8,11 +8,11 @@ interface TwoColumnLayoutProps {
 export default function TwoColumnLayout({ main, sidebar }: TwoColumnLayoutProps) {
   return (
     <div className="flex h-full">
-      <div className="flex-1 h-[var(--main-height)] bg-background">
+      <div className="flex-1 bg-background">
         {main}
         <div className="md:hidden">{sidebar}</div>
       </div>
-      <div className="hidden md:block w-[30rem] overflow-y-auto flex-shrink-0 h-[var(--main-height)] bg-background border-l border-border">
+      <div className="hidden md:block w-[30rem] overflow-y-auto flex-shrink-0 bg-background border-l border-border">
         {sidebar}
       </div>
     </div>
