@@ -10,9 +10,10 @@ import AssetCards from './AssetCards/AssetCards';
 import InsuranceFund from './InsuranceFund/InsuranceFund';
 import PoolPieChart from './PoolCharts/PoolPieChart';
 import VolumeAndFeeChart from './PoolCharts/VolumeAndFeeChart';
-// import SwapForm from './PoolForms/SwapForm';
+import SwapForm from './PoolForms/SwapForm';
 import PoolHeader from './PoolHeader/PoolHeader';
 import PoolInfoDrawer from './PoolInfoDrawer/PoolInfoDrawer';
+import { BalanceTable } from './PoolTables/BalanceTable';
 
 export default function Swap() {
   const { isTablet } = useBreakpoints();
@@ -22,7 +23,7 @@ export default function Swap() {
       <SingleColumnLayout>
         <div className="p-4 flexColumn gap-4">
           <PoolHeader />
-          {/* <SwapForm /> */}
+          <SwapForm />
         </div>
 
         <PoolInfoDrawer>
@@ -45,11 +46,13 @@ export default function Swap() {
           <PoolHeader />
           <PoolPieChart />
           <VolumeAndFeeChart />
+          <h2>My Assets</h2>
+          <BalanceTable />
         </div>
       }
       sidebar={
         <div className="flexColumn p-0.5 gap-1">
-          {/* <SwapForm /> */}
+          <SwapForm />
           <AssetCards />
 
           <InsuranceFund />

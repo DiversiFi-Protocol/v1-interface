@@ -1,347 +1,284 @@
-// import { useQuery } from '@tanstack/react-query';
-// import { toast } from 'sonner';
-// import { erc20Abi, formatGwei, formatUnits, maxUint256, parseUnits, WalletClient } from 'viem';
-// import { useAccount, useChainId, usePublicClient } from 'wagmi';
+import { useQuery } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { erc20Abi, formatGwei, formatUnits, maxUint256, parseUnits, WalletClient } from 'viem';
+import { useAccount, useChainId, usePublicClient } from 'wagmi';
 
-// import IBackingPool from '@/abi/IBackingPool';
-// import { chain, chainId } from '@/constants/chain';
-// import { BACKING_POOL_ADDRESS } from '@/constants/contracts';
-// import { SupportedAsset } from '@/constants/tokens';
+import { chain, chainId } from '@/constants/chain';
+import { BACKING_POOL_ADDRESS } from '@/constants/contracts';
+import { SupportedAsset } from '@/constants/tokens';
 
-// import { MustBigNumber } from '@/lib/numbers';
-// import { sleep } from '@/lib/sleep';
+import { MustBigNumber } from '@/lib/numbers';
+import { sleep } from '@/lib/sleep';
+import { prepareSwapExactInputSingle } from '@/lib/uniswapUtils';
 
-// import { useEthereumPrice } from '../useEthereumPrice';
+import { useEthereumPrice } from '../useEthereumPrice';
 
-// export type SwapStep = {
-//   type: 'network' | 'approve' | 'swap';
-//   execute: (signer: WalletClient) => Promise<void>;
-// };
+export type SwapStep = {
+  type: 'network' | 'approve' | 'swap';
+  execute: (signer: WalletClient) => Promise<{ success: boolean; error?: unknown }>;
+};
 
-// export function useSwapSteps({
-//   assetIn,
-//   assetOut,
-//   amount,
-//   allowMaxApproval,
-//   // minAmountOut,
-// }: {
-//   assetIn: SupportedAsset;
-//   assetOut: SupportedAsset;
-//   amount: string;
-//   allowMaxApproval?: boolean;
-//   minAmountOut?: string;
-// }) {
-//   const { address: assetInAddress, decimals: assetInDecimals } = assetIn;
-//   const { address: assetOutAddress, decimals: assetOutDecimals } = assetOut;
-//   const walletChainId = useChainId();
-//   const { address } = useAccount();
-//   const client = usePublicClient({
-//     chainId,
-//   });
+export function useSwapSteps({
+  assetIn,
+  assetOut,
+  amount,
+  allowMaxApproval,
+  minAmountOut,
+}: {
+  assetIn: SupportedAsset;
+  assetOut: SupportedAsset;
+  amount: string;
+  allowMaxApproval?: boolean;
+  minAmountOut?: string;
+}) {
+  const { address: assetInAddress, decimals: assetInDecimals } = assetIn;
+  const { address: assetOutAddress, decimals: assetOutDecimals } = assetOut;
+  const walletChainId = useChainId();
+  const { address } = useAccount();
+  const client = usePublicClient({
+    chainId,
+  });
 
-//   async function getStepsForSwap() {
-//     const steps = [];
-//     const notifId = crypto.randomUUID();
+  async function getStepsForSwap() {
+    const steps: SwapStep[] = [];
+    const notifId = crypto.randomUUID();
 
-//     if (!address) {
-//       throw new Error('swapHook: No account address found');
-//     }
+    if (!address) {
+      throw new Error('swapHook: No account address found');
+    }
 
-//     // Step 1. Check network
-//     if (walletChainId !== chainId) {
-//       steps.push({
-//         type: 'network',
-//         execute: async (signer: WalletClient) => {
-//           try {
-//             await signer.switchChain({
-//               id: chainId,
-//             });
-//             // Wait for the chain to be switched
-//             await sleep(2_000);
+    // Step 1. Check network
+    if (walletChainId !== chainId) {
+      steps.push({
+        type: 'network',
+        execute: async (signer: WalletClient) => {
+          try {
+            await signer.switchChain({
+              id: chainId,
+            });
+            // Wait for the chain to be switched
+            await sleep(2_000);
 
-//             return {
-//               success: true,
-//             };
-//           } catch {
-//             try {
-//               await signer.addChain({
-//                 chain,
-//               });
-//               // Wait for external wallet to update chains
-//               await sleep(2_000);
+            return {
+              success: true,
+            };
+          } catch {
+            try {
+              await signer.addChain({
+                chain,
+              });
+              // Wait for external wallet to update chains
+              await sleep(2_000);
 
-//               return {
-//                 success: true,
-//               };
-//             } catch (error) {
-//               console.error(error);
-//               toast.error('Failed to switch network', {
-//                 id: notifId,
-//               });
+              return {
+                success: true,
+              };
+            } catch (error) {
+              console.error(error);
+              toast.error('Failed to switch network', {
+                id: notifId,
+              });
 
-//               return {
-//                 success: false,
-//                 error,
-//               };
-//             }
-//           }
-//         },
-//       });
-//     }
+              return {
+                success: false,
+                error,
+              };
+            }
+          }
+        },
+      });
+    }
 
-//     // Step 2. Token Approval
-//     const allowance = await client!.readContract({
-//       address: assetInAddress,
-//       abi: erc20Abi,
-//       functionName: 'allowance',
-//       args: [address, BACKING_POOL_ADDRESS],
-//     });
+    // Step 2. Token Approval
+    const allowance = await client!.readContract({
+      address: assetInAddress,
+      abi: erc20Abi,
+      functionName: 'allowance',
+      args: [address, BACKING_POOL_ADDRESS],
+    });
 
-//     const amountBigInt = parseUnits(amount, assetInDecimals);
+    const amountBigInt = parseUnits(amount, assetInDecimals);
 
-//     if (allowance < amountBigInt) {
-//       steps.push({
-//         type: 'approve',
-//         execute: async (signer: WalletClient) => {
-//           try {
-//             const txHash = await signer.writeContract({
-//               address: assetInAddress,
-//               abi: erc20Abi,
-//               functionName: 'approve',
-//               args: [BACKING_POOL_ADDRESS, allowMaxApproval ? maxUint256 : amountBigInt],
-//               chain,
-//               account: address,
-//             });
+    if (allowance < amountBigInt) {
+      steps.push({
+        type: 'approve',
+        execute: async (signer: WalletClient) => {
+          try {
+            const txHash = await signer.writeContract({
+              address: assetInAddress,
+              abi: erc20Abi,
+              functionName: 'approve',
+              args: [BACKING_POOL_ADDRESS, allowMaxApproval ? maxUint256 : amountBigInt],
+              chain,
+              account: address,
+            });
 
-//             const receipt = await client!.waitForTransactionReceipt({ hash: txHash });
-//             if (receipt.status !== 'success') {
-//               throw new Error('swapHook: Approval failed');
-//             }
+            const receipt = await client!.waitForTransactionReceipt({ hash: txHash });
+            if (receipt.status !== 'success') {
+              throw new Error('swapHook: Approval failed');
+            }
 
-//             toast.success('Token approval has been submitted', {
-//               id: notifId,
-//               action: {
-//                 label: 'View tx',
-//                 onClick: () => {
-//                   window.open(`https://etherscan.io/tx/${txHash}`, '_blank');
-//                 },
-//               },
-//             });
+            toast.success('Token approval has been submitted', {
+              id: notifId,
+              action: {
+                label: 'View tx',
+                onClick: () => {
+                  window.open(`https://etherscan.io/tx/${txHash}`, '_blank');
+                },
+              },
+            });
 
-//             return {
-//               success: true,
-//             };
-//           } catch (error) {
-//             console.error(error);
-//             toast.error('Token approval has failed', {
-//               id: notifId,
-//             });
+            return {
+              success: true,
+            };
+          } catch (error) {
+            console.error(error);
+            toast.error('Token approval has failed', {
+              id: notifId,
+            });
 
-//             return {
-//               success: false,
-//               error,
-//             };
-//           }
-//         },
-//       });
-//     }
+            return {
+              success: false,
+              error,
+            };
+          }
+        },
+      });
+    }
 
-//     // Step 3. Swap
-//     //const minAmountOutBigInt = minAmountOut ? parseUnits(minAmountOut, assetOutDecimals) : 0n;
+    // Step 3. Swap
+    const minAmountOutBigInt = minAmountOut ? parseUnits(minAmountOut, assetOutDecimals) : 0n;
 
-//     // steps.push({
-//     //   type: 'swap',
-//     //   execute: async (signer: WalletClient) => {
-//     //     try {
-//     //       // Execute the swap
-//     //       const txHash = await signer.writeContract({
-//     //         address: BACKING_POOL_ADDRESS,
-//     //         abi: IBackingPool,
-//     //         functionName: 'swapGivenIn',
-//     //         args: [address, assetInAddress, assetOutAddress, amountBigInt, minAmountOutBigInt],
-//     //         chain,
-//     //         account: address,
-//     //       });
+    const swapData = prepareSwapExactInputSingle({
+      caller: address,
+      chain,
+      inputToken: assetInAddress,
+      outputToken: assetOutAddress,
+      exactInput: amountBigInt,
+      minimumOutput: minAmountOutBigInt,
+    });
 
-//     //       const receipt = await client!.waitForTransactionReceipt({ hash: txHash });
-//     //       if (receipt.status !== 'success') {
-//     //         throw new Error('swapHook: Swap failed');
-//     //       }
+    steps.push({
+      type: 'swap',
+      execute: async (signer: WalletClient) => {
+        try {
+          // Execute the swap
+          const txHash = await signer.writeContract({
+            ...swapData,
+            chain,
+            account: address,
+          });
 
-//     //       toast.success('Swap has been submitted', {
-//     //         id: notifId,
-//     //         action: {
-//     //           label: 'View tx',
-//     //           onClick: () => {
-//     //             window.open(`https://etherscan.io/tx/${txHash}`, '_blank');
-//     //           },
-//     //         },
-//     //       });
+          const receipt = await client!.waitForTransactionReceipt({ hash: txHash });
+          if (receipt.status !== 'success') {
+            throw new Error('swapHook: Swap failed');
+          }
 
-//     //       return {
-//     //         success: true,
-//     //       };
-//     //     } catch (error) {
-//     //       console.error(error);
-//     //       toast.error('Swap has failed', {
-//     //         id: notifId,
-//     //       });
+          toast.success('Swap has been submitted', {
+            id: notifId,
+            action: {
+              label: 'View tx',
+              onClick: () => {
+                window.open(`https://etherscan.io/tx/${txHash}`, '_blank');
+              },
+            },
+          });
 
-//     //       return {
-//     //         success: false,
-//     //         error,
-//     //       };
-//     //     }
-//     //   },
-//     // });
+          return {
+            success: true,
+          };
+        } catch (error) {
+          console.error(error);
+          toast.error('Swap has failed', {
+            id: notifId,
+          });
 
-//     return steps;
-//   }
+          return {
+            success: false,
+            error,
+          };
+        }
+      },
+    });
 
-//   return useQuery({
-//     enabled: !!client && !!address && amount.trim() !== '',
-//     queryKey: ['swapSteps', assetInAddress, assetOutAddress, address, amount],
-//     queryFn: getStepsForSwap,
-//     refetchInterval: 10_000,
-//     staleTime: 10_000,
-//   });
-// }
+    return steps;
+  }
 
-// export function useSimulateSwapGivenIn({
-//   assetIn,
-//   assetOut,
-//   amount,
-// }: {
-//   assetIn: SupportedAsset;
-//   assetOut: SupportedAsset;
-//   amount: string;
-// }) {
-//   const { address: assetInAddress, decimals: assetInDecimals } = assetIn;
-//   const { address: assetOutAddress, decimals: assetOutDecimals } = assetOut;
-//   const { address } = useAccount();
-//   const { data: ethPrice } = useEthereumPrice();
+  return useQuery({
+    enabled: !!client && !!address && amount.trim() !== '',
+    queryKey: ['swapSteps', assetInAddress, assetOutAddress, address, amount],
+    queryFn: getStepsForSwap,
+    refetchInterval: 10_000,
+    staleTime: 10_000,
+  });
+}
 
-//   const client = usePublicClient({
-//     chainId,
-//   });
+export function useSimulateSwapGivenIn({
+  assetIn,
+  assetOut,
+  amount,
+  minAmountOut,
+}: {
+  assetIn: SupportedAsset;
+  assetOut: SupportedAsset;
+  amount: string;
+  minAmountOut?: string;
+}) {
+  const { address: assetInAddress, decimals: assetInDecimals } = assetIn;
+  const { address: assetOutAddress, decimals: assetOutDecimals } = assetOut;
+  const { address } = useAccount();
+  const { data: ethPrice } = useEthereumPrice();
 
-//   async function simulateSwap() {
-//     if (!client || !address || amount.trim() === '') {
-//       throw new Error('simulateSwapGivenIn: Invalid input');
-//     }
+  const client = usePublicClient({
+    chainId,
+  });
 
-//     const amountBigInt = parseUnits(amount, assetInDecimals);
-//     const simulate = await client.simulateContract({
-//       address: BACKING_POOL_ADDRESSs,
-//       abi: IBackingPool,
-//       functionName: 'swapGivenIn',
-//       args: [address, assetInAddress, assetOutAddress, amountBigInt, 0n],
-//     });
+  async function simulateSwap() {
+    if (!client || !address || amount.trim() === '') {
+      throw new Error('simulateSwapGivenIn: Invalid input');
+    }
 
-//     const gas = await client.estimateContractGas({
-//       address: BACKING_POOL_ADDRESS,
-//       abi: IBackingPool,
-//       functionName: 'swapGivenIn',
-//       args: [address, assetInAddress, assetOutAddress, amountBigInt, 0n],
-//     });
+    const amountBigInt = parseUnits(amount, assetInDecimals);
+    const minAmountOutBigInt = minAmountOut ? parseUnits(minAmountOut, assetOutDecimals) : 0n;
+    const swapData = prepareSwapExactInputSingle({
+      caller: address,
+      chain,
+      inputToken: assetInAddress,
+      outputToken: assetOutAddress,
+      exactInput: amountBigInt,
+      minimumOutput: minAmountOutBigInt,
+    });
 
-//     const networkCost = ethPrice.price
-//       ? MustBigNumber(formatGwei(gas)).times(ethPrice.price).toFixed(2)
-//       : undefined;
+    const simulate = await client.simulateContract(swapData);
 
-//     if (simulate.result == null) {
-//       return undefined;
-//     }
+    const gas = await client.estimateContractGas(swapData);
 
-//     const amountOut = formatUnits(simulate.result[0], assetOutDecimals);
-//     const fee = formatUnits(simulate.result[1], assetOutDecimals);
+    const networkCost = ethPrice.price
+      ? MustBigNumber(formatGwei(gas)).times(ethPrice.price).toFixed(2)
+      : undefined;
 
-//     return {
-//       amountIn: amount,
-//       assetIn,
-//       amountOut,
-//       assetOut,
-//       networkCost,
-//       fee,
-//     };
-//   }
+    if (simulate.result == null) {
+      return undefined;
+    }
 
-//   return useQuery({
-//     enabled: !!client && amount.trim() !== '',
-//     queryKey: ['simulateSwapGivenIn', assetInAddress, assetOutAddress, amount],
-//     queryFn: simulateSwap,
-//     staleTime: 20_000,
-//     refetchInterval: 20_000,
-//   });
-// }
+    const amountOut = formatUnits(simulate.result[0], assetOutDecimals);
+    const fee = formatUnits(simulate.result[1], assetOutDecimals);
 
-// export function useSimulateSwapGivenOut({
-//   assetIn,
-//   assetOut,
-//   amount,
-// }: {
-//   assetIn: SupportedAsset;
-//   assetOut: SupportedAsset;
-//   amount: string;
-// }) {
-//   const { address: assetInAddress, decimals: assetInDecimals } = assetIn;
-//   const { address: assetOutAddress, decimals: assetOutDecimals } = assetOut;
-//   const { address } = useAccount();
-//   const { data: ethPrice } = useEthereumPrice();
+    return {
+      amountIn: amount,
+      assetIn,
+      amountOut,
+      assetOut,
+      networkCost,
+      fee,
+    };
+  }
 
-//   const client = usePublicClient({
-//     chainId,
-//   });
-
-//   async function simulateSwap() {
-//     if (!address || amount.trim() === '') {
-//       throw new Error('simulateSwapGivenOut: Invalid input');
-//     }
-
-//     if (!client) {
-//       throw new Error('simulateSwapGivenOut: No client found');
-//     }
-
-//     const amountBigInt = parseUnits(amount, assetOutDecimals);
-//     const simulate = await client.simulateContract({
-//       address: BACKING_POOL_ADDRESS,
-//       abi: IBackingPool,
-//       functionName: 'swapGivenOut',
-//       args: [address, assetInAddress, assetOutAddress, amountBigInt, 0n],
-//     });
-
-//     const gas = await client.estimateContractGas({
-//       address: BACKING_POOL_ADDRESS,
-//       abi: IBackingPool,
-//       functionName: 'swapGivenOut',
-//       args: [address, assetInAddress, assetOutAddress, amountBigInt, 0n],
-//     });
-
-//     const networkCost = ethPrice.price
-//       ? MustBigNumber(formatGwei(gas)).times(ethPrice.price).toFixed(2)
-//       : undefined;
-//     if (simulate.result == null) {
-//       return undefined;
-//     }
-
-//     const amountOut = formatUnits(simulate.result[0], assetInDecimals);
-//     const fee = formatUnits(simulate.result[1], assetInDecimals);
-
-//     return {
-//       amountIn: amount,
-//       assetIn,
-//       amountOut,
-//       assetOut,
-//       networkCost,
-//       fee,
-//     };
-//   }
-
-//   return useQuery({
-//     enabled: !!client && amount.trim() !== '',
-//     queryKey: ['simulateSwapGivenOut', assetInAddress, assetOutAddress, amount],
-//     queryFn: simulateSwap,
-//     staleTime: 20_000,
-//     refetchInterval: 20_000,
-//   });
-// }
+  return useQuery({
+    enabled: !!client && amount.trim() !== '',
+    queryKey: ['simulateSwapGivenIn', assetInAddress, assetOutAddress, amount],
+    queryFn: simulateSwap,
+    staleTime: 20_000,
+    refetchInterval: 20_000,
+  });
+}
