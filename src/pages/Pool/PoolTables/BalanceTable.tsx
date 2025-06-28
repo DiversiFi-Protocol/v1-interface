@@ -144,6 +144,7 @@ export function BalanceTable() {
       },
       {
         accessorKey: 'address',
+        enableSorting: false,
         header: ({ column }) => <DataTableColumnHeader column={column} title="Address" />,
         cell: ({ row }) => {
           return (
@@ -178,6 +179,7 @@ export function BalanceTable() {
       },
       {
         accessorKey: 'actions',
+        enableSorting: false,
         header: ({ column }) => <DataTableColumnHeader column={column} title="Actions" />,
         cell: ({ row }) => {
           const actions = [];

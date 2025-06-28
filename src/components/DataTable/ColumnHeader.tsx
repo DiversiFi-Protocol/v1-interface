@@ -19,9 +19,9 @@ export function DataTableColumnHeader<TData, TValue>({
   }
 
   const handleSort = () => {
-    if (!column.getIsSorted()) {
+    if (column.getIsSorted() === false) {
       column.toggleSorting(true);
-    } else if (column.getIsSorted() === 'asc') {
+    } else if (column.getIsSorted() === 'desc') {
       column.toggleSorting(false);
     } else {
       column.toggleSorting(undefined);
@@ -32,7 +32,7 @@ export function DataTableColumnHeader<TData, TValue>({
     <div className={cn('flex items-center gap-2', className)}>
       <Button variant="ghost" size="sm" onClick={handleSort}>
         <span>{title}</span>
-        {column.getIsSorted() === 'desc' ? (
+        {!column.getCanSort() ? null : column.getIsSorted() === 'desc' ? (
           <ArrowDown />
         ) : column.getIsSorted() === 'asc' ? (
           <ArrowUp />
