@@ -45,7 +45,7 @@ export function getPoolKey({
     currency1,
     fee,
     tickSpacing: FEE_TO_TICK_SPACING[fee],
-    hooks: "0x0000000000000000000000000000000000000000",
+    hooks: '0x0000000000000000000000000000000000000000',
   };
 }
 
@@ -164,7 +164,6 @@ export function prepareSwapExactInputSingle({
     Actions.TAKE_ALL,
   ]);
 
-  console.log("poolKey:", poolKey)
   // 3. params[0]: ExactInputSingleParams encoded
   const exactInParams = encodeAbiParameters(
     [
@@ -213,16 +212,18 @@ export function prepareSwapExactInputSingle({
   );
 
   // 6. inputs = [abi.encode(actions, params)]
-  const params = [exactInParams, param1, param2]
-  const actionParams:Hex[] = []
+  const params = [exactInParams, param1, param2];
+  const actionParams: Hex[] = [];
 
-  actionParams.push(encodeAbiParameters(
-    [
-      { type: 'bytes' }, // encoded actions
-      { type: 'bytes[]' }, // array of params
-    ],
-    [toHex(actions), params]
-  ));
+  actionParams.push(
+    encodeAbiParameters(
+      [
+        { type: 'bytes' }, // encoded actions
+        { type: 'bytes[]' }, // array of params
+      ],
+      [toHex(actions), params]
+    )
+  );
 
   return {
     address: UNISWAP_V4_ROUTER_ADDRESS,
@@ -314,17 +315,18 @@ export function prepareSwapExactOutputSingle({
   );
 
   // 6. inputs = [abi.encode(actions, params)]
-  const params = [exactInParams, param1, param2]
-  const actionParams:Hex[] = []
+  const params = [exactInParams, param1, param2];
+  const actionParams: Hex[] = [];
 
-  actionParams.push(encodeAbiParameters(
-    [
-      { type: 'bytes' }, // encoded actions
-      { type: 'bytes[]' }, // array of params
-    ],
-    [toHex(actions), params]
-  ));
-
+  actionParams.push(
+    encodeAbiParameters(
+      [
+        { type: 'bytes' }, // encoded actions
+        { type: 'bytes[]' }, // array of params
+      ],
+      [toHex(actions), params]
+    )
+  );
 
   return {
     address: UNISWAP_V4_ROUTER_ADDRESS,
