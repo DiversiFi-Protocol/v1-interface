@@ -1,0 +1,45 @@
+import { Column } from '@tanstack/react-table';
+import { ArrowDown, ArrowUp, ChevronsUpDown } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
+
+import { cn } from '@/lib/tw';
+
+interface DataTableColumnHeaderProps<TData, TValue> extends React.HTMLAttributes<HTMLDivElement> {
+  column: Column<TData, TValue>;
+  title: string;
+}
+export function DataTableColumnHeader<TData, TValue>({
+  column,
+  title,
+  className,
+}: DataTableColumnHeaderProps<TData, TValue>) {
+  if (!column.getCanSort()) {
+    return <div className={cn(className)}>{title}</div>;
+  }
+
+  const handleSort = () => {
+    if (!column.getIsSorted()) {
+      column.toggleSorting(true);
+    } else if (column.getIsSorted() === 'asc') {
+      column.toggleSorting(false);
+    } else {
+      column.toggleSorting(undefined);
+    }
+  };
+
+  return (
+    <div className={cn('flex items-center gap-2', className)}>
+      <Button variant="ghost" size="sm" onClick={handleSort}>
+        <span>{title}</span>
+        {column.getIsSorted() === 'desc' ? (
+          <ArrowDown />
+        ) : column.getIsSorted() === 'asc' ? (
+          <ArrowUp />
+        ) : (
+          <ChevronsUpDown />
+        )}
+      </Button>
+    </div>
+  );
+}

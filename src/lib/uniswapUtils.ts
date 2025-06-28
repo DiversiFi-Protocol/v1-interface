@@ -105,8 +105,8 @@ export function prepareQuoteExactOutputSingle({
   inputToken: Address;
   outputToken: Address;
   exactOutput: bigint;
-  fee: SwapFee;
-  hooks: Address;
+  fee?: SwapFee;
+  hooks?: Address;
 }): singleQuoteCall {
   const poolKey = getPoolKey(inputToken, outputToken, fee, hooks);
   const zeroForOne = compareAddresses(inputToken, outputToken) < 0;
@@ -144,9 +144,9 @@ export function prepareSwapExactInputSingle({
   outputToken: Address;
   exactInput: bigint;
   minimumOutput: bigint;
-  deadline: bigint;
-  fee: SwapFee;
-  hooks: Address;
+  deadline?: bigint;
+  fee?: SwapFee;
+  hooks?: Address;
 }): SingleSwapWrite {
   const poolKey = getPoolKey(inputToken, outputToken, fee, hooks);
   const zeroForOne = compareAddresses(inputToken, outputToken) < 0;
