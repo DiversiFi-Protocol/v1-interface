@@ -6,7 +6,7 @@ import { UNISWAP_V4_QUOTER_ADDRESS, UNISWAP_V4_ROUTER_ADDRESS } from '@/constant
 import {
   PoolKey,
   FEE_TO_TICK_SPACING,
-  singleQuoteCall,
+  SingleQuoteCall,
   SingleSwapWrite,
   Commands,
   Actions,
@@ -19,12 +19,17 @@ function compareAddresses(a: Address, b: Address): number {
   return aBig < bBig ? -1 : aBig > bBig ? 1 : 0;
 }
 
-export function getPoolKey(
-  token0: Address,
-  token1: Address,
-  fee: SwapFee = 100,
-  hooks: Address = zeroAddress
-): PoolKey {
+export function getPoolKey({
+  token0,
+  token1,
+  fee = 100,
+  hooks = zeroAddress,
+}: {
+  token0: Address;
+  token1: Address;
+  fee?: SwapFee;
+  hooks?: Address;
+}): PoolKey {
   let currency0: Address;
   let currency1: Address;
   if (compareAddresses(token0, token1) < 0) {
@@ -65,14 +70,20 @@ export function getPoolId(key: PoolKey): Hash {
   returns everything required to call useContractRead()
   the contract call will return two values: [expectedOutput, gasUsed]
 */
-export function prepareQuoteExactInputSingle(
-  inputToken: Address,
-  outputToken: Address,
-  exactInput: bigint,
-  fee: SwapFee = 100,
-  hooks: Address = zeroAddress
-): singleQuoteCall {
-  const poolKey = getPoolKey(inputToken, outputToken, fee, hooks);
+export function prepareQuoteExactInputSingle({
+  inputToken,
+  outputToken,
+  exactInput,
+  fee = 100,
+  hooks = zeroAddress,
+}: {
+  inputToken: Address;
+  outputToken: Address;
+  exactInput: bigint;
+  fee?: SwapFee;
+  hooks?: Address;
+}): SingleQuoteCall {
+  const poolKey = getPoolKey({ token0: inputToken, token1: outputToken, fee, hooks });
   const zeroForOne = compareAddresses(inputToken, outputToken) < 0;
   const singleQuoteArgs = [
     {
@@ -107,8 +118,8 @@ export function prepareQuoteExactOutputSingle({
   exactOutput: bigint;
   fee?: SwapFee;
   hooks?: Address;
-}): singleQuoteCall {
-  const poolKey = getPoolKey(inputToken, outputToken, fee, hooks);
+}): SingleQuoteCall {
+  const poolKey = getPoolKey({ token0: inputToken, token1: outputToken, fee, hooks });
   const zeroForOne = compareAddresses(inputToken, outputToken) < 0;
   const singleQuoteArgs = [
     {
@@ -136,7 +147,7 @@ export function prepareSwapExactInputSingle({
   minimumOutput,
   deadline = BigInt(Math.floor(Date.now() / 1000)) + 25n, // 2 blocks
   fee = 100,
-  hooks = zeroAddress,
+  hooks = '0x',
 }: {
   caller: Address;
   chain: Chain;
@@ -148,7 +159,7 @@ export function prepareSwapExactInputSingle({
   fee?: SwapFee;
   hooks?: Address;
 }): SingleSwapWrite {
-  const poolKey = getPoolKey(inputToken, outputToken, fee, hooks);
+  const poolKey = getPoolKey({ token0: inputToken, token1: outputToken, fee, hooks });
   const zeroForOne = compareAddresses(inputToken, outputToken) < 0;
 
   // 1. commands = abi.encodePacked(uint8(Commands.V4_SWAP))
@@ -244,11 +255,11 @@ export function prepareSwapExactOutputSingle({
   outputToken: Address;
   exactOutput: bigint;
   maximumInput: bigint;
-  deadline: bigint;
-  fee: SwapFee;
-  hooks: Address;
+  deadline?: bigint;
+  fee?: SwapFee;
+  hooks?: Address;
 }): SingleSwapWrite {
-  const poolKey = getPoolKey(inputToken, outputToken, fee, hooks);
+  const poolKey = getPoolKey({ token0: inputToken, token1: outputToken, fee, hooks });
   const zeroForOne = compareAddresses(inputToken, outputToken) < 0;
 
   // 1. commands = abi.encodePacked(uint8(Commands.V4_SWAP))

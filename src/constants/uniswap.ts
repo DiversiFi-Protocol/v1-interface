@@ -16,7 +16,7 @@ export type PoolKey = {
   hooks: Address;
 };
 
-export type singleQuoteCall = {
+export type SingleQuoteCall = {
   address: Address;
   abi: Abi;
   functionName: string;
