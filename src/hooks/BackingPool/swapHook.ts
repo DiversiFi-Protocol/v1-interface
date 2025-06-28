@@ -163,11 +163,9 @@ export function useSwapSteps({
       execute: async (signer: WalletClient) => {
         try {
           // Execute the swap
-          const txHash = await signer.writeContract({
-            ...swapData,
-            chain,
-            account: address,
-          });
+          const txHash = await signer.writeContract(
+            swapData,
+          );
 
           const receipt = await client!.waitForTransactionReceipt({ hash: txHash });
           if (receipt.status !== 'success') {
@@ -240,6 +238,8 @@ export function useSimulateSwapGivenIn({
 
     const amountBigInt = parseUnits(amount, assetInDecimals);
     const minAmountOutBigInt = minAmountOut ? parseUnits(minAmountOut, assetOutDecimals) : 0n;
+
+    console.log("???")
     const swapData = prepareSwapExactInputSingle({
       caller: address,
       chain,
@@ -249,11 +249,12 @@ export function useSimulateSwapGivenIn({
       minimumOutput: minAmountOutBigInt,
     });
 
-    console.log(swapData);
+    console.log("swapData", swapData);
 
-    const simulate = await client.simulateContract({
-      ...swapData,
-    });
+    const simulate = await client.simulateContract(
+      swapData,
+    );
+
     console.log('simulate', simulate);
     const gas = await client.estimateContractGas(swapData);
 
