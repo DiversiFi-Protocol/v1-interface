@@ -249,8 +249,12 @@ export function useSimulateSwapGivenIn({
       minimumOutput: minAmountOutBigInt,
     });
 
-    const simulate = await client.simulateContract(swapData);
+    console.log(swapData);
 
+    const simulate = await client.simulateContract({
+      ...swapData,
+    });
+    console.log('simulate', simulate);
     const gas = await client.estimateContractGas(swapData);
 
     const networkCost = ethPrice.price

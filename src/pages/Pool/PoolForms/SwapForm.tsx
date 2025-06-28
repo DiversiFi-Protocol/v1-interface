@@ -58,6 +58,8 @@ export default function SwapForm() {
 
   const { amountOut = '' } = swapSimulation?.data ?? {};
 
+  console.log('error', swapSimulation.error);
+
   const stepsQuery = useSwapSteps({
     assetIn: inputToken,
     assetOut: outputToken,
@@ -214,10 +216,12 @@ export default function SwapForm() {
     return 'Swap';
   }, [signer.data, stepsQuery.data, debouncedInputAmount]);
 
+  console.log('simdata', swapSimulation.data);
+
   const swapButton = (
     <div className="flex flex-col gap-2 w-full">
       <Button
-        variant="ghost"
+        variant="outline"
         isLoading={isAwaitingWalletAction || stepsQuery.isLoading}
         disabled={shouldDisableSwap}
         onClick={onSwap}
