@@ -1,4 +1,4 @@
-import { Address, Hash, zeroAddress, keccak256, encodeAbiParameters, toHex, Chain } from 'viem';
+import { Address, Hash, keccak256, encodeAbiParameters, toHex, Chain, Hex } from 'viem';
 
 import uniswapV4Quoter from '@/abi/uniswapV4Quoter';
 import uniswapV4Router from '@/abi/uniswapV4Router';
@@ -23,12 +23,10 @@ export function getPoolKey({
   token0,
   token1,
   fee = 100,
-  hooks = zeroAddress,
 }: {
   token0: Address;
   token1: Address;
   fee?: SwapFee;
-  hooks?: Address;
 }): PoolKey {
   let currency0: Address;
   let currency1: Address;
@@ -47,7 +45,7 @@ export function getPoolKey({
     currency1,
     fee,
     tickSpacing: FEE_TO_TICK_SPACING[fee],
-    hooks,
+    hooks: "0x0000000000000000000000000000000000000000",
   };
 }
 
@@ -75,15 +73,13 @@ export function prepareQuoteExactInputSingle({
   outputToken,
   exactInput,
   fee = 100,
-  hooks = zeroAddress,
 }: {
   inputToken: Address;
   outputToken: Address;
   exactInput: bigint;
   fee?: SwapFee;
-  hooks?: Address;
 }): SingleQuoteCall {
-  const poolKey = getPoolKey({ token0: inputToken, token1: outputToken, fee, hooks });
+  const poolKey = getPoolKey({ token0: inputToken, token1: outputToken, fee });
   const zeroForOne = compareAddresses(inputToken, outputToken) < 0;
   const singleQuoteArgs = [
     {
@@ -111,15 +107,13 @@ export function prepareQuoteExactOutputSingle({
   outputToken,
   exactOutput,
   fee = 100,
-  hooks = zeroAddress,
 }: {
   inputToken: Address;
   outputToken: Address;
   exactOutput: bigint;
   fee?: SwapFee;
-  hooks?: Address;
 }): SingleQuoteCall {
-  const poolKey = getPoolKey({ token0: inputToken, token1: outputToken, fee, hooks });
+  const poolKey = getPoolKey({ token0: inputToken, token1: outputToken, fee });
   const zeroForOne = compareAddresses(inputToken, outputToken) < 0;
   const singleQuoteArgs = [
     {
@@ -147,7 +141,6 @@ export function prepareSwapExactInputSingle({
   minimumOutput,
   deadline = BigInt(Math.floor(Date.now() / 1000)) + 25n, // 2 blocks
   fee = 100,
-  hooks = '0x',
 }: {
   caller: Address;
   chain: Chain;
@@ -157,9 +150,8 @@ export function prepareSwapExactInputSingle({
   minimumOutput: bigint;
   deadline?: bigint;
   fee?: SwapFee;
-  hooks?: Address;
 }): SingleSwapWrite {
-  const poolKey = getPoolKey({ token0: inputToken, token1: outputToken, fee, hooks });
+  const poolKey = getPoolKey({ token0: inputToken, token1: outputToken, fee });
   const zeroForOne = compareAddresses(inputToken, outputToken) < 0;
 
   // 1. commands = abi.encodePacked(uint8(Commands.V4_SWAP))
@@ -172,6 +164,7 @@ export function prepareSwapExactInputSingle({
     Actions.TAKE_ALL,
   ]);
 
+  console.log("poolKey:", poolKey)
   // 3. params[0]: ExactInputSingleParams encoded
   const exactInParams = encodeAbiParameters(
     [
@@ -220,19 +213,22 @@ export function prepareSwapExactInputSingle({
   );
 
   // 6. inputs = [abi.encode(actions, params)]
-  const input = encodeAbiParameters(
+  const params = [exactInParams, param1, param2]
+  const actionParams:Hex[] = []
+
+  actionParams.push(encodeAbiParameters(
     [
       { type: 'bytes' }, // encoded actions
       { type: 'bytes[]' }, // array of params
     ],
-    [toHex(actions), [exactInParams, param1, param2]]
-  );
+    [toHex(actions), params]
+  ));
 
   return {
     address: UNISWAP_V4_ROUTER_ADDRESS,
     abi: uniswapV4Router,
     functionName: 'execute',
-    args: [toHex(commands), input, deadline],
+    args: [toHex(commands), actionParams, deadline],
     account: caller,
     chain,
   };
@@ -247,7 +243,6 @@ export function prepareSwapExactOutputSingle({
   maximumInput,
   deadline = BigInt(Math.floor(Date.now() / 1000)) + 25n, // 2 blocks
   fee = 100,
-  hooks = zeroAddress,
 }: {
   caller: Address;
   chain: Chain;
@@ -257,9 +252,8 @@ export function prepareSwapExactOutputSingle({
   maximumInput: bigint;
   deadline?: bigint;
   fee?: SwapFee;
-  hooks?: Address;
 }): SingleSwapWrite {
-  const poolKey = getPoolKey({ token0: inputToken, token1: outputToken, fee, hooks });
+  const poolKey = getPoolKey({ token0: inputToken, token1: outputToken, fee });
   const zeroForOne = compareAddresses(inputToken, outputToken) < 0;
 
   // 1. commands = abi.encodePacked(uint8(Commands.V4_SWAP))
@@ -320,19 +314,23 @@ export function prepareSwapExactOutputSingle({
   );
 
   // 6. inputs = [abi.encode(actions, params)]
-  const input = encodeAbiParameters(
+  const params = [exactInParams, param1, param2]
+  const actionParams:Hex[] = []
+
+  actionParams.push(encodeAbiParameters(
     [
       { type: 'bytes' }, // encoded actions
       { type: 'bytes[]' }, // array of params
     ],
-    [toHex(actions), [exactInParams, param1, param2]]
-  );
+    [toHex(actions), params]
+  ));
+
 
   return {
     address: UNISWAP_V4_ROUTER_ADDRESS,
     abi: uniswapV4Router,
     functionName: 'execute',
-    args: [toHex(commands), input, deadline],
+    args: [toHex(commands), actionParams, deadline],
     chain,
     account: caller,
   };

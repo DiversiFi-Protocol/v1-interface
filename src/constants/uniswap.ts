@@ -1,4 +1,4 @@
-import { Address, Abi, Chain } from 'viem';
+import { Address, Abi, Chain, Hex } from 'viem';
 
 export const Commands = { V4_SWAP: 0x10 };
 export const Actions = {
@@ -32,7 +32,7 @@ export type SingleSwapWrite = {
   address: Address;
   abi: Abi;
   functionName: string;
-  args: (string | bigint | boolean | PoolKey)[];
+  args: (string | bigint | boolean | PoolKey | Hex[])[];
   chain: Chain;
   account: Address;
 };
