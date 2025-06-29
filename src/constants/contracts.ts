@@ -20,3 +20,9 @@ export const UNISWAP_V4_ROUTER_ADDRESS: Address = {
   [sepolia.id]: '0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b' as Address,
   [hardhat.id]: zeroAddress,
 }[envVar.chainId as 1 | 31337 | 11155111];
+
+export const PERMIT2_ADDRESS: Address = {
+  [mainnet.id]: '0x000000000022D473030F116dDEE9F6B43aC78BA3' as Address,
+  [sepolia.id]: '0x000000000022D473030F116dDEE9F6B43aC78BA3' as Address,
+  [hardhat.id]: zeroAddress,
+}[envVar.chainId as 1 | 31337 | 11155111];
