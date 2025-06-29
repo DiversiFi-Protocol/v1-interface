@@ -1,10 +1,9 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import type { ColumnDef } from '@tanstack/react-table';
 import { ExternalLinkIcon, Loader2 } from 'lucide-react';
-import { toast } from 'sonner';
 import { Address, erc20Abi, formatUnits, maxUint256 } from 'viem';
-import { useAccount, useWalletClient, useReadContracts } from 'wagmi';
+import { useAccount, useReadContracts } from 'wagmi';
 
 import { BACKING_POOL_ADDRESS } from '@/constants/contracts';
 import { EMPTY_ARR } from '@/constants/objects';
@@ -15,14 +14,12 @@ import { useAssetBalances } from '@/hooks/useAssetBalances';
 import AssetIcon from '@/components/AssetIcon';
 import { DataTableColumnHeader } from '@/components/DataTable/ColumnHeader';
 import { DataTable } from '@/components/DataTable/DataTable';
-import { Button } from '@/components/ui/button';
 
 import { truncateAddress } from '@/lib/addressUtils';
 import { isEmptyObj } from '@/lib/isEmptyObj';
 import { isTruthy } from '@/lib/isTruthy';
 import { MustBigNumber } from '@/lib/numbers';
 import { objectFromEntries } from '@/lib/objectHelpers';
-import { queryClient } from '@/lib/queryClient';
 
 type BalanceTableRow = {
   symbol: string;
@@ -34,7 +31,6 @@ type BalanceTableRow = {
 
 export function BalanceTable() {
   const { address } = useAccount();
-  const signer = useWalletClient();
 
   const allowanceContracts = useMemo(() => {
     return ALL_SUPPORTED_TOKENS.map((asset) => ({
@@ -93,38 +89,6 @@ export function BalanceTable() {
     );
   }, [allowances.data, mapOfBalances]);
 
-  const revokeAllowance = useCallback(
-    async (assetAddress: Address) => {
-      if (!signer.data) {
-        toast.error('No signer found');
-        return;
-      }
-
-      const txHash = await signer.data.writeContract({
-        address: assetAddress,
-        abi: erc20Abi,
-        functionName: 'approve',
-        args: [BACKING_POOL_ADDRESS, 0n],
-      });
-
-      toast.success('Allowance revoked', {
-        action: {
-          label: 'View tx',
-          onClick: () => {
-            window.open(`https://etherscan.io/tx/${txHash}`, '_blank');
-          },
-        },
-      });
-
-      setTimeout(() => {
-        queryClient.invalidateQueries({
-          queryKey: allowances.queryKey,
-        });
-      }, 2_000);
-    },
-    [signer, allowances.queryKey]
-  );
-
   const isLoading = allowances.isLoading || isBalancesLoading;
 
   const columns: ColumnDef<BalanceTableRow>[] = useMemo(
@@ -170,39 +134,8 @@ export function BalanceTable() {
           );
         },
       },
-      {
-        accessorKey: 'allowance',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Allowance" />,
-        cell: ({ row }) => {
-          return <div className="font-mono">{row.getValue('allowance')}</div>;
-        },
-      },
-      {
-        accessorKey: 'actions',
-        enableSorting: false,
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Actions" />,
-        cell: ({ row }) => {
-          const actions = [];
-
-          if (
-            row.getValue<string>('allowance') !== 'Max' &&
-            MustBigNumber(row.getValue<string>('allowance')).gt(0)
-          ) {
-            actions.push(
-              <Button
-                disabled={signer == null}
-                onClick={() => revokeAllowance(row.original.address)}
-              >
-                Revoke
-              </Button>
-            );
-          }
-
-          return <div>{actions}</div>;
-        },
-      },
     ],
-    [signer, revokeAllowance]
+    []
   );
 
   return (

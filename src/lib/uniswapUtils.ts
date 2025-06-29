@@ -1,8 +1,13 @@
-import { Address, Hash, keccak256, encodeAbiParameters, toHex, Chain } from 'viem';
+import { Address, Hash, keccak256, encodeAbiParameters, toHex, Chain, PublicClient } from 'viem';
 
+import Permit2Abi from '@/abi/permit2';
 import uniswapV4Quoter from '@/abi/uniswapV4Quoter';
 import uniswapV4Router from '@/abi/uniswapV4Router';
-import { UNISWAP_V4_QUOTER_ADDRESS, UNISWAP_V4_ROUTER_ADDRESS } from '@/constants/contracts';
+import {
+  PERMIT2_ADDRESS,
+  UNISWAP_V4_QUOTER_ADDRESS,
+  UNISWAP_V4_ROUTER_ADDRESS,
+} from '@/constants/contracts';
 import {
   PoolKey,
   FEE_TO_TICK_SPACING,
@@ -215,11 +220,11 @@ export function prepareSwapExactInputSingle({
   const params = [exactInParams, param1, param2];
   const actionParams = encodeAbiParameters(
     [
-      { type: 'bytes' },    // packed actions
-      { type: 'bytes[]' },  // list of params (must be raw bytes, not encoded again)
+      { type: 'bytes' }, // packed actions
+      { type: 'bytes[]' }, // list of params (must be raw bytes, not encoded again)
     ],
     [toHex(actions), params]
-  )
+  );
 
   return {
     address: UNISWAP_V4_ROUTER_ADDRESS,
@@ -315,12 +320,11 @@ export function prepareSwapExactOutputSingle({
 
   const actionParams = encodeAbiParameters(
     [
-      { type: 'bytes' },    // packed actions
-      { type: 'bytes[]' },  // list of params (must be raw bytes, not encoded again)
+      { type: 'bytes' }, // packed actions
+      { type: 'bytes[]' }, // list of params (must be raw bytes, not encoded again)
     ],
     [toHex(actions), params]
-  )
-
+  );
 
   return {
     address: UNISWAP_V4_ROUTER_ADDRESS,
@@ -330,4 +334,37 @@ export function prepareSwapExactOutputSingle({
     chain,
     account: caller,
   };
+}
+
+export async function findFirstAvailableNonce({
+  client,
+  userAddress,
+  maxWordPos = 4,
+}: {
+  client?: PublicClient;
+  userAddress: Address;
+  maxWordPos?: number;
+}) {
+  if (!client) {
+    return undefined;
+  }
+
+  for (let wordPos = 0; wordPos <= maxWordPos; wordPos++) {
+    const bitmap = await client.readContract({
+      address: PERMIT2_ADDRESS,
+      abi: Permit2Abi,
+      functionName: 'nonceBitmap',
+      args: [userAddress, BigInt(wordPos)],
+    });
+
+    for (let bitPos = 0; bitPos < 256; bitPos++) {
+      const isUsed = (bitmap >> BigInt(bitPos)) & 1n;
+
+      if (!isUsed) {
+        return wordPos * 256 + bitPos;
+      }
+    }
+  }
+
+  throw new Error('No unused nonce found in first few words');
 }

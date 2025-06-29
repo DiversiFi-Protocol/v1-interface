@@ -1,10 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { erc20Abi, formatGwei, formatUnits, maxUint256, parseUnits, WalletClient } from 'viem';
+import {
+  erc20Abi,
+  formatGwei,
+  formatUnits,
+  maxUint160,
+  maxUint256,
+  parseUnits,
+  WalletClient,
+} from 'viem';
 import { useAccount, useChainId, usePublicClient } from 'wagmi';
 
+import Permit2Abi from '@/abi/permit2';
 import { chain, chainId } from '@/constants/chain';
-import { BACKING_POOL_ADDRESS } from '@/constants/contracts';
+import { PERMIT2_ADDRESS, UNISWAP_V4_ROUTER_ADDRESS } from '@/constants/contracts';
 import { SupportedAsset } from '@/constants/tokens';
 
 import { useAppSelector } from '@/state/appTypes';
@@ -12,12 +21,16 @@ import { selectShouldAllowMaxApprovals } from '@/state/formSettingsSelector';
 
 import { MustBigNumber } from '@/lib/numbers';
 import { sleep } from '@/lib/sleep';
-import { prepareQuoteExactInputSingle, prepareSwapExactInputSingle } from '@/lib/uniswapUtils';
+import {
+  findFirstAvailableNonce,
+  prepareQuoteExactInputSingle,
+  prepareSwapExactInputSingle,
+} from '@/lib/uniswapUtils';
 
 import { useEthereumPrice } from '../useEthereumPrice';
 
 export type SwapStep = {
-  type: 'network' | 'approve' | 'swap';
+  type: 'network' | 'approve' | 'approve-permit2' | 'swap';
   execute: (signer: WalletClient) => Promise<{ success: boolean; error?: unknown }>;
 };
 
@@ -79,6 +92,7 @@ export function useSwapSteps({
               console.error(error);
               toast.error('Failed to switch network', {
                 id: notifId,
+                duration: Infinity,
               });
 
               return {
@@ -96,7 +110,7 @@ export function useSwapSteps({
       address: assetInAddress,
       abi: erc20Abi,
       functionName: 'allowance',
-      args: [address, BACKING_POOL_ADDRESS],
+      args: [address, PERMIT2_ADDRESS],
     });
 
     const amountBigInt = parseUnits(amount, assetInDecimals);
@@ -110,7 +124,7 @@ export function useSwapSteps({
               address: assetInAddress,
               abi: erc20Abi,
               functionName: 'approve',
-              args: [BACKING_POOL_ADDRESS, allowMaxApproval ? maxUint256 : amountBigInt],
+              args: [PERMIT2_ADDRESS, allowMaxApproval ? maxUint256 : amountBigInt],
               chain,
               account: address,
             });
@@ -137,6 +151,7 @@ export function useSwapSteps({
             console.error(error);
             toast.error('Token approval has failed', {
               id: notifId,
+              duration: Infinity,
             });
 
             return {
@@ -148,7 +163,94 @@ export function useSwapSteps({
       });
     }
 
-    // Step 3. Swap
+    // Step 3. Permit2 Approval
+    const permit2Allowance = await client!.readContract({
+      address: PERMIT2_ADDRESS,
+      abi: Permit2Abi,
+      functionName: 'allowance',
+      args: [assetInAddress, address, UNISWAP_V4_ROUTER_ADDRESS],
+    });
+
+    const [permit2Amount, expiration, nonce] = permit2Allowance;
+
+    const nowSeconds = Date.now() / 1000;
+    const yearInSeconds = 365 * 24 * 60 * 60;
+    const expirationToSet = expiration + yearInSeconds; // Set to 1 year from now
+    const nextAvailableNonce = await findFirstAvailableNonce({
+      client,
+      userAddress: address,
+    });
+
+    // convert uint256 to uint160
+    if (amountBigInt > maxUint160) {
+      toast.error('Swap amount exceeds max uint160', {
+        id: notifId,
+        duration: Infinity,
+      });
+      return;
+    }
+
+    const amountUint160 = BigInt.asUintN(160, amountBigInt);
+
+    // TODO(@belvis): check nonce logic
+    if (
+      expiration < nowSeconds ||
+      permit2Amount < amountUint160 ||
+      (nextAvailableNonce != null && nextAvailableNonce < nonce)
+    ) {
+      steps.push({
+        type: 'approve-permit2',
+        execute: async (signer: WalletClient) => {
+          try {
+            const txHash = await signer.writeContract({
+              address: PERMIT2_ADDRESS,
+              abi: Permit2Abi,
+              functionName: 'approve',
+              args: [
+                assetInAddress,
+                UNISWAP_V4_ROUTER_ADDRESS,
+                allowMaxApproval ? maxUint160 : amountUint160,
+                expirationToSet,
+              ],
+              chain,
+              account: address,
+            });
+
+            const receipt = await client!.waitForTransactionReceipt({ hash: txHash });
+            if (receipt.status !== 'success') {
+              throw new Error('swapHook: Uniswap Permit2 approval failed');
+            }
+
+            toast.success('Uniswap Permit2 approval has been submitted', {
+              id: notifId,
+              action: {
+                label: 'View tx',
+                onClick: () => {
+                  window.open(`https://etherscan.io/tx/${txHash}`, '_blank');
+                },
+              },
+            });
+
+            return {
+              success: true,
+            };
+          } catch (error) {
+            console.error(error);
+            toast.error('Uniswap Permit2 approval has failed', {
+              id: notifId,
+              duration: Infinity,
+            });
+
+            return {
+              success: false,
+              error,
+            };
+          }
+        },
+      });
+    }
+
+    // Step 4. Swap
     const swapData = prepareSwapExactInputSingle({
       caller: address,
       chain,
