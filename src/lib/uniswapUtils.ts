@@ -1,4 +1,4 @@
-import { Address, Hash, keccak256, encodeAbiParameters, toHex, Chain, Hex } from 'viem';
+import { Address, Hash, keccak256, encodeAbiParameters, toHex, Chain } from 'viem';
 
 import uniswapV4Quoter from '@/abi/uniswapV4Quoter';
 import uniswapV4Router from '@/abi/uniswapV4Router';
@@ -139,7 +139,7 @@ export function prepareSwapExactInputSingle({
   outputToken,
   exactInput,
   minimumOutput,
-  deadline = BigInt(Math.floor(Date.now() / 1000)) + 25n, // 2 blocks
+  deadline = BigInt(Math.floor(Date.now() / 1000)) + 1200n, // 100 blocks
   fee = 100,
 }: {
   caller: Address;
@@ -199,37 +199,33 @@ export function prepareSwapExactInputSingle({
     ]
   );
 
-  // 4. params[1] = encode(key.currency0, amountIn)
+  // 4. params[1] = encode(inputToken, amountIn)
   const param1 = encodeAbiParameters(
     [{ type: 'address' }, { type: 'uint128' }],
-    [poolKey.currency0, exactInput]
+    [inputToken, exactInput]
   );
 
-  // 5. params[2] = encode(key.currency1, minAmountOut)
+  // 5. params[2] = encode(outputToken, minAmountOut)
   const param2 = encodeAbiParameters(
     [{ type: 'address' }, { type: 'uint128' }],
-    [poolKey.currency1, minimumOutput]
+    [outputToken, minimumOutput]
   );
 
   // 6. inputs = [abi.encode(actions, params)]
   const params = [exactInParams, param1, param2];
-  const actionParams: Hex[] = [];
-
-  actionParams.push(
-    encodeAbiParameters(
-      [
-        { type: 'bytes' }, // encoded actions
-        { type: 'bytes[]' }, // array of params
-      ],
-      [toHex(actions), params]
-    )
-  );
+  const actionParams = encodeAbiParameters(
+    [
+      { type: 'bytes' },    // packed actions
+      { type: 'bytes[]' },  // list of params (must be raw bytes, not encoded again)
+    ],
+    [toHex(actions), params]
+  )
 
   return {
     address: UNISWAP_V4_ROUTER_ADDRESS,
     abi: uniswapV4Router,
     functionName: 'execute',
-    args: [toHex(commands), actionParams, deadline],
+    args: [toHex(commands), [actionParams], deadline],
     account: caller,
     chain,
   };
@@ -242,7 +238,7 @@ export function prepareSwapExactOutputSingle({
   outputToken,
   exactOutput,
   maximumInput,
-  deadline = BigInt(Math.floor(Date.now() / 1000)) + 25n, // 2 blocks
+  deadline = BigInt(Math.floor(Date.now() / 1000)) + 1200n, // 100 blocks
   fee = 100,
 }: {
   caller: Address;
@@ -302,37 +298,35 @@ export function prepareSwapExactOutputSingle({
     ]
   );
 
-  // 4. params[1] = encode(key.currency0, amountIn)
+  // 4. params[1] = encode(inputToken, amountIn)
   const param1 = encodeAbiParameters(
     [{ type: 'address' }, { type: 'uint128' }],
-    [poolKey.currency0, exactOutput]
+    [inputToken, maximumInput]
   );
 
-  // 5. params[2] = encode(key.currency1, minAmountOut)
+  // 5. params[2] = encode(outputToken, minAmountOut)
   const param2 = encodeAbiParameters(
     [{ type: 'address' }, { type: 'uint128' }],
-    [poolKey.currency1, maximumInput]
+    [outputToken, exactOutput]
   );
 
   // 6. inputs = [abi.encode(actions, params)]
   const params = [exactInParams, param1, param2];
-  const actionParams: Hex[] = [];
 
-  actionParams.push(
-    encodeAbiParameters(
-      [
-        { type: 'bytes' }, // encoded actions
-        { type: 'bytes[]' }, // array of params
-      ],
-      [toHex(actions), params]
-    )
-  );
+  const actionParams = encodeAbiParameters(
+    [
+      { type: 'bytes' },    // packed actions
+      { type: 'bytes[]' },  // list of params (must be raw bytes, not encoded again)
+    ],
+    [toHex(actions), params]
+  )
+
 
   return {
     address: UNISWAP_V4_ROUTER_ADDRESS,
     abi: uniswapV4Router,
     functionName: 'execute',
-    args: [toHex(commands), actionParams, deadline],
+    args: [toHex(commands), [actionParams], deadline],
     chain,
     account: caller,
   };
