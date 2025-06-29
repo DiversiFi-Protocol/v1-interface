@@ -278,6 +278,7 @@ export default function SwapForm() {
                     {
                       network: 'Switch Network',
                       approve: 'Set Approval',
+                      'approve-permit2': 'Set Permit2 Approval',
                       swap: 'Swap',
                     }[step.type]
                   }

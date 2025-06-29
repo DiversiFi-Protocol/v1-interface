@@ -14,6 +14,9 @@ export default {
       roboto: ['Roboto', 'sans-serif'],
     },
     extend: {
+      fontSize: {
+        xxs: ['0.625rem', { lineHeight: '0.875rem' }],
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
