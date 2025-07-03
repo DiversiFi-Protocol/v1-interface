@@ -167,7 +167,7 @@ export function useSwapSteps({
       address: PERMIT2_ADDRESS,
       abi: Permit2Abi,
       functionName: 'allowance',
-      args: [assetInAddress, address, UNISWAP_V4_ROUTER_ADDRESS],
+      args: [address, assetInAddress, UNISWAP_V4_ROUTER_ADDRESS],
     });
 
     const [permit2Amount, expiration ] = permit2Allowance;
