@@ -187,7 +187,6 @@ export function useSwapSteps({
 
     const amountUint160 = BigInt.asUintN(160, amountBigInt);
 
-    // TODO(@belvis): check nonce logic
     if (
       expiration < nowSeconds ||
       permit2Amount < amountUint160
