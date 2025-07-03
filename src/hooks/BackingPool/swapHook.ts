@@ -174,7 +174,7 @@ export function useSwapSteps({
 
     const nowSeconds = Date.now() / 1000;
     const yearInSeconds = 365 * 24 * 60 * 60;
-    const expirationToSet = nowSeconds + yearInSeconds; // Set to 1 year from now
+    const expirationToSet = Math.floor(nowSeconds + yearInSeconds); // Set to 1 year from now
 
     // convert uint256 to uint160
     if (amountBigInt > maxUint160) {
