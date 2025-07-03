@@ -22,7 +22,6 @@ import { selectShouldAllowMaxApprovals } from '@/state/formSettingsSelector';
 import { MustBigNumber } from '@/lib/numbers';
 import { sleep } from '@/lib/sleep';
 import {
-  findFirstAvailableNonce,
   prepareQuoteExactInputSingle,
   prepareSwapExactInputSingle,
 } from '@/lib/uniswapUtils';
@@ -171,15 +170,11 @@ export function useSwapSteps({
       args: [assetInAddress, address, UNISWAP_V4_ROUTER_ADDRESS],
     });
 
-    const [permit2Amount, expiration, nonce] = permit2Allowance;
+    const [permit2Amount, expiration ] = permit2Allowance;
 
     const nowSeconds = Date.now() / 1000;
     const yearInSeconds = 365 * 24 * 60 * 60;
     const expirationToSet = expiration + yearInSeconds; // Set to 1 year from now
-    const nextAvailableNonce = await findFirstAvailableNonce({
-      client,
-      userAddress: address,
-    });
 
     // convert uint256 to uint160
     if (amountBigInt > maxUint160) {
@@ -195,8 +190,7 @@ export function useSwapSteps({
     // TODO(@belvis): check nonce logic
     if (
       expiration < nowSeconds ||
-      permit2Amount < amountUint160 ||
-      (nextAvailableNonce != null && nextAvailableNonce < nonce)
+      permit2Amount < amountUint160
     ) {
       steps.push({
         type: 'approve-permit2',
