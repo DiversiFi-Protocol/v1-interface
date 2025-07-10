@@ -8,5 +8,8 @@ export function useIsEqualized() {
     address: BACKING_POOL_ADDRESS,
     abi: IBackingPoolAbi,
     functionName: 'getIsEqualized',
+    query: {
+      refetchInterval: 30_000,
+    },
   });
 }
