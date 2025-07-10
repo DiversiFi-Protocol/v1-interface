@@ -24,18 +24,22 @@ export function RoadmapSection({ currentPhase }: RoadmapProps) {
       },
       {
         type: 'sub-milestone',
+        title: 'Phase 0.1',
         description: 'Simple minting and burning of mock tokens',
       },
       {
         type: 'sub-milestone',
+        title: 'Phase 0.2',
         description: 'Uniswap integration with arbitrage bot',
       },
       {
         type: 'sub-milestone',
+        title: 'Phase 0.3',
         description: 'Testing a mid-flight allocation change',
       },
       {
         type: 'sub-milestone',
+        title: 'Phase 0.4',
         description: 'Successful handling of a depeg migration exercise',
       },
       {
@@ -45,10 +49,12 @@ export function RoadmapSection({ currentPhase }: RoadmapProps) {
       },
       {
         type: 'sub-milestone',
+        title: 'Phase 1.1',
         description: 'Liquidity bootstrapping via Liquidity Mining',
       },
       {
         type: 'sub-milestone',
+        title: 'Phase 1.2',
         description: 'Platform integrations (e.g. AAVE, Compound, CEXs)',
       },
       {
@@ -58,10 +64,12 @@ export function RoadmapSection({ currentPhase }: RoadmapProps) {
       },
       {
         type: 'sub-milestone',
+        title: 'Phase 2.1',
         description: 'Staking for Protocol Insurance',
       },
       {
         type: 'sub-milestone',
+        title: 'Phase 2.2',
         description: 'Adding new asset classes',
       },
       {
