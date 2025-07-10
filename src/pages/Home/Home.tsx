@@ -14,7 +14,7 @@ export default function Home({ particlesReady }: { particlesReady: boolean }) {
       <div className="relative z-10 mb-10">
         <HeroSection />
         <BentoSection />
-        <RoadmapSection currentPhase={1} />
+        <RoadmapSection currentPhase={3} />
       </div>
     </div>
   );
