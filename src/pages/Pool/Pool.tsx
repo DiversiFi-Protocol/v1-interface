@@ -11,8 +11,8 @@ import { Button } from '@/components/ui/button';
 
 import { cn } from '@/lib/tw';
 
+import { AllocationChangeBanner } from './AllocationChangeBanner/AllocationChangeBanner';
 import { FormSettingsPopover } from './FormSettingsPopover';
-import { PoolInfoBanner } from './PoolInfoBanner';
 import PoolInfoDrawer from './PoolInfoDrawer/PoolInfoDrawer';
 
 export default function Pool() {
@@ -22,7 +22,7 @@ export default function Pool() {
   if (match == null) {
     return (
       <SingleColumnLayout className="px-4">
-        <PoolInfoBanner />
+        <AllocationChangeBanner />
         {
           <div className="justify-start my-2 ml-auto mr-auto max-w-[500px] row text-2xl font-bold [&_a]:hover:no-underline">
             <NavLink to={PoolRoutes.Mint} className={navLinkClass}>
@@ -51,7 +51,7 @@ export default function Pool() {
 
   return (
     <div className="flexColumn gap-0.5">
-      <PoolInfoBanner className={cn(isTablet ? 'mx-4' : 'mx-0.5')} />
+      <AllocationChangeBanner className={cn(isTablet ? 'mx-4' : 'mx-0.5')} />
       <Outlet />
     </div>
   );
