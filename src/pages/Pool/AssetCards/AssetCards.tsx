@@ -1,17 +1,19 @@
-import { CheckCircle2, Copy, Loader2 } from 'lucide-react';
+import { Copy, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { SUPPORTED_RESERVE_ASSETS, SupportedAsset } from '@/constants/tokens';
 
 import { useGetAssetParams } from '@/hooks/BackingPool/useAssets';
-import { useAllAssetScaledReserves } from '@/hooks/BackingPool/usePoolReserves';
+import {
+  useAllAssetScaledReserves,
+  useGetTotalScaledReserves,
+} from '@/hooks/BackingPool/usePoolReserves';
 
 // import { useGetAssetParams } from '@/hooks/BackingPool/useAssets';
 
 import AssetIcon from '@/components/AssetIcon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 import { truncateAddress } from '@/lib/addressUtils';
 import { formatNumber, MustBigNumber } from '@/lib/numbers';
@@ -25,12 +27,25 @@ function AssetCard({
 }) {
   const { data: assetParamsData, isLoading } = useGetAssetParams(asset.address);
   const { scaledReserves, isLoading: scaledReservesLoading } = useAllAssetScaledReserves();
+  const { totalScaledReserves, isLoading: totalScaledReservesLoading } =
+    useGetTotalScaledReserves();
 
   const scaledReserve = scaledReserves?.find(({ symbol }) => symbol === asset.symbol);
   const scaledReserveAmount = scaledReserve?.amount;
   const scaledReserveAmountFormatted = formatNumber({
     value: scaledReserveAmount,
     type: 'number',
+    options: {
+      useGrouping: true,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    },
+  });
+
+  const currentAllocationBN = MustBigNumber(scaledReserveAmount).div(totalScaledReserves);
+  const currentAllocationFormatted = formatNumber({
+    value: currentAllocationBN.toFixed(2),
+    type: 'percent',
     options: {
       useGrouping: true,
       minimumFractionDigits: 2,
@@ -50,21 +65,7 @@ function AssetCard({
       <CardHeader className="flex flex-row items-center gap-2">
         <AssetIcon size="xl" asset={asset.symbol} />
         <div className="flexColumn gap-1">
-          <CardTitle className="flex flex-row gap-1">
-            {asset.symbol}
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger className="row gap-1 hover:border-transparent cursor-help p-0">
-                  <CheckCircle2 className="size-4 text-green-500" />
-                  <CheckCircle2 className="size-4 text-green-500" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Deposits: Enabled</p>
-                  <p>Swaps: Enabled</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </CardTitle>
+          <CardTitle className="flex flex-row gap-1">{asset.symbol}</CardTitle>
           <CardDescription className="row gap-1">
             <a href={`https://etherscan.io/address/${asset.address}`} target="_blank">
               {truncateAddress(asset.address)}
@@ -90,6 +91,17 @@ function AssetCard({
                 <Loader2 className="size-4 animate-spin" />
               ) : (
                 `${scaledReserveAmountFormatted}`
+              )}
+            </span>
+          </div>
+
+          <div className="row gap-2 justify-between">
+            <span className="text-muted-foreground">Current Pool Allocation</span>
+            <span className="font-semibold font-mono">
+              {scaledReservesLoading || totalScaledReservesLoading ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                `${currentAllocationFormatted}`
               )}
             </span>
           </div>

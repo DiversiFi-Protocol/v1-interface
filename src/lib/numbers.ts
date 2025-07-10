@@ -11,7 +11,7 @@ export const BIG_NUMBERS = {
 export const MustBigNumber = (amount?: BigNumberish | null): BigNumber =>
   new BigNumber(amount || 0);
 
-type FormatNumberType = 'compact' | 'fiat' | 'number' | 'compact-fiat';
+type FormatNumberType = 'compact' | 'fiat' | 'number' | 'compact-fiat' | 'percent';
 
 export function formatNumber({
   value,
@@ -31,6 +31,7 @@ export function formatNumber({
     'compact-fiat': { notation: 'compact' as const, style: 'currency' as const, currency: 'USD' },
     fiat: { style: 'currency' as const, currency: 'USD' },
     number: {},
+    percent: { style: 'percent' as const },
   }[type];
 
   const formatter = Intl.NumberFormat('en', { ...baseOptions, ...options });

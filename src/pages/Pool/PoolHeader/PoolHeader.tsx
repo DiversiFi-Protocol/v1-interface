@@ -1,9 +1,10 @@
-import { Copy, Forward } from 'lucide-react';
+import { Copy, Forward, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { BACKING_POOL_ADDRESS } from '@/constants/contracts';
 import { SUPPORTED_RESERVE_ASSETS } from '@/constants/tokens';
 
+import { useGetTotalScaledReserves } from '@/hooks/BackingPool/usePoolReserves';
 import { useBreakpoints } from '@/hooks/useBreakpoints';
 
 import AssetIcon from '@/components/AssetIcon';
@@ -11,10 +12,24 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
 import { truncateAddress } from '@/lib/addressUtils';
+import { formatNumber } from '@/lib/numbers';
 import { cn } from '@/lib/tw';
 
 export default function PoolHeader() {
   const { isTablet } = useBreakpoints();
+
+  const { totalScaledReserves, isLoading: totalScaledReservesLoading } =
+    useGetTotalScaledReserves();
+
+  const totalReservesFormatted = formatNumber({
+    value: totalScaledReserves,
+    type: 'number',
+    options: {
+      useGrouping: true,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    },
+  });
 
   const onCopy = (value: string, label: string) => {
     navigator.clipboard.writeText(value);
@@ -74,8 +89,14 @@ export default function PoolHeader() {
       <div className="row gap-2">
         <h2 className="text-lg font-semibold">Pool Details</h2>
         <div className="row gap-2">
-          <span className="text-muted-foreground">Utilization</span>
-          <span className="font-semibold">100%</span>
+          <span className="text-muted-foreground">Total Reserves</span>
+          <span className="font-semibold">
+            {totalScaledReservesLoading ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              `${totalReservesFormatted}`
+            )}
+          </span>
         </div>
       </div>
     </Card>
