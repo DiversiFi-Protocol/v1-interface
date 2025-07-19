@@ -43,6 +43,11 @@ const ALL_SUPPORTED_RESERVE_ASSETS: Record<number, SupportedAsset[]> = {
       symbol: 'TK2',
       decimals: 6,
     },
+    {
+      address: '0xbe2Ad83eAa604721AC467390dd86bEB86E1DF3Bd',
+      symbol: 'TK3',
+      decimals: 18,
+    }
   ],
   [hardhat.id]: [
     {
