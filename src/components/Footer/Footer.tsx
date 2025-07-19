@@ -4,6 +4,8 @@ import { PageRoutes } from '@/constants/routes';
 
 import { useBreakpoints } from '@/hooks/useBreakpoints';
 
+import { cn } from '@/lib/tw';
+
 import { ChainSelectorPopover } from './ChainSelectorPopover';
 import { LearnPopover } from './LearnPopover';
 import { SocialPopover } from './SocialPopover';
@@ -29,7 +31,7 @@ export function Footer() {
   ) : (
     <>
       <a
-        className="px-2 py-1"
+        className="py-1"
         href="https://x.com/0xDiversiFi"
         target="_blank"
         rel="noopener noreferrer"
@@ -37,7 +39,7 @@ export function Footer() {
         X/Twitter
       </a>
       <a
-        className="px-2 py-1"
+        className="py-1"
         href="https://discord.gg/wcCvAmwpy5"
         target="_blank"
         rel="noopener noreferrer"
@@ -56,7 +58,7 @@ export function Footer() {
         <div className="row px-6 text-xs gap-2">
           {social}
           {learnMore}
-          <Link className="py-2 px-4" to={PageRoutes.Terms}>
+          <Link className={cn({ 'py-2': isMobile, 'px-4': isMobile })} to={PageRoutes.Terms}>
             Terms
           </Link>
         </div>
