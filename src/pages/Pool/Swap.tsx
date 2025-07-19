@@ -46,7 +46,7 @@ export default function Swap() {
           <PoolHeader />
           <PoolPieChart />
           <VolumeAndFeeChart />
-          <h2>My Assets</h2>
+          <h2>My Portfolio</h2>
           <BalanceTable />
         </div>
       }
