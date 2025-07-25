@@ -15,7 +15,7 @@ import { truncateAddress } from '@/lib/addressUtils';
 import { formatNumber } from '@/lib/numbers';
 import { cn } from '@/lib/tw';
 
-export default function PoolHeader() {
+export default function PoolHeader({ className }: { className?: string }) {
   const { isTablet } = useBreakpoints();
 
   const { totalScaledReserves, isLoading: totalScaledReservesLoading } =
@@ -37,7 +37,7 @@ export default function PoolHeader() {
   };
 
   return (
-    <Card className="p-6 gap-2 flexColumn">
+    <Card className={cn('p-6 gap-2 flexColumn', className)}>
       <div className={cn('row justify-between', isTablet && 'flexColumn items-start gap-2')}>
         <div className="row gap-2">
           <AssetIcon asset="DFiUSD" size="lg" />

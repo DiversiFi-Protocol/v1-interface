@@ -22,7 +22,13 @@ import FormInput from './FormInput';
 const DEFAULT_INPUT_TOKEN = SUPPORTED_RESERVE_ASSETS[0];
 const DEFAULT_OUTPUT_TOKEN = BACKED_TOKEN;
 
-export default function SwapForm() {
+export default function SwapForm({
+  hideHeader = false,
+  withCard = true,
+}: {
+  hideHeader?: boolean;
+  withCard?: boolean;
+}) {
   const [inputAmount, setInputAmount] = useState('');
   const [inputToken, setInputToken] = useState<SupportedAsset>(DEFAULT_INPUT_TOKEN);
   const debouncedInputAmount = useDebounce(inputAmount);
@@ -303,14 +309,21 @@ export default function SwapForm() {
     </div>
   );
 
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Swap</CardTitle>
-      </CardHeader>
+  if (withCard) {
+    return (
+      <Card>
+        <CardHeader>{!hideHeader && <CardTitle>Swap</CardTitle>}</CardHeader>
 
-      <CardContent className="flexColumn gap-1">{swapView}</CardContent>
-      <CardFooter>{swapButtonAndReceipt}</CardFooter>
-    </Card>
+        <CardContent className="flexColumn gap-1">{swapView}</CardContent>
+        <CardFooter>{swapButtonAndReceipt}</CardFooter>
+      </Card>
+    );
+  }
+
+  return (
+    <div className="flexColumn gap-2">
+      {swapView}
+      {swapButtonAndReceipt}
+    </div>
   );
 }

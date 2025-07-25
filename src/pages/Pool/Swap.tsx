@@ -5,11 +5,13 @@ import { InfoIcon } from 'lucide-react';
 import { useBreakpoints } from '@/hooks/useBreakpoints';
 
 import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import AssetCards from './AssetCards/AssetCards';
 import InsuranceFund from './InsuranceFund/InsuranceFund';
 import PoolPieChart from './PoolCharts/PoolPieChart';
 import VolumeAndFeeChart from './PoolCharts/VolumeAndFeeChart';
+import { SwapDialog } from './PoolForms/SwapDialog';
 import SwapForm from './PoolForms/SwapForm';
 import PoolHeader from './PoolHeader/PoolHeader';
 import PoolInfoDrawer from './PoolInfoDrawer/PoolInfoDrawer';
@@ -38,6 +40,53 @@ export default function Swap() {
       </SingleColumnLayout>
     );
   }
+
+  return (
+    <SingleColumnLayout className="w-full" innerClassName="flexColumn gap-8">
+      <PoolHeader />
+      <AssetCards direction="row" />
+
+      <Tabs defaultValue="overview">
+        <TabsList className="bg-transparent">
+          <TabsTrigger className="bg-transparent text-lg font-semibold" value="overview">
+            Overview
+          </TabsTrigger>
+          <TabsTrigger className="bg-transparent text-lg font-semibold" value="fee-volume">
+            Fees & Volume
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="overview">
+          <PoolPieChart />
+        </TabsContent>
+        <TabsContent value="fee-volume">
+          <VolumeAndFeeChart />
+        </TabsContent>
+      </Tabs>
+
+      <Tabs defaultValue="holdings">
+        <TabsList className="bg-transparent w-full">
+          <TabsTrigger className="bg-transparent text-lg font-semibold" value="holdings">
+            Holdings
+          </TabsTrigger>
+          <TabsTrigger className="bg-transparent text-lg font-semibold" value="recent-activity">
+            Recent Activity
+          </TabsTrigger>
+
+          <SwapDialog>
+            <Button className="ml-auto" variant="gradient-primary" size="default">
+              Swap
+            </Button>
+          </SwapDialog>
+        </TabsList>
+        <TabsContent value="holdings">
+          <BalanceTable />
+        </TabsContent>
+        <TabsContent value="recent-activity">
+          <BalanceTable />
+        </TabsContent>
+      </Tabs>
+    </SingleColumnLayout>
+  );
 
   return (
     <TwoColumnLayout
