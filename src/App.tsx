@@ -6,6 +6,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 import LoadingSpinner from './components/LoadingSpinner';
 import { PageRoutes, PoolRoutes } from './constants/routes';
+import { useBreakpoints } from './hooks/useBreakpoints';
 import RootLayout from './layouts/RootLayout';
 import SidebarLayout from './layouts/SidebarLayout';
 import Terms from './pages/Terms/Terms';
@@ -20,6 +21,7 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 
 function App() {
   const [init, setInit] = useState(false);
+  const { isTablet } = useBreakpoints();
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -41,7 +43,7 @@ function App() {
           }
         />
       </Route>
-      <Route element={<SidebarLayout />}>
+      <Route element={isTablet ? <RootLayout /> : <SidebarLayout />}>
         <Route
           path={PageRoutes.Pool}
           element={
