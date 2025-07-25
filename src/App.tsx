@@ -7,6 +7,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import LoadingSpinner from './components/LoadingSpinner';
 import { PageRoutes, PoolRoutes } from './constants/routes';
 import RootLayout from './layouts/RootLayout';
+import SidebarLayout from './layouts/SidebarLayout';
 import Terms from './pages/Terms/Terms';
 
 const Allowance = lazy(() => import('./pages/Allowance/Allowance'));
@@ -39,6 +40,8 @@ function App() {
             </Suspense>
           }
         />
+      </Route>
+      <Route element={<SidebarLayout />}>
         <Route
           path={PageRoutes.Pool}
           element={
@@ -71,7 +74,7 @@ function App() {
               </Suspense>
             }
           />
-          <Route path={PageRoutes.Pool} element={<Navigate to={PoolRoutes.Mint} replace />} />
+          <Route path={PageRoutes.Pool} element={<Navigate to={PoolRoutes.Swap} replace />} />
         </Route>
         <Route
           path={PageRoutes.Allowance}

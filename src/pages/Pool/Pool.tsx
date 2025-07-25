@@ -51,7 +51,7 @@ export default function Pool() {
 
   return (
     <div className="flexColumn gap-0.5">
-      <AllocationChangeBanner className={cn(isTablet ? 'mx-4' : 'mx-0.5')} />
+      <AllocationChangeBanner className={cn(isTablet ? 'mx-4' : 'my-2 rounded-md')} />
       <Outlet />
     </div>
   );

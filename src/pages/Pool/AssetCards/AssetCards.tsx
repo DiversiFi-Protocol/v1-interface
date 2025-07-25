@@ -17,6 +17,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 import { truncateAddress } from '@/lib/addressUtils';
 import { formatNumber, MustBigNumber } from '@/lib/numbers';
+import { cn } from '@/lib/tw';
 
 function AssetCard({
   asset,
@@ -122,15 +123,16 @@ function AssetCard({
   );
 }
 
-export default function AssetCards() {
+export default function AssetCards({ direction = 'column' }: { direction?: 'column' | 'row' }) {
   const onCopy = (address: string) => {
     navigator.clipboard.writeText(address);
     toast.success('Copied token address to clipboard');
   };
   return (
     <div className="grid gap-1">
-      <div className="flexColumn gap-1">
-        <h2 className="text-lg font-semibold p-1">Reserve Assets</h2>
+      <h2 className="text-lg font-semibold p-1">Reserve Assets</h2>
+
+      <div className={cn(direction === 'row' ? 'row gap-1' : 'flexColumn gap-1')}>
         {SUPPORTED_RESERVE_ASSETS.map((asset) => (
           <AssetCard key={asset.symbol} asset={asset} onCopy={onCopy} />
         ))}
