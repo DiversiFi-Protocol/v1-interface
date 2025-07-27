@@ -5,8 +5,6 @@ import { NavLink } from 'react-router-dom';
 
 import { PoolRoutes } from '@/constants/routes';
 
-import { useBreakpoints } from '@/hooks/useBreakpoints';
-
 import { Button } from '@/components/ui/button';
 
 import { cn } from '@/lib/tw';
@@ -17,7 +15,6 @@ import PoolInfoDrawer from './PoolInfoDrawer/PoolInfoDrawer';
 
 export default function Pool() {
   const match = useMatch(PoolRoutes.Swap);
-  const { isTablet } = useBreakpoints();
 
   if (match == null) {
     return (
@@ -51,7 +48,6 @@ export default function Pool() {
 
   return (
     <div className="flexColumn gap-0.5">
-      <AllocationChangeBanner className={cn(isTablet ? 'mx-4' : 'my-2 rounded-md')} />
       <Outlet />
     </div>
   );
