@@ -132,7 +132,7 @@ export default function AssetCards({ direction = 'column' }: { direction?: 'colu
     <div className="grid gap-1">
       <h2 className="text-lg font-semibold p-1">Reserve Assets</h2>
 
-      <div className={cn(direction === 'row' ? 'row gap-1' : 'flexColumn gap-1')}>
+      <div className={cn(direction === 'row' ? 'row gap-1 flex-wrap' : 'flexColumn gap-1')}>
         {SUPPORTED_RESERVE_ASSETS.map((asset) => (
           <AssetCard key={asset.symbol} asset={asset} onCopy={onCopy} />
         ))}

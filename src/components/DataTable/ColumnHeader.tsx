@@ -30,7 +30,7 @@ export function DataTableColumnHeader<TData, TValue>({
 
   return (
     <div className={cn('flex items-center gap-2', className)}>
-      <Button variant="ghost" size="sm" onClick={handleSort}>
+      <Button className="p-0" variant="ghost" size="sm" onClick={handleSort}>
         <span>{title}</span>
         {!column.getCanSort() ? null : column.getIsSorted() === 'desc' ? (
           <ArrowDown />

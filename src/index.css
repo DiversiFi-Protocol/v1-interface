@@ -118,9 +118,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --navbar-height: 3.5rem; /* 56px */
-  --footer-height: 2.5rem; /* 40px */
+  --navbar-height: 0;
+  --footer-height: 0;
   --main-height: calc(100vh - var(--navbar-height) - var(--footer-height));
+
+  /* Tablet and Mobile have a navbar and footer */
+  @media (max-width: 1024px) {
+    --navbar-height: 3.5rem; /* 56px */
+    --footer-height: 2.5rem; /* 40px */
+  }
 }
 
 a {

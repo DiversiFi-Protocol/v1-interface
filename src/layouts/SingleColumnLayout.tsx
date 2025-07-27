@@ -13,12 +13,7 @@ export default function SingleColumnLayout({
 }) {
   return (
     <div className={cn('flex h-[var(--main-height)]', className)}>
-      <div
-        className={cn(
-          'flex-1 h-[var(--main-height)] overflow-y-auto bg-background relative',
-          innerClassName
-        )}
-      >
+      <div className={cn('flex-1 h-[var(--main-height)] bg-background relative', innerClassName)}>
         {children}
       </div>
     </div>

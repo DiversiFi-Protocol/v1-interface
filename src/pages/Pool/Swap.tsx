@@ -7,6 +7,9 @@ import { useBreakpoints } from '@/hooks/useBreakpoints';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
+import { cn } from '@/lib/tw';
+
+import { AllocationChangeBanner } from './AllocationChangeBanner/AllocationChangeBanner';
 import AssetCards from './AssetCards/AssetCards';
 import InsuranceFund from './InsuranceFund/InsuranceFund';
 import PoolPieChart from './PoolCharts/PoolPieChart';
@@ -24,6 +27,7 @@ export default function Swap() {
     return (
       <SingleColumnLayout>
         <div className="p-4 flexColumn gap-4">
+          <AllocationChangeBanner className="mx-4" />
           <PoolHeader />
           <SwapForm />
         </div>
@@ -43,6 +47,8 @@ export default function Swap() {
 
   return (
     <SingleColumnLayout className="w-full" innerClassName="flexColumn gap-8">
+      <AllocationChangeBanner className="my-2 rounded-md" />
+
       <PoolHeader />
       <AssetCards direction="row" />
 
