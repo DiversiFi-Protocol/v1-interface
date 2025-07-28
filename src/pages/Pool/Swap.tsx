@@ -30,7 +30,7 @@ export default function Swap() {
     return (
       <SingleColumnLayout>
         <div className="p-4 flexColumn gap-4">
-          <AllocationChangeBanner className="mx-4" />
+          <AllocationChangeBanner />
           <PoolHeader />
           <Tabs defaultValue="swap">
             <TabsList className="bg-transparent">
@@ -72,7 +72,7 @@ export default function Swap() {
 
   return (
     <SingleColumnLayout className="w-full" innerClassName="flexColumn gap-8 pb-4">
-      <AllocationChangeBanner className="my-2 rounded-md" />
+      <AllocationChangeBanner className="my-2" />
 
       <PoolHeader />
       <AssetCards direction="row" />

@@ -118,6 +118,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  --window-height: 100vh;
   --navbar-height: 0;
   --footer-height: 0;
   --main-height: calc(100vh - var(--navbar-height) - var(--footer-height));
@@ -126,6 +127,12 @@
   @media (max-width: 1024px) {
     --navbar-height: 3.5rem; /* 56px */
     --footer-height: 2.5rem; /* 40px */
+  }
+}
+
+@supports (height: 100svh) {
+  :root {
+    --window-height: 100svh;
   }
 }
 
