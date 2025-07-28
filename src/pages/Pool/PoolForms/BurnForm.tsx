@@ -25,7 +25,7 @@ import { objectFromEntries } from '@/lib/objectHelpers';
 import { InventoryPopover } from '../InventoryPopover';
 import FormInput from './FormInput';
 
-export default function BurnForm() {
+export default function BurnForm({ withCard = true }: { withCard?: boolean }) {
   const [burnAmount, setBurnAmount] = useState('');
   const debouncedBurnAmount = useDebounce(burnAmount);
 
@@ -256,18 +256,27 @@ export default function BurnForm() {
     </div>
   );
 
+  if (withCard) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            <div className="row gap-2 h-8 justify-between">
+              Burn
+              <InventoryPopover />
+            </div>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flexColumn gap-1">{content}</CardContent>
+        <CardFooter>{burnButtonAndReceipt}</CardFooter>
+      </Card>
+    );
+  }
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>
-          <div className="row gap-2 h-8 justify-between">
-            Burn
-            <InventoryPopover />
-          </div>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flexColumn gap-1">{content}</CardContent>
-      <CardFooter>{burnButtonAndReceipt}</CardFooter>
-    </Card>
+    <div className="flexColumn gap-2">
+      {content}
+      {burnButtonAndReceipt}
+    </div>
   );
 }
