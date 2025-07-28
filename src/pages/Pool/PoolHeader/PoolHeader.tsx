@@ -41,7 +41,7 @@ export default function PoolHeader({ className }: { className?: string }) {
       <div className={cn('row justify-between', isTablet && 'flexColumn items-start gap-2')}>
         <div className="row gap-2">
           <AssetIcon asset="DFiUSD" size="lg" />
-          <h1 className="text-2xl font-bold">DFiUSD Pool</h1>
+          <h1 className="text-2xl font-bold">DFiUSD</h1>
           <a
             className="row gap-1 whitespace-nowrap"
             href={`https://etherscan.io/address/${BACKING_POOL_ADDRESS}`}

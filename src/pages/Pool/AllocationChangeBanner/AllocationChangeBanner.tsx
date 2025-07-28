@@ -16,7 +16,7 @@ export function AllocationChangeBanner({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'row justify-between border-solid border border-destructive text-destructive p-2 bg-destructive/15',
+        'row rounded-md justify-between border-solid border border-destructive text-destructive p-2 bg-destructive/15',
         className
       )}
     >
