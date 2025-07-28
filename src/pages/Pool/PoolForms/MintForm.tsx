@@ -25,7 +25,7 @@ import { objectFromEntries } from '@/lib/objectHelpers';
 import { InventoryPopover } from '../InventoryPopover';
 import FormInput from './FormInput';
 
-export default function MintForm() {
+export default function MintForm({ withCard = true }: { withCard?: boolean }) {
   const [mintAmount, setMintAmount] = useState('');
   const debouncedMintAmount = useDebounce(mintAmount);
 
@@ -258,18 +258,27 @@ export default function MintForm() {
     </div>
   );
 
+  if (withCard) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            <div className="row gap-2 h-8 justify-between">
+              Mint
+              <InventoryPopover />
+            </div>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flexColumn gap-1">{content}</CardContent>
+        <CardFooter>{mintButtonAndReceipt}</CardFooter>
+      </Card>
+    );
+  }
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>
-          <div className="row gap-2 h-8 justify-between">
-            Mint
-            <InventoryPopover />
-          </div>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flexColumn gap-1">{content}</CardContent>
-      <CardFooter>{mintButtonAndReceipt}</CardFooter>
-    </Card>
+    <div className="flexColumn gap-2">
+      {content}
+      {mintButtonAndReceipt}
+    </div>
   );
 }

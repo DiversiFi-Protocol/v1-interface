@@ -2,12 +2,21 @@ import * as React from 'react';
 
 import { cn } from '@/lib/tw';
 
-const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
+type CardProps = React.HTMLAttributes<HTMLDivElement> & {
+  borderColor?: 'default' | 'create' | 'destroy';
+};
+
+const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ className, borderColor = 'default', ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
-        'border-[1px] rounded-md bg-card text-card-foreground border-none shadow dark:border-border dark:border-solid dark:shadow-none',
+        'border-[1px] rounded-md bg-card text-card-foreground border-none',
+        {
+          default: 'dark:border-border dark:border-solid dark:shadow-none shadow',
+          create: 'border-green-500 border-solid shadow-green-900/20 shadow',
+          destroy: 'border-red-500 border-solid shadow-red-900/20 shadow',
+        }[borderColor],
         className
       )}
       {...props}
