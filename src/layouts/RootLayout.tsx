@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar/Navbar';
 
 export default function RootLayout() {
   return (
-    <div className="min-h-screen w-screen overflow-y-auto">
+    <div className="min-h-screen w-screen overflow-y-auto withNavbar">
       <Navbar />
       <main className="mt-[var(--navbar-height)] mb-[var(--footer-height)] min-h-[var(--main-height)]">
         <div className="max-w-[1400px] mx-auto px-4">
