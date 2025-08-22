@@ -30,6 +30,15 @@ export function LearnPopover() {
           <ScrollIcon className="text-muted-foreground w-4 h-4" />
           Whitepaper
         </a>
+        <a
+          className="row gap-4 w-full text-popover-foreground hover:text-popover-foreground hover:bg-foreground/10 p-2 hover:no-underline"
+          href="/docs/NM-0609-DiversiFi.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <ScrollIcon className="text-muted-foreground w-4 h-4" />
+          Audit
+        </a>
       </PopoverContent>
     </Popover>
   );
