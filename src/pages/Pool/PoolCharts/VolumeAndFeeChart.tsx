@@ -3,6 +3,9 @@
 import * as React from 'react';
 
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+import { Provider } from 'urql';
+
+// import { useGetPoolVolumes } from '@/hooks/UniswapGraphHooks/useGetPoolVolumes';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -11,6 +14,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
+
+import { uniswapGraphClient } from '@/lib/uniswapGraph';
 
 const chartData = [
   { date: '2024-04-01', volume: 222, fee: 150 },
@@ -106,8 +111,17 @@ const chartData = [
   { date: '2024-06-30', volume: 446, fee: 400 },
 ];
 
-export default function VolumeAndFeeChart() {
+function VolumeAndFeeChart() {
   const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig>('volume');
+  // const [{ data, fetching, error }] = useGetPoolVolumes({
+  //   poolIds: ['0x21c67e77068de97969ba93d4aab21826d33ca12bb9f565d8496e8fda8a82ca27'],
+  // });
+
+  // console.log({
+  //   data,
+  //   fetching,
+  //   error,
+  // });
 
   const total = React.useMemo(
     () => ({
@@ -205,5 +219,13 @@ export default function VolumeAndFeeChart() {
         </ChartContainer>
       </CardContent>
     </Card>
+  );
+}
+
+export default function WrappedVolumeAndFeeChart() {
+  return (
+    <Provider value={uniswapGraphClient}>
+      <VolumeAndFeeChart />
+    </Provider>
   );
 }
