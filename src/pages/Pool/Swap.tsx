@@ -1,5 +1,4 @@
 import SingleColumnLayout from '@/layouts/SingleColumnLayout';
-import TwoColumnLayout from '@/layouts/TwoColumnLayout';
 import { ArrowLeftRight, Flame, InfoIcon, Stars } from 'lucide-react';
 
 import { useBreakpoints } from '@/hooks/useBreakpoints';
@@ -10,7 +9,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { AllocationChangeBanner } from './AllocationChangeBanner/AllocationChangeBanner';
 import AssetCards from './AssetCards/AssetCards';
-import InsuranceFund from './InsuranceFund/InsuranceFund';
 import PoolPieChart from './PoolCharts/PoolPieChart';
 import VolumeAndFeeChart from './PoolCharts/VolumeAndFeeChart';
 import { BurnDialog } from './PoolForms/BurnDialog';
@@ -71,8 +69,8 @@ export default function Swap() {
   }
 
   return (
-    <SingleColumnLayout className="w-full" innerClassName="flexColumn gap-8 pb-4">
-      <AllocationChangeBanner className="my-2" />
+    <SingleColumnLayout className="w-full" innerClassName="flexColumn gap-8 py-4">
+      <AllocationChangeBanner className="mb-2" />
 
       <PoolHeader />
       <AssetCards direction="row" />
@@ -153,27 +151,5 @@ export default function Swap() {
         </TabsContent>
       </Tabs>
     </SingleColumnLayout>
-  );
-
-  return (
-    <TwoColumnLayout
-      main={
-        <div className="flexColumn p-0.5 gap-1">
-          <PoolHeader />
-          <PoolPieChart />
-          <VolumeAndFeeChart />
-          <h2>My Portfolio</h2>
-          <BalanceTable />
-        </div>
-      }
-      sidebar={
-        <div className="flexColumn p-0.5 gap-1">
-          <SwapForm />
-          <AssetCards />
-
-          <InsuranceFund />
-        </div>
-      }
-    />
   );
 }

@@ -11,12 +11,12 @@ import RootLayout from './layouts/RootLayout';
 import SidebarLayout from './layouts/SidebarLayout';
 import Terms from './pages/Terms/Terms';
 
-const Allowance = lazy(() => import('./pages/Allowance/Allowance'));
 const Home = lazy(() => import('./pages/Home/Home'));
 const Swap = lazy(() => import('./pages/Pool/Swap'));
 const Mint = lazy(() => import('./pages/Pool/Mint'));
 const Burn = lazy(() => import('./pages/Pool/Burn'));
 const Pool = lazy(() => import('./pages/Pool/Pool'));
+const Settings = lazy(() => import('./pages/Account/Settings'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function App() {
@@ -79,10 +79,10 @@ function App() {
           <Route path={PageRoutes.Pool} element={<Navigate to={PoolRoutes.Swap} replace />} />
         </Route>
         <Route
-          path={PageRoutes.Allowance}
+          path={PageRoutes.Account}
           element={
             <Suspense fallback={<LoadingSpinner />}>
-              <Allowance />
+              <Settings />
             </Suspense>
           }
         />

@@ -1,4 +1,4 @@
-import { Copy, Forward, Loader2 } from 'lucide-react';
+import { Copy, Link, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { BACKING_POOL_ADDRESS } from '@/constants/contracts';
@@ -59,12 +59,12 @@ export default function PoolHeader({ className }: { className?: string }) {
           </Button>
 
           <Button
-            className="[&_svg]:size-5 size-5 min-w-5 min-h-5 p-0"
+            className="[&_svg]:size-4 size-5 min-w-5 min-h-5 p-0"
             variant="ghost"
             size="icon"
             onClick={() => onCopy(window.location.href, 'pool link')}
           >
-            <Forward />
+            <Link />
           </Button>
         </div>
 
@@ -87,7 +87,6 @@ export default function PoolHeader({ className }: { className?: string }) {
       </div>
 
       <div className="row gap-2">
-        <h2 className="text-lg font-semibold">Pool Details</h2>
         <div className="row gap-2">
           <span className="text-muted-foreground">Total Reserves</span>
           <span className="font-semibold">
