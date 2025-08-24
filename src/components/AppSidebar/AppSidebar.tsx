@@ -1,4 +1,4 @@
-import { Book, Lock, PieChart, Settings, TerminalSquare } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 import { PageRoutes, PoolRoutes } from '@/constants/routes';
 
@@ -19,57 +19,20 @@ import {
 import ThemeToggle from '../ThemeToggle';
 import { ConnectButton } from './ConnectButton';
 
-export function AppSidebar({
-  hideProtocol = true,
-  hideSocial = true,
-}: {
-  hideProtocol?: boolean;
-  hideSocial?: boolean;
-}) {
+export function AppSidebar() {
   const { theme } = useTheme();
 
   const pools = [
     {
       title: 'DFiUSD',
       url: PoolRoutes.Swap,
-      icon: PieChart,
     },
   ];
 
   const accountItems = [
     {
-      title: 'Manage Allowances',
-      url: PageRoutes.Allowance,
-      icon: Lock,
-    },
-    {
       title: 'Settings',
-      url: '#',
-      icon: Settings,
-    },
-  ];
-
-  const protocolItems = [
-    {
-      title: 'Documentation',
-      url: 'https://docs.diversifi.tech',
-      icon: TerminalSquare,
-    },
-    {
-      title: 'Whitepaper',
-      url: '/docs/whitepaper.pdf',
-      icon: Book,
-    },
-  ];
-
-  const socialItems = [
-    {
-      title: 'X/Twitter',
-      url: 'https://x.com/0xDiversiFi',
-    },
-    {
-      title: 'Discord',
-      url: 'https://discord.gg/wcCvAmwpy5',
+      url: PageRoutes.Account,
     },
   ];
 
@@ -92,10 +55,9 @@ export function AppSidebar({
               {pools.map((pool) => (
                 <SidebarMenuItem key={pool.title}>
                   <SidebarMenuButton asChild>
-                    <a href={pool.url}>
-                      {/* <pool.icon /> */}
+                    <Link to={pool.url}>
                       <span>{pool.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -104,45 +66,12 @@ export function AppSidebar({
               {accountItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      {/* <item.icon /> */}
+                    <Link to={item.url}>
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
-
-              {!hideProtocol && (
-                <span className="text-sm font-medium text-muted-foreground px-2 mt-4">
-                  Protocol
-                </span>
-              )}
-              {!hideProtocol &&
-                protocolItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <a href={item.url} target="_blank" rel="noopener noreferrer">
-                        {/* <item.icon /> */}
-                        <span>{item.title}</span>
-                      </a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-
-              {!hideSocial && (
-                <span className="text-sm font-medium text-muted-foreground px-2 mt-4">Social</span>
-              )}
-              {!hideSocial &&
-                socialItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <a href={item.url} target="_blank" rel="noopener noreferrer">
-                        {/* <item.icon /> */}
-                        <span>{item.title}</span>
-                      </a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

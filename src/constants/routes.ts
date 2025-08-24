@@ -1,8 +1,8 @@
 export enum PageRoutes {
   Home = '/',
   About = '/about',
+  Account = '/account',
   Pool = '/pool',
-  Allowance = '/allowance',
   Terms = '/terms',
   NotFound = '*',
 }
