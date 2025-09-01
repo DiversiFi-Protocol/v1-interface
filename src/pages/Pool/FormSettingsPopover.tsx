@@ -2,9 +2,6 @@ import { useCallback } from 'react';
 
 import { CheckedState } from '@radix-ui/react-checkbox';
 import { AlertTriangle, Settings } from 'lucide-react';
-import { Link } from 'react-router-dom';
-
-import { PageRoutes } from '@/constants/routes';
 
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -47,14 +44,7 @@ export function FormSettingsPopover({ className }: { className?: string }) {
           </TooltipTrigger>
 
           <TooltipContent className="max-w-[300px]">
-            <p>
-              Allowing max token approval will prevent the need for future approve calls. You can
-              update your past approvals{' '}
-              <Link className="text-accent" to={PageRoutes.Allowance}>
-                here
-              </Link>
-              .
-            </p>
+            <p>Allowing max token approval will prevent the need for future approve calls.</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
