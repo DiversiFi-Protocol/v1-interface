@@ -1,7 +1,5 @@
-import { Suspense, lazy, useEffect, useState } from 'react';
+import { Suspense, lazy } from 'react';
 
-import { initParticlesEngine } from '@tsparticles/react';
-import { loadSlim } from '@tsparticles/slim';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import LoadingSpinner from './components/LoadingSpinner';
@@ -9,39 +7,19 @@ import { PageRoutes, PoolRoutes } from './constants/routes';
 import { useBreakpoints } from './hooks/useBreakpoints';
 import RootLayout from './layouts/RootLayout';
 import SidebarLayout from './layouts/SidebarLayout';
-import Terms from './pages/Terms/Terms';
 
-const Home = lazy(() => import('./pages/Home/Home'));
 const Swap = lazy(() => import('./pages/Pool/Swap'));
-const Mint = lazy(() => import('./pages/Pool/Mint'));
-const Burn = lazy(() => import('./pages/Pool/Burn'));
 const Pool = lazy(() => import('./pages/Pool/Pool'));
 const Settings = lazy(() => import('./pages/Account/Settings'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function App() {
-  const [init, setInit] = useState(false);
   const { isTablet } = useBreakpoints();
-
-  useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine);
-    }).then(() => {
-      setInit(true);
-    });
-  }, []);
 
   return (
     <Routes>
       <Route element={<RootLayout />}>
-        <Route
-          path={PageRoutes.Home}
-          element={
-            <Suspense fallback={<LoadingSpinner />}>
-              <Home particlesReady={init} />
-            </Suspense>
-          }
-        />
+        <Route path={PageRoutes.Home} element={<Navigate to={PageRoutes.Pool} replace />} />
       </Route>
       <Route element={isTablet ? <RootLayout /> : <SidebarLayout />}>
         <Route
@@ -60,22 +38,6 @@ function App() {
               </Suspense>
             }
           />
-          <Route
-            path={PoolRoutes.Mint}
-            element={
-              <Suspense fallback={<LoadingSpinner />}>
-                <Mint />
-              </Suspense>
-            }
-          />
-          <Route
-            path={PoolRoutes.Burn}
-            element={
-              <Suspense fallback={<LoadingSpinner />}>
-                <Burn />
-              </Suspense>
-            }
-          />
           <Route path={PageRoutes.Pool} element={<Navigate to={PoolRoutes.Swap} replace />} />
         </Route>
         <Route
@@ -83,14 +45,6 @@ function App() {
           element={
             <Suspense fallback={<LoadingSpinner />}>
               <Settings />
-            </Suspense>
-          }
-        />
-        <Route
-          path={PageRoutes.Terms}
-          element={
-            <Suspense fallback={<LoadingSpinner />}>
-              <Terms />
             </Suspense>
           }
         />

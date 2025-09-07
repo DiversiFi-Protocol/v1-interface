@@ -41,7 +41,7 @@ export function AppSidebar() {
       <SidebarHeader className="px-4 py-2 mb-4">
         <a href={PageRoutes.Home}>
           <img
-            src={theme === 'dark' ? '/brand/diversifi-dark.png' : '/brand/diversifi-light.png'}
+            src={theme === 'dark' ? '/brand/logo-text-light.svg' : '/brand/logo-text-dark.svg'}
             alt="DiversiFi"
             className="w-auto min-w-8 h-8"
           />

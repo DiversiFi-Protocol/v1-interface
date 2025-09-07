@@ -10,9 +10,10 @@ import { envVar } from '@/constants/environment';
 import { queryClient } from '@/lib/queryClient';
 
 const showHardhat = import.meta.env.MODE === 'development';
+const alchemyApiKey = import.meta.env.VITE_ALCHEMY_API_KEY;
 
-const alchemyMainnet = 'https://eth-mainnet.g.alchemy.com/v2/7GwBcdnuSTJywivj2pPW4';
-const alchemySepolia = 'https://eth-sepolia.g.alchemy.com/v2/7GwBcdnuSTJywivj2pPW4';
+const alchemyMainnet = `https://eth-mainnet.g.alchemy.com/v2/${alchemyApiKey}`;
+const alchemySepolia = `https://eth-sepolia.g.alchemy.com/v2/${alchemyApiKey}`;
 
 const wagmiConfig: Pick<Parameters<typeof createConfig>[0], 'chains' | 'transports'> = showHardhat
   ? {
@@ -35,7 +36,7 @@ const config = createConfig(
   getDefaultConfig({
     appName: 'DiversiFi',
     appDescription: 'Tokenized assets for DiversiFi-ing your portfolio',
-    appUrl: 'https://diversifi.tech',
+    appUrl: 'https://app.diversifi.tech',
     walletConnectProjectId: envVar.walletConnectProjectId || '',
     ...wagmiConfig,
   })
