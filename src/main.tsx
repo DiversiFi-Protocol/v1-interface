@@ -12,6 +12,7 @@ import { store, persistor } from '@/state/store';
 import App from './App.tsx';
 import './index.css';
 import { ChainProvider } from './providers/ChainProvider.tsx';
+import { ComplianceProvider } from './providers/ComplianceProvider.tsx';
 import { ThemeProvider } from './providers/ThemeProvider.tsx';
 import Web3Provider from './providers/Web3Provider';
 
@@ -32,10 +33,12 @@ createRoot(document.getElementById('root')!).render(
         <ThemeProvider>
           <Web3Provider>
             <ChainProvider>
-              <BrowserRouter>
-                <App />
-                <Toaster richColors />
-              </BrowserRouter>
+              <ComplianceProvider>
+                <BrowserRouter>
+                  <App />
+                  <Toaster richColors />
+                </BrowserRouter>
+              </ComplianceProvider>
             </ChainProvider>
           </Web3Provider>
         </ThemeProvider>
