@@ -39,7 +39,7 @@ export function AppSidebar() {
   return (
     <Sidebar className="border-r-1 border-border border-solid [&_a]:hover:no-underline">
       <SidebarHeader className="px-4 py-2 mb-4">
-        <a href={PageRoutes.Home}>
+        <a href="https://diversifi.tech">
           <img
             src={theme === 'dark' ? '/brand/logo-text-light.svg' : '/brand/logo-text-dark.svg'}
             alt="DiversiFi"
