@@ -80,7 +80,7 @@ export default function Swap() {
           <TabsTrigger className="bg-transparent text-lg font-semibold" value="overview">
             Overview
           </TabsTrigger>
-          <TabsTrigger className="bg-transparent text-lg font-semibold" value="fee-volume">
+          <TabsTrigger disabled className="bg-transparent text-lg font-semibold" value="fee-volume">
             Fees & Volume
           </TabsTrigger>
         </TabsList>
