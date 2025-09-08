@@ -69,7 +69,7 @@ export default function PoolHeader({ className }: { className?: string }) {
         </div>
 
         <div className="row relative">
-          {SUPPORTED_RESERVE_ASSETS.map((asset, idx) => (
+          {SUPPORTED_RESERVE_ASSETS.slice(0, 3).map((asset, idx) => (
             <div
               key={asset.symbol}
               className={cn(
@@ -83,6 +83,15 @@ export default function PoolHeader({ className }: { className?: string }) {
               <span>{asset.symbol}</span>
             </div>
           ))}
+          {SUPPORTED_RESERVE_ASSETS.length > 3 && (
+            <div
+              className={cn(
+                'bg-background row gap-2 rounded-3xl border-border border-[1px] border-solid py-1 px-3 relative pl-8'
+              )}
+            >
+              <span>+{SUPPORTED_RESERVE_ASSETS.length - 3}</span>
+            </div>
+          )}
         </div>
       </div>
 
