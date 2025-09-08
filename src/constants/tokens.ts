@@ -26,6 +26,26 @@ const ALL_SUPPORTED_RESERVE_ASSETS: Record<number, SupportedAsset[]> = {
       symbol: 'USDT',
       decimals: 6,
     },
+    {
+      address: '0xdC035D45d973E3EC169d2276DDab16f1e407384F',
+      symbol: 'USDS',
+      decimals: 18,
+    },
+    {
+      address: '0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f',
+      symbol: 'GHO',
+      decimals: 18,
+    },
+    {
+      address: '0xc5f0f7b66764F6ec8C8Dff7BA683102295E16409',
+      symbol: 'FDUSD',
+      decimals: 18,
+    },
+    {
+      address: '0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29',
+      symbol: 'FRXUSD',
+      decimals: 18,
+    },
   ],
   [sepolia.id]: [
     {
@@ -47,7 +67,7 @@ const ALL_SUPPORTED_RESERVE_ASSETS: Record<number, SupportedAsset[]> = {
       address: '0xbe2Ad83eAa604721AC467390dd86bEB86E1DF3Bd',
       symbol: 'TK3',
       decimals: 18,
-    }
+    },
   ],
   [hardhat.id]: [
     {
