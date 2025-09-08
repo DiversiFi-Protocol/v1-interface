@@ -26,6 +26,14 @@ export default function AssetIcon({ asset, size = 'sm', className }: AssetIconPr
         return '/currencies/dai.png';
       case 'DFiUSD':
         return '/currencies/dfiusd.png';
+      case 'USDS':
+        return '/currencies/usds.png';
+      case 'GHO':
+        return '/currencies/gho.png';
+      case 'FDUSD':
+        return '/currencies/fdusd.png';
+      case 'FRXUSD':
+        return '/currencies/frxusd.png';
       default:
         return null;
     }
