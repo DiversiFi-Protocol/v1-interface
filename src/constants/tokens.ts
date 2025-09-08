@@ -1,4 +1,4 @@
-import { Address, zeroAddress } from 'viem';
+import { Address } from 'viem';
 import { hardhat, mainnet, sepolia } from 'viem/chains';
 
 import { chainId } from '@/constants/chain';
@@ -72,12 +72,12 @@ export const SUPPORTED_RESERVE_ASSETS = ALL_SUPPORTED_RESERVE_ASSETS[chainId];
 
 const BACKED_TOKENS: Record<number, SupportedAsset> = {
   [mainnet.id]: {
-    address: zeroAddress, // TODO: Add address
+    address: '0xDF10bE61122b11c89238445783b5b9DBfddE0EBf',
     decimals: 18,
     symbol: 'DFiUSD',
   },
   [sepolia.id]: {
-    address: '0x22DDD92A1c78C52F083f1ACfB6c7A5C60f931393',
+    address: '0xDF10bE61122b11c89238445783b5b9DBfddE0EBf',
     decimals: 18,
     symbol: 'DFiUSD',
   },
