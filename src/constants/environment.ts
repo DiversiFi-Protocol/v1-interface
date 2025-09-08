@@ -9,6 +9,7 @@ export class EnvVar {
   }
 
   get chainId(): 1 | 31337 | 11155111 {
+    console.log(import.meta.env.VITE_CHAIN_ID, this.CHAIN_ID)
     if (!this.CHAIN_ID) {
       throw new Error('CHAIN_ID is missing from environment variables');
     }
