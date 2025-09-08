@@ -1,7 +1,3 @@
-import { Link } from 'react-router-dom';
-
-import { PageRoutes } from '@/constants/routes';
-
 import { useBreakpoints } from '@/hooks/useBreakpoints';
 
 import { cn } from '@/lib/tw';
@@ -61,9 +57,14 @@ export function Footer() {
         <div className="row px-6 text-xs gap-2">
           {social}
           {learnMore}
-          <Link className={cn({ 'py-2': isMobile, 'px-4': isMobile })} to={PageRoutes.Terms}>
+          <a
+            className={cn({ 'py-2': isMobile, 'px-4': isMobile })}
+            href="https://diversifi.tech/terms"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Terms
-          </Link>
+          </a>
         </div>
       </div>
     </footer>

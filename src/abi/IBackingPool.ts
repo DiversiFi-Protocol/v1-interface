@@ -138,7 +138,8 @@ export default [
   {
     inputs: [
       { internalType: 'uint256', name: '_burnAmount', type: 'uint256' },
-      { internalType: 'bytes', name: '_forwardData', type: 'bytes' },
+      { internalType: 'bool', name: '_unsafe', type: 'bool'},
+      { internalType: 'bytes', name: '_forwardData', type: 'bytes' }
     ],
     name: 'burn',
     outputs: [],

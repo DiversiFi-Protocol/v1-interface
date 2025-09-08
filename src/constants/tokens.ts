@@ -1,4 +1,4 @@
-import { Address, zeroAddress } from 'viem';
+import { Address } from 'viem';
 import { hardhat, mainnet, sepolia } from 'viem/chains';
 
 import { chainId } from '@/constants/chain';
@@ -26,6 +26,26 @@ const ALL_SUPPORTED_RESERVE_ASSETS: Record<number, SupportedAsset[]> = {
       symbol: 'USDT',
       decimals: 6,
     },
+    {
+      address: '0xdC035D45d973E3EC169d2276DDab16f1e407384F',
+      symbol: 'USDS',
+      decimals: 18,
+    },
+    {
+      address: '0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f',
+      symbol: 'GHO',
+      decimals: 18,
+    },
+    {
+      address: '0xc5f0f7b66764F6ec8C8Dff7BA683102295E16409',
+      symbol: 'FDUSD',
+      decimals: 18,
+    },
+    {
+      address: '0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29',
+      symbol: 'FRXUSD',
+      decimals: 18,
+    },
   ],
   [sepolia.id]: [
     {
@@ -47,7 +67,7 @@ const ALL_SUPPORTED_RESERVE_ASSETS: Record<number, SupportedAsset[]> = {
       address: '0xbe2Ad83eAa604721AC467390dd86bEB86E1DF3Bd',
       symbol: 'TK3',
       decimals: 18,
-    }
+    },
   ],
   [hardhat.id]: [
     {
@@ -72,12 +92,12 @@ export const SUPPORTED_RESERVE_ASSETS = ALL_SUPPORTED_RESERVE_ASSETS[chainId];
 
 const BACKED_TOKENS: Record<number, SupportedAsset> = {
   [mainnet.id]: {
-    address: zeroAddress, // TODO: Add address
+    address: '0xDF10bE61122b11c89238445783b5b9DBfddE0EBf',
     decimals: 18,
     symbol: 'DFiUSD',
   },
   [sepolia.id]: {
-    address: '0x22DDD92A1c78C52F083f1ACfB6c7A5C60f931393',
+    address: '0xDF10bE61122b11c89238445783b5b9DBfddE0EBf',
     decimals: 18,
     symbol: 'DFiUSD',
   },
