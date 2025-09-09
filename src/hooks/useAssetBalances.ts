@@ -39,6 +39,7 @@ export function useAssetBalances() {
       const asset = ALL_SUPPORTED_TOKENS[idx];
 
       if (status === 'success') {
+        console.log("Bal", result, asset)
         return {
           balance: formatUnits(result, asset.decimals),
           ...asset,
