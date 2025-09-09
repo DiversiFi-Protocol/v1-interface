@@ -148,11 +148,11 @@ export default function BurnForm({ withCard = true }: { withCard?: boolean }) {
     </div>
   );
 
-  const hasTokensForBurn = MustBigNumber(mapOfBalances[BACKED_TOKEN.address]?.balance).gte(
-    MustBigNumber(debouncedBurnAmount).div(3)
-  );
+  // const hasTokensForBurn = MustBigNumber(mapOfBalances[BACKED_TOKEN.address]?.balance).gte(
+  //   MustBigNumber(debouncedBurnAmount).div(3)
+  // );
 
-  const isDisabled = signer.data == null || !hasTokensForBurn || burnAmount === '';
+  const isDisabled = signer.data == null /*|| !hasTokensForBurn*/ || burnAmount === '';
 
   const buttonText = useMemo(() => {
     if (debouncedBurnAmount === '') {
@@ -163,12 +163,12 @@ export default function BurnForm({ withCard = true }: { withCard?: boolean }) {
       return 'Connect Wallet';
     }
 
-    if (!hasTokensForBurn) {
-      return 'Insufficient Balance';
-    }
+    // if (!hasTokensForBurn) {
+    //   return 'Insufficient Balance';
+    // }
 
     return 'Burn';
-  }, [signer.data, hasTokensForBurn, debouncedBurnAmount]);
+  }, [signer.data, true/*hasTokensForBurn*/, debouncedBurnAmount]);
 
   const burnButtonAndReceipt = (
     <div className="flex flex-col gap-2 w-full">
