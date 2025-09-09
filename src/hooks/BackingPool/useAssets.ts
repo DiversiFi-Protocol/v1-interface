@@ -36,12 +36,13 @@ export function useGetAssetParamsForAllAssets() {
       select: (data) => {
         return data.map(({ result, status }) => {
           if (status === 'success') {
+            console.log("successful call: ", result)
             return {
               ...result,
               targetAllocation: Number(result.targetAllocation) / 2 ** 88,
             };
           }
-          console.log("failed call to: ", result)
+          console.log("failed call: ", result)
 
           return undefined;
         });
