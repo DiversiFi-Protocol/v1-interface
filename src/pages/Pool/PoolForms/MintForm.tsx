@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import { useWalletClient } from 'wagmi';
 
 import { EMPTY_ARR } from '@/constants/objects';
-import { BACKED_TOKEN, SUPPORTED_RESERVE_ASSETS } from '@/constants/tokens';
+import { BACKED_TOKEN, /*SUPPORTED_RESERVE_ASSETS*/ } from '@/constants/tokens';
 
 import {
   MintStep,
@@ -148,13 +148,13 @@ export default function MintForm({ withCard = true }: { withCard?: boolean }) {
     </div>
   );
 
-  const hasTokensForMint = SUPPORTED_RESERVE_ASSETS.every((asset) =>
-    MustBigNumber(mapOfBalances[asset.address]?.balance).gte(
-      MustBigNumber(debouncedMintAmount).div(3)
-    )
-  );
+  // const hasTokensForMint = SUPPORTED_RESERVE_ASSETS.every((asset) =>
+  //   MustBigNumber(mapOfBalances[asset.address]?.balance).gte(
+  //     MustBigNumber(debouncedMintAmount).div(3)
+  //   )
+  // );
 
-  const isDisabled = signer.data == null || !hasTokensForMint || mintAmount === '';
+  const isDisabled = signer.data == null /*|| !hasTokensForMint*/ || mintAmount === '';
 
   const buttonText = useMemo(() => {
     if (debouncedMintAmount === '') {
@@ -165,12 +165,12 @@ export default function MintForm({ withCard = true }: { withCard?: boolean }) {
       return 'Connect Wallet';
     }
 
-    if (!hasTokensForMint) {
-      return 'Insufficient Balance';
-    }
+    // if (!hasTokensForMint) {
+    //   return 'Insufficient Balance';
+    // }
 
     return 'Mint';
-  }, [signer.data, hasTokensForMint, debouncedMintAmount]);
+  }, [signer.data, true/*hasTokensForMint*/, debouncedMintAmount]);
 
   const mintButtonAndReceipt = (
     <div className="flex flex-col gap-2 w-full">
