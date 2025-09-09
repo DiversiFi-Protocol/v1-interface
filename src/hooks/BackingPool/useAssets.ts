@@ -18,6 +18,7 @@ export function useGetAssetParams(assetAddress?: Address) {
 }
 
 function getAssetBalanceContracts() {
+  console.log("SUPPORTED_RESERVE_ASSETS", SUPPORTED_RESERVE_ASSETS)
   return SUPPORTED_RESERVE_ASSETS.map(
     (asset) =>
       ({
@@ -36,13 +37,11 @@ export function useGetAssetParamsForAllAssets() {
       select: (data) => {
         return data.map(({ result, status }) => {
           if (status === 'success') {
-            console.log("successful call: ", result)
             return {
               ...result,
               targetAllocation: Number(result.targetAllocation) / 2 ** 88,
             };
           }
-          console.log("failed call: ", result)
 
           return undefined;
         });
