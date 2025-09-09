@@ -7,6 +7,7 @@ import {
   useAllAssetScaledReserves,
   useGetTotalScaledReserves,
 } from '@/hooks/BackingPool/usePoolReserves';
+import { useBreakpoints } from '@/hooks/useBreakpoints';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -20,12 +21,13 @@ import {
 
 import { MustBigNumber, formatNumber } from '@/lib/numbers';
 import { objectFromEntries } from '@/lib/objectHelpers';
+import { cn } from '@/lib/tw';
 
 export default function PoolPieChart() {
   const { totalScaledReserves, isLoading: totalScaledReservesLoading } =
     useGetTotalScaledReserves();
   const { scaledReserves, isLoading: scaledReservesLoading } = useAllAssetScaledReserves();
-
+  const { isMobile } = useBreakpoints();
   const chartData = useMemo(() => {
     return scaledReserves?.map(({ amount, symbol }) => ({
       asset: symbol,
@@ -91,7 +93,7 @@ export default function PoolPieChart() {
                 data={chartData}
                 dataKey="amount"
                 nameKey="asset"
-                innerRadius={90}
+                innerRadius={isMobile ? '70%' : 90}
                 strokeWidth={5}
               >
                 <Label
@@ -107,14 +109,17 @@ export default function PoolPieChart() {
                           <tspan
                             x={viewBox.cx}
                             y={viewBox.cy}
-                            className="fill-foreground text-3xl font-bold"
+                            className={cn(
+                              'fill-foreground text-3xl font-bold',
+                              isMobile && 'text-lg'
+                            )}
                           >
                             {tvl}
                           </tspan>
                           <tspan
                             x={viewBox.cx}
                             y={(viewBox.cy || 0) + 24}
-                            className="fill-muted-foreground"
+                            className={cn('fill-muted-foreground', isMobile && 'text-xxs')}
                           >
                             Total Value Locked
                           </tspan>
