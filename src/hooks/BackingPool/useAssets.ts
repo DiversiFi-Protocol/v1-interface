@@ -18,7 +18,6 @@ export function useGetAssetParams(assetAddress?: Address) {
 }
 
 function getAssetBalanceContracts() {
-  console.log("SUPPORTED_RESERVE_ASSETS", SUPPORTED_RESERVE_ASSETS)
   return SUPPORTED_RESERVE_ASSETS.map(
     (asset) =>
       ({
