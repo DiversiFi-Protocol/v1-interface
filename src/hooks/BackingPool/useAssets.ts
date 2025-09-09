@@ -41,6 +41,7 @@ export function useGetAssetParamsForAllAssets() {
               targetAllocation: Number(result.targetAllocation) / 2 ** 88,
             };
           }
+          console.log("failed call to: ", result)
 
           return undefined;
         });
