@@ -22,7 +22,7 @@ const ALL_SUPPORTED_RESERVE_ASSETS: Record<number, SupportedAsset[]> = {
       decimals: 6,
     },
     {
-      address: '0xdAC17f958d2ee523a2206206994597c13d831ec7',
+      address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
       symbol: 'USDT',
       decimals: 6,
     },
