@@ -19,7 +19,7 @@ export function Footer() {
       <a href="/docs/whitepaper.pdf" target="_blank" rel="noopener noreferrer">
         Whitepaper
       </a>
-      <a href="/docs/NM-0609-DiversiFi_1.pdf" target="_blank" rel="noopener noreferrer">
+      <a href="/docs/diversifi-audit.pdf" target="_blank" rel="noopener noreferrer">
         Audit
       </a>
     </>
