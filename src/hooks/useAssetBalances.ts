@@ -9,6 +9,7 @@ const QUERY_CONFIG = {
 };
 
 function getAssetBalanceContracts(walletAddress: Address | undefined) {
+  console.log("hi", walletAddress)
   if (!walletAddress) return [];
 
   return ALL_SUPPORTED_TOKENS.map(
