@@ -19,7 +19,6 @@ export const ChainProvider = ({ children }: { children: React.ReactNode }) => {
   const chainId = useChainId();
   const { chains: supportedChains, switchChain } = useSwitchChain();
 
-  // If the chain is not supported, set it to the default chainId
   useEffect(() => {
     if (chainId !== DEFAULT_CHAIN_ID) {
       switchChain({ chainId: DEFAULT_CHAIN_ID });

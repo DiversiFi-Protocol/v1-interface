@@ -1,7 +1,9 @@
-import { ALL_SUPPORTED_TOKENS } from '@/constants/tokens';
 import { useMemo } from 'react';
+
 import { Address, erc20Abi, formatUnits } from 'viem';
 import { useAccount, useReadContracts } from 'wagmi';
+
+import { ALL_SUPPORTED_TOKENS } from '@/constants/tokens';
 
 const QUERY_CONFIG = {
   refetchInterval: 10_000,
@@ -9,7 +11,6 @@ const QUERY_CONFIG = {
 };
 
 function getAssetBalanceContracts(walletAddress: Address | undefined) {
-  console.log("hi", walletAddress)
   if (!walletAddress) return [];
 
   return ALL_SUPPORTED_TOKENS.map(
@@ -39,7 +40,6 @@ export function useAssetBalances() {
       const asset = ALL_SUPPORTED_TOKENS[idx];
 
       if (status === 'success') {
-        console.log("Bal", result, asset)
         return {
           balance: formatUnits(result, asset.decimals),
           ...asset,
