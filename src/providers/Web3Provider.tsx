@@ -17,7 +17,7 @@ const alchemySepolia = `https://eth-sepolia.g.alchemy.com/v2/${alchemyApiKey}`;
 
 const wagmiConfig: Pick<Parameters<typeof createConfig>[0], 'chains' | 'transports'> = showHardhat
   ? {
-      chains: [sepolia, hardhat, mainnet],
+      chains: [mainnet, sepolia, hardhat],
       transports: {
         [hardhat.id]: http('http://127.0.0.1:8545/'),
         [sepolia.id]: http(alchemySepolia),
@@ -25,7 +25,7 @@ const wagmiConfig: Pick<Parameters<typeof createConfig>[0], 'chains' | 'transpor
       },
     }
   : {
-      chains: [sepolia, mainnet],
+      chains: [ mainnet, sepolia],
       transports: {
         [sepolia.id]: http(alchemySepolia),
         [mainnet.id]: http(alchemyMainnet),
