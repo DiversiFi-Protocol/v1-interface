@@ -1,13 +1,15 @@
 import { ScrollIcon, TerminalSquareIcon } from 'lucide-react';
 
-import { Button } from '../ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/tw';
 
-export function LearnPopover() {
+import { Button } from './ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+
+export function LearnPopover({ className }: { className?: string }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="ghost" className="hover:underline text-xs">
+        <Button variant="ghost" className={cn('hover:underline text-xs', className)}>
           Learn
         </Button>
       </PopoverTrigger>

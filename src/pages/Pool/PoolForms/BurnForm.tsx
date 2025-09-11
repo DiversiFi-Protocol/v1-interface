@@ -241,7 +241,7 @@ export default function BurnForm({ withCard = true }: { withCard?: boolean }) {
                   error == null ? (
                     <span>pending...</span>
                   ) : (
-                    <a className="hover:underline cursor-pointer" onClick={onRetry}>
+                    <a className="hover:underline" onClick={onRetry}>
                       Retry
                     </a>
                   )

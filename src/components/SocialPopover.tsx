@@ -1,14 +1,16 @@
 import DiscordIcon from '@/assets/social/discord.svg';
 import XIcon from '@/assets/social/x.svg';
 
-import { Button } from '../ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/tw';
 
-export function SocialPopover() {
+import { Button } from './ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+
+export function SocialPopover({ className }: { className?: string }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="ghost" className="hover:underline text-xs">
+        <Button variant="ghost" className={cn('hover:underline text-xs', className)}>
           Social
         </Button>
       </PopoverTrigger>
