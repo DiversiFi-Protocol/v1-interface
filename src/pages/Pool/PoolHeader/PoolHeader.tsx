@@ -1,4 +1,4 @@
-import { ArrowUpRightFromSquare, Copy, Link, Loader2 } from 'lucide-react';
+import { ArrowUpRightFromSquare, Copy, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { BACKING_POOL_ADDRESS } from '@/constants/contracts';
