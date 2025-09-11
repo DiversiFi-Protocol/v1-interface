@@ -150,6 +150,7 @@ a {
   font-weight: 500;
   color: var(--accent);
   text-decoration: inherit;
+  cursor: pointer;
 }
 
 a:hover {
