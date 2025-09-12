@@ -5,7 +5,10 @@ import { toast } from 'sonner';
 import { useWalletClient } from 'wagmi';
 
 import { EMPTY_ARR } from '@/constants/objects';
-import { BACKED_TOKEN, /*SUPPORTED_RESERVE_ASSETS*/ } from '@/constants/tokens';
+import {
+  BACKED_TOKEN,
+  SUPPORTED_RESERVE_ASSETS /*SUPPORTED_RESERVE_ASSETS*/,
+} from '@/constants/tokens';
 
 import {
   MintStep,
@@ -148,13 +151,19 @@ export default function MintForm({ withCard = true }: { withCard?: boolean }) {
     </div>
   );
 
-  // const hasTokensForMint = SUPPORTED_RESERVE_ASSETS.every((asset) =>
-  //   MustBigNumber(mapOfBalances[asset.address]?.balance).gte(
-  //     MustBigNumber(debouncedMintAmount).div(3)
-  //   )
-  // );
+  const hasTokensForMint = SUPPORTED_RESERVE_ASSETS.every((asset) => {
+    const depositAsset = mintDepositAmounts?.find(
+      (a) => a.address.toLowerCase() === asset.address.toLowerCase()
+    );
 
-  const isDisabled = signer.data == null /*|| !hasTokensForMint*/ || mintAmount === '';
+    if (depositAsset == null) {
+      return true;
+    }
+
+    return MustBigNumber(mapOfBalances[asset.address]?.balance).gte(depositAsset.depositAmount);
+  });
+
+  const isDisabled = signer.data == null || !hasTokensForMint || mintAmount === '';
 
   const buttonText = useMemo(() => {
     if (debouncedMintAmount === '') {
@@ -165,12 +174,12 @@ export default function MintForm({ withCard = true }: { withCard?: boolean }) {
       return 'Connect Wallet';
     }
 
-    // if (!hasTokensForMint) {
-    //   return 'Insufficient Balance';
-    // }
+    if (!hasTokensForMint) {
+      return 'Insufficient Balance';
+    }
 
     return 'Mint';
-  }, [signer.data, true/*hasTokensForMint*/, debouncedMintAmount]);
+  }, [signer.data, hasTokensForMint, debouncedMintAmount]);
 
   const mintButtonAndReceipt = (
     <div className="flex flex-col gap-2 w-full">
@@ -243,7 +252,7 @@ export default function MintForm({ withCard = true }: { withCard?: boolean }) {
                   error == null ? (
                     <span>pending...</span>
                   ) : (
-                    <a className="hover:underline cursor-pointer" onClick={onRetry}>
+                    <a className="hover:underline" onClick={onRetry}>
                       Retry
                     </a>
                   )

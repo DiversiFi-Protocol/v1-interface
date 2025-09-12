@@ -143,7 +143,6 @@ table {
 
 /* Additional resets for better default behavior */
 a {
-  text-decoration: none;
   color: inherit;
 }
 
