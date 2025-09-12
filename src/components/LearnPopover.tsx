@@ -1,13 +1,15 @@
 import { ScrollIcon, TerminalSquareIcon } from 'lucide-react';
 
-import { Button } from '../ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/tw';
 
-export function LearnPopover() {
+import { Button } from './ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+
+export function LearnPopover({ className }: { className?: string }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="ghost" className="hover:underline text-xs">
+        <Button variant="ghost" className={cn('hover:underline text-xs', className)}>
           Learn
         </Button>
       </PopoverTrigger>
@@ -32,7 +34,7 @@ export function LearnPopover() {
         </a>
         <a
           className="row gap-4 w-full text-popover-foreground hover:text-popover-foreground hover:bg-foreground/10 p-2 hover:no-underline"
-          href="/docs/NM-0609-DiversiFi_1.pdf"
+          href="/docs/diversifi-audit.pdf"
           target="_blank"
           rel="noopener noreferrer"
         >

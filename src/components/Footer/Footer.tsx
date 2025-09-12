@@ -1,10 +1,11 @@
 import { useBreakpoints } from '@/hooks/useBreakpoints';
 
+import { LearnPopover } from '@/components/LearnPopover';
+import { SocialPopover } from '@/components/SocialPopover';
+
 import { cn } from '@/lib/tw';
 
 import { ChainSelectorPopover } from './ChainSelectorPopover';
-import { LearnPopover } from './LearnPopover';
-import { SocialPopover } from './SocialPopover';
 
 export function Footer() {
   const { isMobile } = useBreakpoints();
@@ -19,7 +20,7 @@ export function Footer() {
       <a href="/docs/whitepaper.pdf" target="_blank" rel="noopener noreferrer">
         Whitepaper
       </a>
-      <a href="/docs/NM-0609-DiversiFi_1.pdf" target="_blank" rel="noopener noreferrer">
+      <a href="/docs/diversifi-audit.pdf" target="_blank" rel="noopener noreferrer">
         Audit
       </a>
     </>
