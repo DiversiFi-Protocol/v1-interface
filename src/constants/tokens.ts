@@ -92,12 +92,12 @@ export const SUPPORTED_RESERVE_ASSETS = ALL_SUPPORTED_RESERVE_ASSETS[chainId];
 
 const BACKED_TOKENS: Record<number, SupportedAsset> = {
   [mainnet.id]: {
-    address: '0xDF10bE61122b11c89238445783b5b9DBfddE0EBf',
+    address: '0xDF100b8ABd3cd41fC5cC1236AD7c6629A901AfBf',
     decimals: 18,
     symbol: 'DFiUSD',
   },
   [sepolia.id]: {
-    address: '0xDF10bE61122b11c89238445783b5b9DBfddE0EBf',
+    address: '0xDF100b8ABd3cd41fC5cC1236AD7c6629A901AfBf',
     decimals: 18,
     symbol: 'DFiUSD',
   },
