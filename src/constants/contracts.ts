@@ -5,7 +5,7 @@ import { envVar } from './environment';
 
 export const BACKING_POOL_ADDRESS: Address = (
   {
-    [mainnet.id]: '0x8978F3A0227453Dd0821bC8A85e4bEF96DAF8327',
+    [mainnet.id]: '0x99a9A2a0E1A6F9ce6AAEf1c38e7Aad70fB2a5fe9',
     [sepolia.id]: '0x8978F3A0227453Dd0821bC8A85e4bEF96DAF8327',
     [hardhat.id]: zeroAddress,
   } satisfies Record<number, Address>
