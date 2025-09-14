@@ -4,7 +4,7 @@
 export const onRequest: PagesFunction = async (ctx) => {
   const blocked = [
     "CU","IR","KP","RU","SY","AF","BY","MM","VE","SS","SD","LY","SO","YE",
-    "NI","CF","CD","CG","ML","ET","IQ","LB","BI","GW","CI","LR","US","ZW" // keep "US" only while testing
+    "NI","CF","CD","CG","ML","ET","IQ","LB","BI","GW","CI","LR","US","ZW"
   ];
 
   const req = ctx.request as Request & { cf?: any };
