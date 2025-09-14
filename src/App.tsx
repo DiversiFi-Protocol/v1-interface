@@ -7,6 +7,7 @@ import { PageRoutes, PoolRoutes } from './constants/routes';
 import { useBreakpoints } from './hooks/useBreakpoints';
 import RootLayout from './layouts/RootLayout';
 import SidebarLayout from './layouts/SidebarLayout';
+import Blocked from './pages/Blocked';
 
 const Swap = lazy(() => import('./pages/Pool/Swap'));
 const Pool = lazy(() => import('./pages/Pool/Pool'));
@@ -57,6 +58,14 @@ function App() {
           }
         />
       </Route>
+      <Route
+        path={PageRoutes.Blocked}
+        element={
+          <Suspense fallback={<LoadingSpinner />}>
+            <Blocked />
+          </Suspense>
+        }
+      />
     </Routes>
   );
 }

@@ -2,6 +2,7 @@ export enum PageRoutes {
   Home = '/',
   Account = '/account',
   Pool = '/pool',
+  Blocked = '/blocked',
   NotFound = '*',
 }
 
