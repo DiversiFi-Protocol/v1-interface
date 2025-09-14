@@ -1,59 +1,67 @@
 //Cloudflare middleware for blocking sanctioned countries
 
 export const onRequest: PagesFunction = async (ctx) => {
-  // --- Config ---
-  const BLOCKED = new Set([
+  const blocked = [
     "CU","IR","KP","RU","SY","AF","BY","MM","VE","SS","SD","LY","SO","YE",
-    "NI","CF","CD","CG","ML","ET","IQ","LB","BI","GW","CI","LR","ZW"
-    // Add "US" ONLY while testing from the US, then remove it.
-  ]);
+    "NI","CF","CD","CG","ML","ET","IQ","LB","BI","GW","CI","LR","ZW" // remove "US" unless testing
+  ];
 
   const req = ctx.request as Request & { cf?: any };
   const url = new URL(req.url);
 
-  // Cloudflare geolocation (either header or req.cf.country)
-  const country = (req.headers.get("cf-ipcountry") || req.cf?.country || "").toUpperCase();
-
-  // Helper to ensure Vary + no-store on every response
-  const stamp = (res: Response, extra?: Record<string,string>) => {
-    const out = new Response(res.body, res);
-    // Make cache country-aware and effectively disabled for HTML
-    const prevVary = out.headers.get("Vary");
-    out.headers.set("Vary", prevVary ? prevVary + ", CF-IPCountry" : "CF-IPCountry");
-    out.headers.set("Cache-Control", "no-store");
-    if (extra) for (const [k,v] of Object.entries(extra)) out.headers.set(k, v);
-    return out;
-  };
-
-  const isBlockedCountry = BLOCKED.has(country);
-  const onBlockedPage = url.pathname === "/blocked" || url.pathname.startsWith("/blocked/");
-
-  if (!isBlockedCountry) {
-    // Allowed traffic: pass through, mark headers for debugging
-    const res = await ctx.next();
-    return stamp(res, { "x-country": country || "NONE", "x-blocked": "0" });
-  }
-
-  // ------- Blocked traffic below -------
-  // Allow only the /blocked page and its own assets. Everything else is denied.
-  if (onBlockedPage) {
-    const res = await ctx.next();
-    return stamp(res, { "x-country": country, "x-blocked": "1", "x-allowed-path": "/blocked" });
-  }
-
-  // For any other path, do a clean redirect for navigations, otherwise 403.
+  const country = req.headers.get("cf-ipcountry") || req.cf?.country || "";
   const dest = (req.headers.get("sec-fetch-dest") || "").toLowerCase();
   const mode = (req.headers.get("sec-fetch-mode") || "").toLowerCase();
   const accept = (req.headers.get("accept") || "").toLowerCase();
+  const referer = req.headers.get("referer") || "";
+
+  const isBlocked = blocked.includes(country);
   const isNavigation = dest === "document" || mode === "navigate" || accept.includes("text/html");
-  if (isNavigation) {
-    return stamp(new Response(null, {
+  const onBlockedPage = url.pathname === "/blocked" || url.pathname.startsWith("/blocked/");
+  const isPreflight = req.method === "OPTIONS";
+
+  // helper to append/ensure Vary header
+  const setVary = (res: Response, name: string) => {
+    const prev = res.headers.get("Vary");
+    res.headers.set("Vary", prev ? `${prev}, ${name}` : name);
+  };
+
+  if (!isBlocked || isPreflight) {
+    const res = await ctx.next();
+    const out = new Response(res.body, res);
+    setVary(out, "CF-IPCountry");
+    out.headers.set("x-country", country || "NONE");      // debug
+    out.headers.set("Cache-Control", "no-store");         // avoid sticky HTML
+    return out;
+  }
+
+  // ---- Blocked visitors only ----
+  if (!onBlockedPage && isNavigation) {
+    const out = new Response(null, {
       status: 302,
       headers: {
         Location: "https://app.diversifi.tech/blocked",
-        "Clear-Site-Data": "\"cache\", \"cookies\", \"storage\"" // nuke stale SW/cache on client
+        "Cache-Control": "no-store",
+        "Clear-Site-Data": "\"cache\", \"cookies\", \"storage\"" // nuke stale SW/cache
       }
-    }), { "x-country": country, "x-blocked": "1", "x-redirect": "1" });
+    });
+    setVary(out, "CF-IPCountry");
+    out.headers.set("x-country", country);                // debug
+    return out;
   }
-  return stamp(new Response("Forbidden", { status: 403 }), { "x-country": country, "x-blocked": "1", "x-redirect": "0" });
+
+  // Allow only the /blocked page and its own assets; block everything else
+  if (onBlockedPage) {
+    const res = await ctx.next();
+    const out = new Response(res.body, res);
+    setVary(out, "CF-IPCountry");
+    out.headers.set("Cache-Control", "no-store");
+    out.headers.set("x-country", country);                // debug
+    return out;
+  }
+
+  const out = new Response("Forbidden", { status: 403, headers: { "Cache-Control": "no-store" } });
+  setVary(out, "CF-IPCountry");
+  out.headers.set("x-country", country);                  // debug
+  return out;
 };
