@@ -1,54 +1,67 @@
 //Cloudflare middleware for blocking sanctioned countries
 
-// Cloudflare Pages Function: hard block except /blocked for sanctioned countries
 export const onRequest: PagesFunction = async (ctx) => {
   const blocked = [
     "CU","IR","KP","RU","SY","AF","BY","MM","VE","SS","SD","LY","SO","YE",
-    "NI","CF","CD","CG","ML","ET","IQ","LB","BI","GW","CI","LR","US","ZW"
+    "NI","CF","CD","CG","ML","ET","IQ","LB","BI","GW","CI","LR","ZW" // remove "US" unless testing
   ];
 
   const req = ctx.request as Request & { cf?: any };
   const url = new URL(req.url);
 
   const country = req.headers.get("cf-ipcountry") || req.cf?.country || "";
-  const dest = (req.headers.get("sec-fetch-dest") || "").toLowerCase();   // 'document','script','style','image',...
-  const mode = (req.headers.get("sec-fetch-mode") || "").toLowerCase();   // 'navigate','cors',...
+  const dest = (req.headers.get("sec-fetch-dest") || "").toLowerCase();
+  const mode = (req.headers.get("sec-fetch-mode") || "").toLowerCase();
   const accept = (req.headers.get("accept") || "").toLowerCase();
   const referer = req.headers.get("referer") || "";
 
   const isBlocked = blocked.includes(country);
   const isNavigation = dest === "document" || mode === "navigate" || accept.includes("text/html");
   const onBlockedPage = url.pathname === "/blocked" || url.pathname.startsWith("/blocked/");
+  const isPreflight = req.method === "OPTIONS";
 
-  if (!isBlocked) {
-    // Non-blocked visitors: normal site
-    return ctx.next();
+  // helper to append/ensure Vary header
+  const setVary = (res: Response, name: string) => {
+    const prev = res.headers.get("Vary");
+    res.headers.set("Vary", prev ? `${prev}, ${name}` : name);
+  };
+
+  if (!isBlocked || isPreflight) {
+    const res = await ctx.next();
+    const out = new Response(res.body, res);
+    setVary(out, "CF-IPCountry");
+    out.headers.set("x-country", country || "NONE");      // debug
+    out.headers.set("Cache-Control", "no-store");         // avoid sticky HTML
+    return out;
   }
 
-  // ---- Blocked visitors only below ----
-
-  if (onBlockedPage) {
-    // Allow the /blocked page itself and its *own* assets
-    if (isNavigation) return ctx.next();
-
-    // Allow subresources only when they are for the /blocked page
-    if (url.pathname.startsWith("/blocked/") || referer.startsWith("https://app.diversifi.tech/blocked")) {
-      return ctx.next();
-    }
-
-    // Anything else (e.g., app JS from /assets) is forbidden
-    return new Response("Forbidden", { status: 403, headers: { "Cache-Control": "no-store" } });
-  }
-
-  // For any other path:
-  if (isNavigation) {
-    // Redirect top-level navigation to /blocked (no cache)
-    return new Response(null, {
+  // ---- Blocked visitors only ----
+  if (!onBlockedPage && isNavigation) {
+    const out = new Response(null, {
       status: 302,
-      headers: { Location: "https://app.diversifi.tech/blocked", "Cache-Control": "no-store" },
+      headers: {
+        Location: "https://app.diversifi.tech/blocked",
+        "Cache-Control": "no-store",
+        "Clear-Site-Data": "\"cache\", \"cookies\", \"storage\"" // nuke stale SW/cache
+      }
     });
+    setVary(out, "CF-IPCountry");
+    out.headers.set("x-country", country);                // debug
+    return out;
   }
 
-  // Block all non-navigation requests (JS/CSS/API/img) outside /blocked for blocked users
-  return new Response("Forbidden", { status: 403, headers: { "Cache-Control": "no-store" } });
+  // Allow only the /blocked page and its own assets; block everything else
+  if (onBlockedPage) {
+    const res = await ctx.next();
+    const out = new Response(res.body, res);
+    setVary(out, "CF-IPCountry");
+    out.headers.set("Cache-Control", "no-store");
+    out.headers.set("x-country", country);                // debug
+    return out;
+  }
+
+  const out = new Response("Forbidden", { status: 403, headers: { "Cache-Control": "no-store" } });
+  setVary(out, "CF-IPCountry");
+  out.headers.set("x-country", country);                  // debug
+  return out;
 };
