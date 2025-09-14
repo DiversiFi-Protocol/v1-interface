@@ -46,7 +46,7 @@ export const onRequest: PagesFunction = async (ctx) => {
       status: 302,
       headers: {
         Location: "https://app.diversifi.tech/blocked",
-        "Clear-Site-Data": "\"cache\", \"cookies\", \"storage\""
+        "Clear-Site-Data": "\"cache\""
       }
     }));
   }
