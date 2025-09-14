@@ -30,25 +30,25 @@ export const onRequest: PagesFunction = async (ctx) => {
 
   if (!isBlocked) {
     const res = await ctx.next();
-    return stamp(res, { "x-country": country, "x-blocked": "0" });
+    return res;
   }
 
   // ------- blocked visitors -------
   // If they request /blocked itself, allow it (and we’ll gate assets below).
   if (onBlockedPage) {
     const res = await ctx.next();
-    return stamp(res, { "x-country": country, "x-blocked": "1", "x-allowed-path": "/blocked" });
+    return res;
   }
 
   // If it's a top-level navigation elsewhere, bounce to /blocked
   if (isNavigation) {
-    return stamp(new Response(null, {
+    return (new Response(null, {
       status: 302,
       headers: {
         Location: "https://app.diversifi.tech/blocked",
         "Clear-Site-Data": "\"cache\", \"cookies\", \"storage\""
       }
-    }), { "x-country": country, "x-blocked": "1", "x-redirect": "1" });
+    }));
   }
 
   // Subresources (CSS/JS/img/fonts) are only allowed when the Referer is the /blocked page
@@ -64,9 +64,9 @@ export const onRequest: PagesFunction = async (ctx) => {
 
   if (allowSubresource) {
     const res = await ctx.next();
-    return stamp(res, { "x-country": country, "x-blocked": "1", "x-asset": "blocked-ok" });
+    return res;
   }
 
   // Everything else is forbidden
-  return stamp(new Response("Forbidden", { status: 403 }), { "x-country": country, "x-blocked": "1", "x-asset": "blocked-deny" });
+  return new Response("Forbidden", { status: 403 });
 };
