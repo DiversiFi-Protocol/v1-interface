@@ -30,7 +30,6 @@ export const onRequest: PagesFunction = async (ctx) => {
     const res = await ctx.next();
     const out = new Response(res.body, res);
     setVary(out, "CF-IPCountry");
-    out.headers.set("x-country", country || "NONE");      // debug
     out.headers.set("Cache-Control", "no-store");         // avoid sticky HTML
     return out;
   }
@@ -46,7 +45,6 @@ export const onRequest: PagesFunction = async (ctx) => {
       }
     });
     setVary(out, "CF-IPCountry");
-    out.headers.set("x-country", country);                // debug
     return out;
   }
 
@@ -56,12 +54,10 @@ export const onRequest: PagesFunction = async (ctx) => {
     const out = new Response(res.body, res);
     setVary(out, "CF-IPCountry");
     out.headers.set("Cache-Control", "no-store");
-    out.headers.set("x-country", country);                // debug
     return out;
   }
 
   const out = new Response("Forbidden", { status: 403, headers: { "Cache-Control": "no-store" } });
   setVary(out, "CF-IPCountry");
-  out.headers.set("x-country", country);                  // debug
   return out;
 };
