@@ -3,19 +3,20 @@
 export const onRequest: PagesFunction = async (ctx) => {
   const blocked = [
     "CU","IR","KP","RU","SY","AF","BY","MM","VE","SS","SD","LY","SO","YE",
-    "NI","CF","CD","CG","ML","ET","IQ","LB","BI","GW","CI","LR","US","ZW"
+    "NI","CF","CD","CG","ML","ET","IQ","LB","BI","GW","CI","LR","US","ZW" // keep "US" only for testing
   ];
 
-  const country = (ctx.request as any).cf?.country || "";
-  const url = new URL(ctx.request.url);
-  return Response.redirect("https://google.com", 400)
-  // avoid loops; let CORS preflights pass
+  const req = ctx.request as Request & { cf?: any };
+  const country = req.headers.get("cf-ipcountry") || req.cf?.country || "";
+  const url = new URL(req.url);
+
   if (
     blocked.includes(country) &&
     !url.pathname.startsWith("/blocked") &&
-    ctx.request.method !== "OPTIONS"
+    req.method !== "OPTIONS"
   ) {
-    return Response.redirect("https://app.diversifi.tech/blocked", 451);
+    // valid redirect statuses: 301/302/303/307/308
+    return Response.redirect("https://app.diversifi.tech/blocked", 302);
   }
 
   return ctx.next();
