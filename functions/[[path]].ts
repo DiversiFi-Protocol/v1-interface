@@ -1,3 +1,5 @@
+//Cloudflare middleware for blocking sanctioned countries
+
 export const onRequest: PagesFunction = async (ctx) => {
   const blocked = [
     "CU","IR","KP","RU","SY","AF","BY","MM","VE","SS","SD","LY","SO","YE",
