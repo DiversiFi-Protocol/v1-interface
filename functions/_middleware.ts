@@ -13,7 +13,7 @@ export const onRequest: PagesFunction = async (ctx) => {
     !url.pathname.startsWith("/blocked") &&
     ctx.request.method !== "OPTIONS"
   ) {
-    return Response.redirect("https://app.diversifi.tech/blocked", 302);
+    return Response.redirect("https://app.diversifi.tech/blocked", 451);
   }
 
   return ctx.next();
