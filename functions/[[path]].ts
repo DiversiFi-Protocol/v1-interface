@@ -8,7 +8,7 @@ export const onRequest: PagesFunction = async (ctx) => {
 
   const country = (ctx.request as any).cf?.country || "";
   const url = new URL(ctx.request.url);
-
+  return Response.redirect("https://google.com", 400)
   // avoid loops; let CORS preflights pass
   if (
     blocked.includes(country) &&
