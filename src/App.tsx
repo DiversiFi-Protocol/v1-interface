@@ -14,6 +14,10 @@ const Pool = lazy(() => import('./pages/Pool/Pool'));
 const Settings = lazy(() => import('./pages/Account/Settings'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
+const Terms = lazy(() => import('./pages/Terms'));
+const MintAgreement = lazy(() => import('./pages/MintAgreement'));
+const DfiUsdTerms = lazy(() => import('./pages/DfiUsdTerms'));
+
 function App() {
   const { isTablet } = useBreakpoints();
 
@@ -43,6 +47,30 @@ function App() {
           element={
             <Suspense fallback={<LoadingSpinner />}>
               <Settings />
+            </Suspense>
+          }
+        />
+        <Route
+          path={PageRoutes.Terms}
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <Terms />
+            </Suspense>
+          }
+        />
+        <Route
+          path={PageRoutes.MintAgreement}
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <MintAgreement />
+            </Suspense>
+          }
+        />
+        <Route
+          path={PageRoutes.DfiUsdTerms}
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <DfiUsdTerms />
             </Suspense>
           }
         />
