@@ -1,4 +1,4 @@
-import { ScrollIcon, TerminalSquareIcon } from 'lucide-react';
+import { ScrollIcon } from 'lucide-react';
 
 import { cn } from '@/lib/tw';
 
