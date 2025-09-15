@@ -10,7 +10,7 @@ import SidebarLayout from './layouts/SidebarLayout';
 import Blocked from './pages/Blocked';
 import GeneralTermsPage from './pages/Terms/GeneralTermsPage';
 import DFIUSDTermsPage from './pages/Terms/DFiUSDTermsPage';
-import DFiUSDMintUserAgreementPage from './pages/Terms/DFiUSDMintUserAgreementPage';
+import DFiUSDMintUserTermsPage from './pages/Terms/DFiUSDMintUserTermsPage';
 
 const Swap = lazy(() => import('./pages/Pool/Swap'));
 const Pool = lazy(() => import('./pages/Pool/Pool'));
@@ -78,7 +78,7 @@ function App() {
         path={PageRoutes.DFiUSDMintUserTerms}
         element={
           <Suspense fallback={<LoadingSpinner />}>
-            <DFiUSDMintUserAgreementPage />
+            <DFiUSDMintUserTermsPage />
           </Suspense>
         }
       />
