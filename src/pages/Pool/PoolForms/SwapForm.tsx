@@ -68,7 +68,7 @@ export default function SwapForm({
     assetIn: inputToken,
     assetOut: outputToken,
     amount: debouncedInputAmount,
-    minAmountOut: amountOutBigInt,
+    minAmountOut: amountOutBigInt ?? 0n * 9995n / 10000n, //5 bps slippage tolerance
   });
 
   const signer = useWalletClient();
