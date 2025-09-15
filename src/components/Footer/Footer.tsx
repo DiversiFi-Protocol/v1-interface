@@ -3,12 +3,27 @@ import { useBreakpoints } from '@/hooks/useBreakpoints';
 import { LearnPopover } from '@/components/LearnPopover';
 import { SocialPopover } from '@/components/SocialPopover';
 
-import { cn } from '@/lib/tw';
-
 import { ChainSelectorPopover } from './ChainSelectorPopover';
+import { TermsPopover } from '../TermsPopover';
 
 export function Footer() {
   const { isMobile } = useBreakpoints();
+
+  const terms = isMobile ? (
+    <TermsPopover />
+  ) : (
+    <>
+      <a href="/terms/GeneralTerms" target="_blank" rel="noopener noreferrer">
+        General Terms
+      </a>
+      <a href="/terms/DFiUSDTerms" target="_blank" rel="noopener noreferrer">
+        DFiUSD Terms
+      </a>
+      <a href="/terms/DFiUSDMintUserTerms" target="_blank" rel="noopener noreferrer">
+        DFiUSD Mint User Agreement
+      </a>
+    </>
+  );
 
   const learnMore = isMobile ? (
     <LearnPopover />
@@ -58,14 +73,7 @@ export function Footer() {
         <div className="row px-6 text-xs gap-2">
           {social}
           {learnMore}
-          <a
-            className={cn({ 'py-2': isMobile, 'px-4': isMobile })}
-            href="https://diversifi.tech/terms"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Terms
-          </a>
+          {terms}
         </div>
       </div>
     </footer>
