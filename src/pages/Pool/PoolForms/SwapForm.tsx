@@ -64,15 +64,11 @@ export default function SwapForm({
 
   const { amountOutBigInt, amountOut = '' } = swapQuote?.data ?? {};
 
-    if (typeof amountOutBigInt === 'undefined') {
-    throw new Error("failed to get swap quote")
-  }
-
   const stepsQuery = useSwapSteps({
     assetIn: inputToken,
     assetOut: outputToken,
     amount: debouncedInputAmount,
-    minAmountOut: amountOutBigInt * 9998n / 10000n, //2 bps slippage tolerance
+    minAmountOut: amountOutBigInt ?? 0n * 9998n / 10000n, //2 bps slippage tolerance
   });
 
   const signer = useWalletClient();
