@@ -8,6 +8,9 @@ import { useBreakpoints } from './hooks/useBreakpoints';
 import RootLayout from './layouts/RootLayout';
 import SidebarLayout from './layouts/SidebarLayout';
 import Blocked from './pages/Blocked';
+import GeneralTermsPage from './pages/Terms/GeneralTermsPage';
+import DFIUSDTermsPage from './pages/Terms/DFiUSDTermsPage';
+import DFiUSDMintUserTermsPage from './pages/Terms/DFiUSDMintUserTermsPage';
 
 const Swap = lazy(() => import('./pages/Pool/Swap'));
 const Pool = lazy(() => import('./pages/Pool/Pool'));
@@ -88,6 +91,30 @@ function App() {
         element={
           <Suspense fallback={<LoadingSpinner />}>
             <Blocked />
+          </Suspense>
+        }
+      />
+      <Route
+        path={PageRoutes.GeneralTerms}
+        element={
+          <Suspense fallback={<LoadingSpinner />}>
+            <GeneralTermsPage />
+          </Suspense>
+        }
+      />
+      <Route
+        path={PageRoutes.DFiUSDMintUserTerms}
+        element={
+          <Suspense fallback={<LoadingSpinner />}>
+            <DFiUSDMintUserTermsPage />
+          </Suspense>
+        }
+      />
+      <Route
+        path={PageRoutes.DFiUSDTerms}
+        element={
+          <Suspense fallback={<LoadingSpinner />}>
+            <DFIUSDTermsPage />
           </Suspense>
         }
       />
