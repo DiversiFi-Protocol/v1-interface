@@ -42,7 +42,7 @@ export function useSwapSteps({
   assetIn: SupportedAsset;
   assetOut: SupportedAsset;
   amount: string;
-  minAmountOut?: bigint;
+  minAmountOut: bigint;
 }) {
   const { address: assetInAddress, decimals: assetInDecimals } = assetIn;
   const { address: assetOutAddress } = assetOut;
@@ -250,7 +250,7 @@ export function useSwapSteps({
       inputToken: assetInAddress,
       outputToken: assetOutAddress,
       exactInput: amountBigInt,
-      minimumOutput: minAmountOut ?? 0n, // minAmountOut should never be undefined due to the query's enabled condition
+      minimumOutput: minAmountOut, // minAmountOut should never be undefined due to the query's enabled condition
     });
 
     steps.push({
