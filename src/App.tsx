@@ -3,23 +3,19 @@ import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import LoadingSpinner from './components/LoadingSpinner';
-import { PageRoutes } from './constants/routes';
+import { PageRoutes, TermsRoutes } from './constants/routes';
 import { useBreakpoints } from './hooks/useBreakpoints';
 import RootLayout from './layouts/RootLayout';
 import SidebarLayout from './layouts/SidebarLayout';
 import Blocked from './pages/Blocked';
-import GeneralTermsPage from './pages/Terms/GeneralTermsPage';
-import DFIUSDTermsPage from './pages/Terms/DFiUSDTermsPage';
 import DFiUSDMintUserTermsPage from './pages/Terms/DFiUSDMintUserTermsPage';
+import DFIUSDTermsPage from './pages/Terms/DFiUSDTermsPage';
+import GeneralTermsPage from './pages/Terms/GeneralTermsPage';
 
 const Swap = lazy(() => import('./pages/Pool/Swap'));
 const Pool = lazy(() => import('./pages/Pool/Pool'));
 const Settings = lazy(() => import('./pages/Account/Settings'));
 const NotFound = lazy(() => import('./pages/NotFound'));
-
-const Terms = lazy(() => import('./pages/Terms'));
-const MintAgreement = lazy(() => import('./pages/MintAgreement'));
-const DfiUsdTerms = lazy(() => import('./pages/DfiUsdTerms'));
 
 function App() {
   const { isTablet } = useBreakpoints();
@@ -54,30 +50,6 @@ function App() {
           }
         />
         <Route
-          path={PageRoutes.Terms}
-          element={
-            <Suspense fallback={<LoadingSpinner />}>
-              <Terms />
-            </Suspense>
-          }
-        />
-        <Route
-          path={PageRoutes.MintAgreement}
-          element={
-            <Suspense fallback={<LoadingSpinner />}>
-              <MintAgreement />
-            </Suspense>
-          }
-        />
-        <Route
-          path={PageRoutes.DfiUsdTerms}
-          element={
-            <Suspense fallback={<LoadingSpinner />}>
-              <DfiUsdTerms />
-            </Suspense>
-          }
-        />
-        <Route
           path={PageRoutes.NotFound}
           element={
             <Suspense fallback={<LoadingSpinner />}>
@@ -95,7 +67,7 @@ function App() {
         }
       />
       <Route
-        path={PageRoutes.GeneralTerms}
+        path={TermsRoutes.GeneralTerms}
         element={
           <Suspense fallback={<LoadingSpinner />}>
             <GeneralTermsPage />
@@ -103,7 +75,7 @@ function App() {
         }
       />
       <Route
-        path={PageRoutes.DFiUSDMintUserTerms}
+        path={TermsRoutes.DFiUSDMintUserTerms}
         element={
           <Suspense fallback={<LoadingSpinner />}>
             <DFiUSDMintUserTermsPage />
@@ -111,7 +83,7 @@ function App() {
         }
       />
       <Route
-        path={PageRoutes.DFiUSDTerms}
+        path={TermsRoutes.DFiUSDTerms}
         element={
           <Suspense fallback={<LoadingSpinner />}>
             <DFIUSDTermsPage />
