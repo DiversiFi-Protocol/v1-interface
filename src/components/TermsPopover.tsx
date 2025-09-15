@@ -20,7 +20,7 @@ export function TermsPopover({ className }: { className?: string }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <TerminalSquareIcon className="text-muted-foreground w-4 h-4" />
+          <ScrollIcon className="text-muted-foreground w-4 h-4" />
           General Terms
         </a>
         <a
