@@ -45,12 +45,19 @@ export default function PoolHeader({ className }: { className?: string }) {
             <h1 className="text-2xl font-bold mr-1">DFiUSD</h1>
 
             <div className="row gap-1 text-sm sm:text-base">
+              {truncateAddress(BACKED_TOKEN.address)}
               <a
-                className="row gap-1 whitespace-nowrap"
+                className="row"
                 href={`https://etherscan.io/address/${BACKED_TOKEN.address}`}
                 target="_blank"
               >
-                {truncateAddress(BACKED_TOKEN.address)}
+                <Button
+                  className="[&_svg]:size-3.5 size-4 min-w-4 min-h-4 p-0"
+                  variant="ghost"
+                  size="icon"
+                >
+                  <ArrowUpRightFromSquare />
+                </Button>
               </a>
               <Button
                 className="[&_svg]:size-4 size-5 min-w-5 min-h-5 p-0"
@@ -59,15 +66,6 @@ export default function PoolHeader({ className }: { className?: string }) {
                 onClick={() => onCopy(BACKED_TOKEN.address, 'pool address')}
               >
                 <Copy />
-              </Button>
-
-              <Button
-                className="[&_svg]:size-3.5 size-4 min-w-4 min-h-4 p-0"
-                variant="ghost"
-                size="icon"
-                onClick={() => onCopy(window.location.href, 'pool link')}
-              >
-                <ArrowUpRightFromSquare />
               </Button>
             </div>
           </div>
@@ -104,13 +102,22 @@ export default function PoolHeader({ className }: { className?: string }) {
         <div className="flexColumn text-sm gap-2 sm:row sm:text-base">
           <span className="text-muted-foreground">Pool:</span>
           <div className="row gap-1">
+            {truncateAddress(BACKING_POOL_ADDRESS)}
+
             <a
-              className="row gap-1 whitespace-nowrap"
+              className="row"
               href={`https://etherscan.io/address/${BACKING_POOL_ADDRESS}`}
               target="_blank"
             >
-              {truncateAddress(BACKING_POOL_ADDRESS)}
+              <Button
+                className="[&_svg]:size-3.5 size-4 min-w-4 min-h-4 p-0"
+                variant="ghost"
+                size="icon"
+              >
+                <ArrowUpRightFromSquare />
+              </Button>
             </a>
+
             <Button
               className="[&_svg]:size-4 size-5 min-w-5 min-h-5 p-0"
               variant="ghost"
@@ -118,15 +125,6 @@ export default function PoolHeader({ className }: { className?: string }) {
               onClick={() => onCopy(BACKING_POOL_ADDRESS, 'pool address')}
             >
               <Copy />
-            </Button>
-
-            <Button
-              className="[&_svg]:size-3.5 size-4 min-w-4 min-h-4 p-0"
-              variant="ghost"
-              size="icon"
-              onClick={() => onCopy(window.location.href, 'pool link')}
-            >
-              <ArrowUpRightFromSquare />
             </Button>
           </div>
           <div className="flexColumn sm:row gap-1">
