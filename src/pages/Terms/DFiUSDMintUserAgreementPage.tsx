@@ -679,7 +679,7 @@ export default function DFiUSDMintUserAgreementPage() {
 
 const legalStyles = classNames(
   "mx-auto max-w-[54rem]",
-  "text-white text-justify",
+  "text-black text-justify",
   "[&_a]:text-primary [&_a]:underline",
   "[&_p]:text-sm [&_p]:leading-6 [&_p]:mb-8 [&_p]:font-normal",
   "[&_ul]:list-none [&_ul]:pl-4 [&_ul]:my-4 [&_ul]:text-sm [&_ul]:leading-6 [&_ul]:font-normal",
