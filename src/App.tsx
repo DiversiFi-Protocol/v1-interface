@@ -75,7 +75,7 @@ function App() {
         }
       />
       <Route
-        path={PageRoutes.DFiUSDMintUserAgreement}
+        path={PageRoutes.DFiUSDMintUserTerms}
         element={
           <Suspense fallback={<LoadingSpinner />}>
             <DFiUSDMintUserAgreementPage />

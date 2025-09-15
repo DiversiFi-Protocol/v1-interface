@@ -4,6 +4,6 @@ export enum PageRoutes {
   Blocked = '/blocked',
   GeneralTerms = '/terms/GeneralTerms',
   DFiUSDTerms = '/terms/DFiUSDTerms',
-  DFiUSDMintUserAgreement = '/terms/DFiUSDMintUserAgreement',
+  DFiUSDMintUserTerms = '/terms/DFiUSDMintUserTerms',
   NotFound = '*',
 }
