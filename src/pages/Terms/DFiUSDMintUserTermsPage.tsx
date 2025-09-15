@@ -1,6 +1,6 @@
 import classNames from "classnames";
 
-export default function DFiUSDMintUserAgreementPage() {
+export default function DFiUSDMintUserTermsPage() {
   return (
     <main>
       <article className="p-8 pt-20">
