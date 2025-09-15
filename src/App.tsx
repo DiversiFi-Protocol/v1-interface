@@ -1,9 +1,9 @@
 import { Suspense, lazy } from 'react';
 
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import LoadingSpinner from './components/LoadingSpinner';
-import { PageRoutes, PoolRoutes } from './constants/routes';
+import { PageRoutes } from './constants/routes';
 import { useBreakpoints } from './hooks/useBreakpoints';
 import RootLayout from './layouts/RootLayout';
 import SidebarLayout from './layouts/SidebarLayout';
@@ -19,12 +19,10 @@ function App() {
 
   return (
     <Routes>
-      <Route element={<RootLayout />}>
-        <Route path={PageRoutes.Home} element={<Navigate to={PageRoutes.Pool} replace />} />
-      </Route>
+      <Route element={<RootLayout />}></Route>
       <Route element={isTablet ? <RootLayout /> : <SidebarLayout />}>
         <Route
-          path={PageRoutes.Pool}
+          path={PageRoutes.Home}
           element={
             <Suspense fallback={<LoadingSpinner />}>
               <Pool />
@@ -32,14 +30,13 @@ function App() {
           }
         >
           <Route
-            path={PoolRoutes.Swap}
+            path={PageRoutes.Home}
             element={
               <Suspense fallback={<LoadingSpinner />}>
                 <Swap />
               </Suspense>
             }
           />
-          <Route path={PageRoutes.Pool} element={<Navigate to={PoolRoutes.Swap} replace />} />
         </Route>
         <Route
           path={PageRoutes.Account}
