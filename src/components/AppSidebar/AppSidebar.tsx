@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { PageRoutes, PoolRoutes } from '@/constants/routes';
+import { PageRoutes } from '@/constants/routes';
 
 import { useTheme } from '@/providers/ThemeProvider';
 
@@ -27,7 +27,7 @@ export function AppSidebar() {
   const pools = [
     {
       title: 'DFiUSD',
-      url: PoolRoutes.Swap,
+      url: PageRoutes.Home,
     },
   ];
 
@@ -41,13 +41,13 @@ export function AppSidebar() {
   return (
     <Sidebar className="border-r-1 border-border border-solid">
       <SidebarHeader className="px-4 py-2 mb-4">
-        <a href="https://diversifi.tech">
+        <Link to={PageRoutes.Home}>
           <img
             src={theme === 'dark' ? '/brand/logo-text-light.svg' : '/brand/logo-text-dark.svg'}
             alt="DiversiFi"
             className="w-auto min-w-8 h-8"
           />
-        </a>
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
