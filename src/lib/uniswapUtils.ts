@@ -151,6 +151,9 @@ export function prepareSwapExactInputSingle({
   deadline?: bigint;
   fee?: SwapFee;
 }): SingleSwapWrite {
+  if(minimumOutput == 0n) {
+    throw new Error("minimum swap output cannot be zero")
+  }
   const poolKey = getPoolKey({ token0: inputToken, token1: outputToken, fee });
   const zeroForOne = compareAddresses(inputToken, outputToken) < 0;
 
