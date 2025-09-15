@@ -20,6 +20,7 @@ import { LearnPopover } from '../LearnPopover';
 import { SocialPopover } from '../SocialPopover';
 import ThemeToggle from '../ThemeToggle';
 import { ConnectButton } from './ConnectButton';
+import { TermsPopover } from '../TermsPopover';
 
 export function AppSidebar() {
   const { theme } = useTheme();
@@ -80,12 +81,7 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter className="bg-border pt-0 pb-[1px] pl-0 pr-0 flexColumn gap-[1px]">
         <div className="row bg-sidebar p-2 justify-evenly">
-          <a
-            className="text-center font-normal flex-1 text-xs text-muted-foreground hover:underline border-r border-border border-solid"
-            href="https://diversifi.tech/terms"
-          >
-            Terms
-          </a>
+          <TermsPopover className="text-center h-auto text-xs font-normal text-muted-foreground flex-1 p-0 border-r border-t-0 border-b-0 border-l-0 hover:brightness-100 rounded-none border-border border-solid hover:text-sidebar-accent-foreground" />
           <LearnPopover className="text-center h-auto text-xs font-normal text-muted-foreground flex-1 p-0 border-r border-t-0 border-b-0 border-l-0 hover:brightness-100 rounded-none border-border border-solid hover:text-sidebar-accent-foreground" />
           <SocialPopover className="text-center h-auto text-xs font-normal text-muted-foreground flex-1 p-0 rounded-none hover:text-sidebar-accent-foreground hover:brightness-100" />
         </div>
