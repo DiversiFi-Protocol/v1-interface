@@ -17,10 +17,11 @@ import {
 } from '@/components/ui/sidebar';
 
 import { LearnPopover } from '../LearnPopover';
+import { LegalPopover } from '../LegalPopover';
 import { SocialPopover } from '../SocialPopover';
+import { TermsPopover } from '../TermsPopover';
 import ThemeToggle from '../ThemeToggle';
 import { ConnectButton } from './ConnectButton';
-import { TermsPopover } from '../TermsPopover';
 
 export function AppSidebar() {
   const { theme } = useTheme();

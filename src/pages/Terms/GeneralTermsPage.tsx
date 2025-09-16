@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { cn } from '@/lib/tw';
 
 export default function GeneralTermsPage() {
   return (
@@ -11,11 +11,11 @@ export default function GeneralTermsPage() {
 
           <p>
             These Terms of Service (these “Terms”) explain the terms and conditions by which you may
-            access and use our website, https://diversifi.tech
-            (the “Website”), operated by or on behalf of Diversifi Stables, Inc., inclusive with its
-            affiliates, (the “Company”, “we” or “us”), our App (as defined below), and any other
-            Services provided by the Company, including any related content, tools, documentation,
-            features and functionality collectively the “Services”.
+            access and use our website, https://diversifi.tech (the “Website”), operated by or on
+            behalf of Diversifi Stables, Inc., inclusive with its affiliates, (the “Company”, “we”
+            or “us”), our App (as defined below), and any other Services provided by the Company,
+            including any related content, tools, documentation, features and functionality
+            collectively the “Services”.
           </p>
 
           <p>
@@ -34,7 +34,8 @@ export default function GeneralTermsPage() {
           </p>
 
           <p>
-            For terms applicable to DFiUSD, please refer to the relevant DFiUSD Terms and Conditions.
+            For terms applicable to DFiUSD, please refer to the relevant DFiUSD Terms and
+            Conditions.
           </p>
 
           <h3>
@@ -56,21 +57,21 @@ export default function GeneralTermsPage() {
           </p>
 
           <p>
-            Documentation relevant to the Services, the App, and the Protocol are available at{" "}
-            <a href="https://docs.diversifi.tech">docs.diversifi.tech</a> (the “Documentation”). The Protocol itself is not part of the
-            Services, and your use of the Protocol is entirely at your own risk. Additionally, the
-            third party technologies required to be used or interacted with in order to interact
-            with the Protocol, including but not limited to a Wallet (as defined below, and
-            collectively the “Third-Party Tools”), are not part of the Services, and your use of
-            such Third-Party Tools are entirely at your own risk. The App is separate and distinct
-            from the Protocol and any Third-Party Tools and is not essential for the purpose of
-            accessing or otherwise interacting with the Protocol. The App merely displays blockchain
-            data and provides a web application that reduces the complexity of using the Third-Party
-            Tools to otherwise interact with the Protocol. Activity on the Protocol is conducted via
-            permissionless smart contracts as well as certain aspects of off-chain infrastructure
-            detailed in the Documentation and maintained by the Foundation and its affiliates, and
-            users or other developers are free to create their own interfaces to interact with the
-            Protocol.
+            Documentation relevant to the Services, the App, and the Protocol are available at{' '}
+            <a href="https://docs.diversifi.tech">docs.diversifi.tech</a> (the “Documentation”). The
+            Protocol itself is not part of the Services, and your use of the Protocol is entirely at
+            your own risk. Additionally, the third party technologies required to be used or
+            interacted with in order to interact with the Protocol, including but not limited to a
+            Wallet (as defined below, and collectively the “Third-Party Tools”), are not part of the
+            Services, and your use of such Third-Party Tools are entirely at your own risk. The App
+            is separate and distinct from the Protocol and any Third-Party Tools and is not
+            essential for the purpose of accessing or otherwise interacting with the Protocol. The
+            App merely displays blockchain data and provides a web application that reduces the
+            complexity of using the Third-Party Tools to otherwise interact with the Protocol.
+            Activity on the Protocol is conducted via permissionless smart contracts as well as
+            certain aspects of off-chain infrastructure detailed in the Documentation and maintained
+            by the Foundation and its affiliates, and users or other developers are free to create
+            their own interfaces to interact with the Protocol.
           </p>
 
           <p>
@@ -158,8 +159,8 @@ export default function GeneralTermsPage() {
           </h3>
 
           <p>
-            You must be 18 years of age or older and not be a Prohibited Person to use the
-            Services. A “Prohibited Person” is any person or entity that is:
+            You must be 18 years of age or older and not be a Prohibited Person to use the Services.
+            A “Prohibited Person” is any person or entity that is:
           </p>
 
           <ul>
@@ -298,16 +299,19 @@ export default function GeneralTermsPage() {
               organizing, promoting or facilitating violence or criminal or harmful activities,
               defamatory, obscene or otherwise objectionable;
             </li>
-            <li>violate any applicable law or regulation in connection with your access to or use of the Services;</li>
+            <li>
+              violate any applicable law or regulation in connection with your access to or use of
+              the Services;
+            </li>
             <li>access or use the Services in any way not expressly permitted by these Terms.</li>
           </ul>
 
           <p>
             You are responsible for your interactions with other users on or through the Services.
-            While we reserve the right to monitor interactions between users, we are not obligated to
-            do so, and we cannot be held liable for your interactions with other users, or for any
-            user’s actions or inactions. If you have a dispute with one or more users, you release
-            us (and our affiliates and subsidiaries, and our and their respective officers,
+            While we reserve the right to monitor interactions between users, we are not obligated
+            to do so, and we cannot be held liable for your interactions with other users, or for
+            any user’s actions or inactions. If you have a dispute with one or more users, you
+            release us (and our affiliates and subsidiaries, and our and their respective officers,
             directors, employees and agents) from claims, demands and damages (actual and
             consequential) of every kind and nature, known and unknown, arising out of or in any way
             connected with such disputes. In entering into this release you expressly waive any
@@ -324,57 +328,58 @@ export default function GeneralTermsPage() {
             The Services, including their “look and feel” (e.g., text, graphics, images, logos),
             proprietary content, information and other materials, are protected under copyright,
             trademark and other intellectual property laws. You agree that the Company and/or its
-            licensors own all right, title and interest in and to the Services (including any and all
-            intellectual property rights therein) and you agree not to take any action(s) inconsistent
-            with such ownership interests. We and our licensors reserve all rights in connection with
-            the Services and its content, including, without limitation, the exclusive right to create
-            derivative works.
+            licensors own all right, title and interest in and to the Services (including any and
+            all intellectual property rights therein) and you agree not to take any action(s)
+            inconsistent with such ownership interests. We and our licensors reserve all rights in
+            connection with the Services and its content, including, without limitation, the
+            exclusive right to create derivative works.
           </p>
 
           <p>
             The Company’s name, trademarks and logos and all related names, logos, product and
             service names, designs and slogans are trademarks of the Company or its affiliates or
-            licensors. Other names, logos, product and service names, designs and slogans that appear
-            on the Services are the property of their respective owners, who may or may not be
-            affiliated with, connected to, or sponsored by us.
+            licensors. Other names, logos, product and service names, designs and slogans that
+            appear on the Services are the property of their respective owners, who may or may not
+            be affiliated with, connected to, or sponsored by us.
           </p>
 
           <p>
             We welcome feedback, bug reports, comments and suggestions for improvements to the
             Services (“Feedback”). You acknowledge and expressly agree that any contribution of
             Feedback does not and will not give or grant you any right, title or interest in the
-            Services or in any such Feedback. All Feedback becomes the sole and exclusive property of
-            the Company, and the Company may use and disclose Feedback in any manner and for any
-            purpose whatsoever without further notice or compensation to you and without retention by
-            you of any proprietary or other right or claim. You hereby assign to the Company any and
-            all right, title and interest (including, but not limited to, any patent, copyright,
+            Services or in any such Feedback. All Feedback becomes the sole and exclusive property
+            of the Company, and the Company may use and disclose Feedback in any manner and for any
+            purpose whatsoever without further notice or compensation to you and without retention
+            by you of any proprietary or other right or claim. You hereby assign to the Company any
+            and all right, title and interest (including, but not limited to, any patent, copyright,
             trade secret, trademark, show-how, know-how, moral rights and any and all other
             intellectual property right) that you may have in and to any and all Feedback.
           </p>
 
           <p>
             The Services, through the App, may provide data relevant to the operation of one or more
-            Third-Party Protocols. The Services may display, include or make available content, data,
-            information, applications or materials from third parties (“Third-Party Materials”) or
-            provide links to certain third party websites. The Company does not endorse any
-            Third-Party Materials or the use of any provider of any Third-Party Protocols. You agree
-            that your access and use of such Third-Party Protocols and Third-Party Materials (e.g.,
-            services like Telegram or protocols like The Open Network (TON)) is governed solely by
-            the terms and conditions of such Third-Party Protocols and Third-Party Materials, as
-            applicable. The Company is not responsible or liable for, and make no representations as
-            to any aspect of such Third-Party Materials and Third-Party Protocols, including, without
-            limitation, their content, operation, or the manner in which they handle, protect, manage
-            or process data or any interaction between you and the provider of such Third-Party
-            Protocols. The Company is not responsible for examining or evaluating the content,
-            accuracy, completeness, availability, timeliness, validity, copyright compliance,
-            legality, decency, quality, risk, functionality, safety, or any other aspect of such
-            Third Party Protocols or Third Party Materials or websites. You irrevocably waive any
-            claim against the Company with respect to such Third-Party Protocols and Third-Party
-            Materials. We are not liable for any damage or loss caused or alleged to be caused by or
-            in connection with your enablement, access or use of any such Third-Party Protocols or
-            Third-Party Materials, or your reliance on the privacy practices, data security processes
-            or other policies of such Third-Party Protocols. Third-Party Protocols, Third-Party
-            Materials and links to other websites are provided solely as a convenience to you.
+            Third-Party Protocols. The Services may display, include or make available content,
+            data, information, applications or materials from third parties (“Third-Party
+            Materials”) or provide links to certain third party websites. The Company does not
+            endorse any Third-Party Materials or the use of any provider of any Third-Party
+            Protocols. You agree that your access and use of such Third-Party Protocols and
+            Third-Party Materials (e.g., services like Telegram or protocols like The Open Network
+            (TON)) is governed solely by the terms and conditions of such Third-Party Protocols and
+            Third-Party Materials, as applicable. The Company is not responsible or liable for, and
+            make no representations as to any aspect of such Third-Party Materials and Third-Party
+            Protocols, including, without limitation, their content, operation, or the manner in
+            which they handle, protect, manage or process data or any interaction between you and
+            the provider of such Third-Party Protocols. The Company is not responsible for examining
+            or evaluating the content, accuracy, completeness, availability, timeliness, validity,
+            copyright compliance, legality, decency, quality, risk, functionality, safety, or any
+            other aspect of such Third Party Protocols or Third Party Materials or websites. You
+            irrevocably waive any claim against the Company with respect to such Third-Party
+            Protocols and Third-Party Materials. We are not liable for any damage or loss caused or
+            alleged to be caused by or in connection with your enablement, access or use of any such
+            Third-Party Protocols or Third-Party Materials, or your reliance on the privacy
+            practices, data security processes or other policies of such Third-Party Protocols.
+            Third-Party Protocols, Third-Party Materials and links to other websites are provided
+            solely as a convenience to you.
           </p>
 
           <h3>
@@ -387,34 +392,34 @@ export default function GeneralTermsPage() {
             AVAILABLE” basis. Without limiting the foregoing, to the maximum extent permitted under
             applicable law, the Company, its parents, affiliates, related companies, officers,
             directors, employees, agents, representatives, partners and licensors (the “Company
-            Entities”), and Multisig Members (as defined below){" "}
+            Entities”), and Multisig Members (as defined below){' '}
             <strong>
               DISCLAIM ALL WARRANTIES AND CONDITIONS, WHETHER EXPRESS, IMPLIED OR STATUTORY,
-              INCLUDING WITHOUT LIMITATION ANY WARRANTIES RELATING TO TITLE, MERCHANTABILITY, FITNESS
-              FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, USAGE, QUALITY, PERFORMANCE, SUITABILITY OR
-              FITNESS OF THE SERVICES AND THE PROTOCOL FOR ANY PARTICULAR PURPOSE, OR AS TO THE
-              ACCURACY, QUALITY, SEQUENCE, RELIABILITY, WORKMANSHIP OR TECHNICAL CODING THEREOF, OR
-              THE ABSENCE OF ANY DEFECTS THEREIN WHETHER LATENT OR PATENT.
-            </strong>{" "}
-            The Company Entities and MultiSig Members make no warranty or representation and disclaim
-            all responsibility and liability for: (a) the completeness, accuracy, availability,
-            timeliness, security or reliability of the Services and the Protocol; (b) any harm to
-            your computer system, loss of data, or other harm that results from your access to or use
-            of the Services or the Protocol; (c) the operation or compatibility with any other
-            application or any particular system or device, including any Wallets; and (d) whether
-            the Services or the Protocol will meet your requirements or be available on an
-            uninterrupted, secure or error-free basis.
+              INCLUDING WITHOUT LIMITATION ANY WARRANTIES RELATING TO TITLE, MERCHANTABILITY,
+              FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, USAGE, QUALITY, PERFORMANCE,
+              SUITABILITY OR FITNESS OF THE SERVICES AND THE PROTOCOL FOR ANY PARTICULAR PURPOSE, OR
+              AS TO THE ACCURACY, QUALITY, SEQUENCE, RELIABILITY, WORKMANSHIP OR TECHNICAL CODING
+              THEREOF, OR THE ABSENCE OF ANY DEFECTS THEREIN WHETHER LATENT OR PATENT.
+            </strong>{' '}
+            The Company Entities and MultiSig Members make no warranty or representation and
+            disclaim all responsibility and liability for: (a) the completeness, accuracy,
+            availability, timeliness, security or reliability of the Services and the Protocol; (b)
+            any harm to your computer system, loss of data, or other harm that results from your
+            access to or use of the Services or the Protocol; (c) the operation or compatibility
+            with any other application or any particular system or device, including any Wallets;
+            and (d) whether the Services or the Protocol will meet your requirements or be available
+            on an uninterrupted, secure or error-free basis.
           </p>
 
           <p>
             The Company and its affiliates are not registered in any capacity with any other
-            regulatory body in any jurisdiction. You understand and acknowledge that we do not broker
-            trading orders on your behalf, match orders for buyers and sellers of securities or any
-            other assets, or offer any products, financial or otherwise, for sale or distribution. We
-            also do not facilitate the execution or settlement of your transactions, which occur
-            entirely on public distributed blockchains. The App is strictly a means by which users
-            may construct transaction data to be utilized by the individual user by executing
-            transactions utilizing Wallets.
+            regulatory body in any jurisdiction. You understand and acknowledge that we do not
+            broker trading orders on your behalf, match orders for buyers and sellers of securities
+            or any other assets, or offer any products, financial or otherwise, for sale or
+            distribution. We also do not facilitate the execution or settlement of your
+            transactions, which occur entirely on public distributed blockchains. The App is
+            strictly a means by which users may construct transaction data to be utilized by the
+            individual user by executing transactions utilizing Wallets.
           </p>
 
           <p>
@@ -433,8 +438,8 @@ export default function GeneralTermsPage() {
             taking, any action based on any information contained in the App or obtained via the
             Services. We do not make any investment recommendations to you or opine on the merits of
             any investment transaction or opportunity. You alone are responsible for determining
-            whether any investment, investment strategy or related transaction is appropriate for you
-            based on your personal investment objectives, financial circumstances, and risk
+            whether any investment, investment strategy or related transaction is appropriate for
+            you based on your personal investment objectives, financial circumstances, and risk
             tolerance.
           </p>
 
@@ -442,25 +447,26 @@ export default function GeneralTermsPage() {
             <strong>
               TO THE EXTENT NOT PROHIBITED BY LAW, YOU AGREE THAT IN NO EVENT WILL THE COMPANY
               ENTITIES OR MULTISIG MEMBERS BE LIABLE (A) FOR DAMAGES OF ANY KIND, INCLUDING DIRECT,
-              INDIRECT, SPECIAL, EXEMPLARY, INCIDENTAL, CONSEQUENTIAL OR PUNITIVE DAMAGES (INCLUDING,
-              BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, LOSS OF USE, DATA OR
-              PROFITS, BUSINESS INTERRUPTION OR ANY OTHER DAMAGES OR LOSSES, ARISING OUT OF OR
-              RELATED TO YOUR USE OR INABILITY TO USE THE SERVICES), HOWEVER CAUSED AND UNDER ANY
-              THEORY OF LIABILITY, WHETHER UNDER THESE TERMS OR OTHERWISE ARISING IN ANY WAY IN
-              CONNECTION WITH THE SERVICES OR THESE TERMS AND WHETHER IN CONTRACT, STRICT LIABILITY OR
-              TORT (INCLUDING NEGLIGENCE OR OTHERWISE) EVEN IF THE COMPANY ENTITIES HAVE BEEN ADVISED
-              OF THE POSSIBILITY OF SUCH DAMAGE, OR (B) FOR ANY OTHER CLAIM, DEMAND OR DAMAGES
-              WHATSOEVER RESULTING FROM OR ARISING OUT OF OR IN CONNECTION WITH THESE TERMS OR THE
-              DELIVERY, USE OR PERFORMANCE OF THE SERVICES. THE COMPANY ENTITIES’ TOTAL LIABILITY TO
-              YOU FOR ANY DAMAGES FINALLY AWARDED SHALL NOT EXCEED ONE HUNDRED DOLLARS ($100.00).
-              SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF INCIDENTAL OR
-              CONSEQUENTIAL DAMAGES, SO THE ABOVE EXCLUSION OR LIMITATION MAY NOT APPLY TO YOU.
+              INDIRECT, SPECIAL, EXEMPLARY, INCIDENTAL, CONSEQUENTIAL OR PUNITIVE DAMAGES
+              (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, LOSS OF
+              USE, DATA OR PROFITS, BUSINESS INTERRUPTION OR ANY OTHER DAMAGES OR LOSSES, ARISING
+              OUT OF OR RELATED TO YOUR USE OR INABILITY TO USE THE SERVICES), HOWEVER CAUSED AND
+              UNDER ANY THEORY OF LIABILITY, WHETHER UNDER THESE TERMS OR OTHERWISE ARISING IN ANY
+              WAY IN CONNECTION WITH THE SERVICES OR THESE TERMS AND WHETHER IN CONTRACT, STRICT
+              LIABILITY OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) EVEN IF THE COMPANY ENTITIES
+              HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE, OR (B) FOR ANY OTHER CLAIM,
+              DEMAND OR DAMAGES WHATSOEVER RESULTING FROM OR ARISING OUT OF OR IN CONNECTION WITH
+              THESE TERMS OR THE DELIVERY, USE OR PERFORMANCE OF THE SERVICES. THE COMPANY ENTITIES’
+              TOTAL LIABILITY TO YOU FOR ANY DAMAGES FINALLY AWARDED SHALL NOT EXCEED ONE HUNDRED
+              DOLLARS ($100.00). SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF
+              INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE ABOVE EXCLUSION OR LIMITATION MAY NOT
+              APPLY TO YOU.
             </strong>
           </p>
 
           <p>
-            By using the Services, you represent that you have sufficient knowledge and experience in
-            business and financial matters, including a sufficient understanding of blockchain
+            By using the Services, you represent that you have sufficient knowledge and experience
+            in business and financial matters, including a sufficient understanding of blockchain
             technologies, cryptocurrencies and other digital assets, storage mechanisms (such as
             Wallets), and blockchain-based software systems to be able to assess and evaluate the
             risks and benefits of the Services contemplated hereunder, and will bear the risks
@@ -471,25 +477,25 @@ export default function GeneralTermsPage() {
             losing access to cryptocurrency due to slashing, loss of private key(s), custodial error
             or purchaser error, risk of mining or blockchain attacks, risk of hacking and security
             weaknesses, risk of unfavorable regulatory intervention in one or more jurisdictions,
-            risk related to token taxation, risk of personal information disclosure, risk of uninsured
-            losses, volatility risks, and unanticipated risks. You acknowledge that cryptocurrencies
-            and other similar digital assets are neither (i) deposits of or guaranteed by a bank nor
-            (ii) insured by the FDIC or by any other governmental agency.
+            risk related to token taxation, risk of personal information disclosure, risk of
+            uninsured losses, volatility risks, and unanticipated risks. You acknowledge that
+            cryptocurrencies and other similar digital assets are neither (i) deposits of or
+            guaranteed by a bank nor (ii) insured by the FDIC or by any other governmental agency.
           </p>
 
           <p>
-            There are certain multi-signature crypto wallets (the “MultiSigs”, and the signatories to
-            such MultiSigs, the “MultiSig Members”) that have certain controls related to the
+            There are certain multi-signature crypto wallets (the “MultiSigs”, and the signatories
+            to such MultiSigs, the “MultiSig Members”) that have certain controls related to the
             Protocol, that may include, but are not limited to, the ability to pause certain
             functionality of the Protocol, implement, or influence upgrades to the Protocol (or any
             aspect thereof) and certain other controls of the functionality of the Protocol as
             described in the Documentation or in public communications. While the MultiSigs may have
             MultiSig Members that are employed or engaged by the Company, they may be controlled
             partially or entirely by MultiSig Members that are unaffiliated third parties over which
-            we have no or limited control. We will not be able to control the actions of such MultiSig
-            Members if they are not employed or engaged by us and thus certain MultiSigs will be
-            outside of our control. The Company therefore cannot be held liable for any action, or
-            inaction, relating to such a MultiSig.
+            we have no or limited control. We will not be able to control the actions of such
+            MultiSig Members if they are not employed or engaged by us and thus certain MultiSigs
+            will be outside of our control. The Company therefore cannot be held liable for any
+            action, or inaction, relating to such a MultiSig.
           </p>
 
           <p>
@@ -506,10 +512,10 @@ export default function GeneralTermsPage() {
 
           <p>
             We cannot control or influence market sentiment or liquidity or how third-party services
-            or platforms support, quote, restrict or provide access to, or value cryptocurrencies and
-            other digital assets and we expressly deny and disclaim any liability to you and deny any
-            obligations to indemnify or hold you harmless for any losses you may incur as a result of
-            fluctuations in the value of cryptocurrencies or other digital assets.
+            or platforms support, quote, restrict or provide access to, or value cryptocurrencies
+            and other digital assets and we expressly deny and disclaim any liability to you and
+            deny any obligations to indemnify or hold you harmless for any losses you may incur as a
+            result of fluctuations in the value of cryptocurrencies or other digital assets.
           </p>
 
           <p>
@@ -518,8 +524,8 @@ export default function GeneralTermsPage() {
             vulnerabilities in the programming, design, or implementation of a blockchain, the
             Protocol, any deployed smart contracts, or a Third-Party Protocol may arise due to
             hacking or other security incidents and could result in significant adverse effects,
-            including but not limited to, significant volatility or loss of any digital assets elected
-            into the Protocol.
+            including but not limited to, significant volatility or loss of any digital assets
+            elected into the Protocol.
           </p>
 
           <p>
@@ -540,9 +546,9 @@ export default function GeneralTermsPage() {
             your misuse of the Services; or (d) your negligence or willful misconduct. If you are
             obligated to indemnify any Company Entity hereunder, then you agree that Company (or, at
             its discretion, the applicable Company Entity) will have the right, in its sole
-            discretion, to control any action or proceeding and to determine whether Company wishes to
-            settle, and if so, on what terms, and you agree to fully cooperate with Company in the
-            defense or settlement of such claim.
+            discretion, to control any action or proceeding and to determine whether Company wishes
+            to settle, and if so, on what terms, and you agree to fully cooperate with Company in
+            the defense or settlement of such claim.
           </p>
 
           <p>
@@ -557,98 +563,96 @@ export default function GeneralTermsPage() {
           <p>
             <strong>
               PLEASE READ THIS SECTION CAREFULLY – IT MAY SIGNIFICANTLY AFFECT YOUR LEGAL RIGHTS,
-              INCLUDING YOUR RIGHT TO FILE A LAWSUIT IN COURT AND TO HAVE A JURY HEAR YOUR CLAIMS. IT
-              CONTAINS PROCEDURES FOR MANDATORY BINDING ARBITRATION AND A CLASS ACTION WAIVER.
+              INCLUDING YOUR RIGHT TO FILE A LAWSUIT IN COURT AND TO HAVE A JURY HEAR YOUR CLAIMS.
+              IT CONTAINS PROCEDURES FOR MANDATORY BINDING ARBITRATION AND A CLASS ACTION WAIVER.
             </strong>
           </p>
 
           <p>
             You and the Company agree that in the event of any dispute between you and the Company
-            Entities or the MultiSig Members, either party will first contact the other party and make
-            a good faith sustained effort to resolve the dispute before resorting to more formal means
-            of resolution, including without limitation, any court action, after first allowing the
-            receiving party 30 days in which to respond. Both you and the Company agree that this
-            dispute resolution procedure is a condition precedent which must be satisfied before
-            initiating any arbitration against you, any Company Entity or any MultiSig Members, as
-            applicable.
+            Entities or the MultiSig Members, either party will first contact the other party and
+            make a good faith sustained effort to resolve the dispute before resorting to more
+            formal means of resolution, including without limitation, any court action, after first
+            allowing the receiving party 30 days in which to respond. Both you and the Company agree
+            that this dispute resolution procedure is a condition precedent which must be satisfied
+            before initiating any arbitration against you, any Company Entity or any MultiSig
+            Members, as applicable.
           </p>
 
           <p>
             After the informal dispute resolution process, any remaining dispute, controversy, or
-            claim (collectively, “Claim”) relating in any way to the Services, including the App, any
-            use or access or lack of access thereto, and any other usage of the Protocol even if
-            interacted with outside of the Services or App, will be resolved by arbitration, including
-            threshold questions of arbitrability of the Claim. You and the Company agree that any
-            Claim including those not of a contractual nature - arising out of, related or connected
-            to the Services, the App, or otherwise, shall be settled by arbitration under the BVI IAC
-            Arbitration Rules (the Rules), by three arbitrators, appointed in accordance with the
-            Rules, which are deemed to be incorporated by reference into this clause. The language of
-            arbitration will be English. Any arbitration under these Terms will take place on an
-            individual basis – class arbitrations and class actions are not permitted. You understand
-            that by agreeing to these Terms, you and the Company are each waiving the right to trial
-            by jury or to participate in a class action or class arbitration.
+            claim (collectively, “Claim”) relating in any way to the Services, including the App,
+            any use or access or lack of access thereto, and any other usage of the Protocol even if
+            interacted with outside of the Services or App, will be resolved by arbitration,
+            including threshold questions of arbitrability of the Claim. You and the Company agree
+            that any Claim including those not of a contractual nature - arising out of, related or
+            connected to the Services, the App, or otherwise, shall be settled by arbitration under
+            the BVI IAC Arbitration Rules (the Rules), by three arbitrators, appointed in accordance
+            with the Rules, which are deemed to be incorporated by reference into this clause. The
+            language of arbitration will be English. Any arbitration under these Terms will take
+            place on an individual basis – class arbitrations and class actions are not permitted.
+            You understand that by agreeing to these Terms, you and the Company are each waiving the
+            right to trial by jury or to participate in a class action or class arbitration.
           </p>
 
           <p>
             Notwithstanding the foregoing, you and the Company agree that the following types of
-            disputes will be resolved in a court of proper jurisdiction: (i) disputes or claims within
-            the jurisdiction of a small claims court consistent with the jurisdictional and dollar
-            limits that may apply, as long as it is brought and maintained as an individual dispute
-            and not as a class, representative, or consolidated action or proceeding; (ii) disputes or
-            claims where the sole form of relief sought is injunctive relief (including public
-            injunctive relief); or (iii) intellectual property disputes.
+            disputes will be resolved in a court of proper jurisdiction: (i) disputes or claims
+            within the jurisdiction of a small claims court consistent with the jurisdictional and
+            dollar limits that may apply, as long as it is brought and maintained as an individual
+            dispute and not as a class, representative, or consolidated action or proceeding; (ii)
+            disputes or claims where the sole form of relief sought is injunctive relief (including
+            public injunctive relief); or (iii) intellectual property disputes.
           </p>
 
           <p>
-            Payment of all filing, administration, and arbitrator costs and expenses will be governed
-            by the Rules, except that if you demonstrate that any such costs and expenses owed by you
-            under those rules would be prohibitively more expensive than a court proceeding, the
-            Company will pay the amount of any such costs and expenses that the arbitrator determines
-            are necessary to prevent the arbitration from being prohibitively more expensive than a
-            court proceeding (subject to possible reimbursement as set forth below). Fees and costs
-            may be awarded as provided pursuant to applicable law. If the arbitrator finds that either
-            the substance of your claim or the relief sought in the Claim is frivolous, then the
-            payment of all fees will be governed by the Rules. In that case, you agree to reimburse
-            the Company for all monies previously disbursed by it that are otherwise your obligation
-            to pay under the applicable rules.
+            Payment of all filing, administration, and arbitrator costs and expenses will be
+            governed by the Rules, except that if you demonstrate that any such costs and expenses
+            owed by you under those rules would be prohibitively more expensive than a court
+            proceeding, the Company will pay the amount of any such costs and expenses that the
+            arbitrator determines are necessary to prevent the arbitration from being prohibitively
+            more expensive than a court proceeding (subject to possible reimbursement as set forth
+            below). Fees and costs may be awarded as provided pursuant to applicable law. If the
+            arbitrator finds that either the substance of your claim or the relief sought in the
+            Claim is frivolous, then the payment of all fees will be governed by the Rules. In that
+            case, you agree to reimburse the Company for all monies previously disbursed by it that
+            are otherwise your obligation to pay under the applicable rules.
           </p>
 
           <p>
-            You have the right to opt-out and not be bound by the arbitration provisions set forth in
-            these Terms by sending written notice of your decision to opt-out to legal@.
-            The notice must be sent to the Company within thirty (30) days of your first accessing the
-            Services or agreeing to these Terms; otherwise you shall be bound to arbitrate disputes on
-            a non-class basis in accordance with these Terms. If you opt out of only the arbitration
-            provisions, and not also the class action waiver, the class action waiver still applies.
-            You may not opt out of only the class action waiver and not also the arbitration
-            provisions. If you opt-out of these arbitration provisions, the Company also will not be
-            bound by them.
+            You have the right to opt-out and not be bound by the arbitration provisions set forth
+            in these Terms by sending written notice of your decision to opt-out to legal@. The
+            notice must be sent to the Company within thirty (30) days of your first accessing the
+            Services or agreeing to these Terms; otherwise you shall be bound to arbitrate disputes
+            on a non-class basis in accordance with these Terms. If you opt out of only the
+            arbitration provisions, and not also the class action waiver, the class action waiver
+            still applies. You may not opt out of only the class action waiver and not also the
+            arbitration provisions. If you opt-out of these arbitration provisions, the Company also
+            will not be bound by them.
           </p>
 
           <p>
-            <strong>
-              WAIVER OF RIGHT TO BRING CLASS ACTION AND REPRESENTATIVE CLAIMS.
-            </strong>{" "}
-            TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, YOU AND THE COMPANY EACH AGREE THAT
-            ANY PROCEEDING TO RESOLVE ANY DISPUTE, CLAIM OR CONTROVERSY WILL BE BROUGHT AND CONDUCTED
+            <strong>WAIVER OF RIGHT TO BRING CLASS ACTION AND REPRESENTATIVE CLAIMS.</strong> TO THE
+            FULLEST EXTENT PERMITTED BY APPLICABLE LAW, YOU AND THE COMPANY EACH AGREE THAT ANY
+            PROCEEDING TO RESOLVE ANY DISPUTE, CLAIM OR CONTROVERSY WILL BE BROUGHT AND CONDUCTED
             ONLY IN THE RESPECTIVE PARTY’S INDIVIDUAL CAPACITY AND NOT AS PART OF ANY CLASS (OR
-            PURPORTED CLASS), CONSOLIDATED, MULTIPLE-PLAINTIFF, OR REPRESENTATIVE ACTION OR PROCEEDING
-            (“CLASS ACTION”). YOU AND THE COMPANY AGREE TO WAIVE THE RIGHT TO PARTICIPATE AS A
-            PLAINTIFF OR CLASS MEMBER IN ANY CLASS ACTION. YOU AND THE COMPANY EXPRESSLY WAIVE ANY
-            ABILITY TO MAINTAIN A CLASS ACTION IN ANY FORUM. IF THE DISPUTE IS SUBJECT TO ARBITRATION,
-            THE ARBITRATOR WILL NOT HAVE THE AUTHORITY TO COMBINE OR AGGREGATE CLAIMS, CONDUCT A CLASS
-            ACTION, OR MAKE AN AWARD TO ANY PERSON OR ENTITY NOT A PARTY TO THE ARBITRATION. FURTHER,
-            YOU AND THE COMPANY AGREE THAT THE ARBITRATOR MAY NOT CONSOLIDATE PROCEEDINGS FOR MORE
-            THAN ONE PERSON’S CLAIMS, AND IT MAY NOT OTHERWISE PRESIDE OVER ANY FORM OF A CLASS
-            ACTION. FOR THE AVOIDANCE OF DOUBT, HOWEVER, YOU CAN SEEK PUBLIC INJUNCTIVE RELIEF TO THE
-            EXTENT AUTHORIZED BY LAW AND CONSISTENT WITH THE EXCEPTIONS CLAUSE ABOVE. IF THIS CLASS
-            ACTION WAIVER IS LIMITED, VOIDED, OR FOUND UNENFORCEABLE, THEN, UNLESS THE PARTIES
-            MUTUALLY AGREE OTHERWISE, THE PARTIES’ AGREEMENT TO ARBITRATE SHALL BE NULL AND VOID WITH
-            RESPECT TO SUCH PROCEEDING SO LONG AS THE PROCEEDING IS PERMITTED TO PROCEED AS A CLASS
-            ACTION. IF A COURT DECIDES THAT THE LIMITATIONS OF THIS PARAGRAPH ARE DEEMED INVALID OR
-            UNENFORCEABLE, ANY PUTATIVE CLASS, PRIVATE ATTORNEY GENERAL OR CONSOLIDATED OR
-            REPRESENTATIVE ACTION MUST BE BROUGHT IN A COURT OF PROPER JURISDICTION AND NOT IN
-            ARBITRATION.
+            PURPORTED CLASS), CONSOLIDATED, MULTIPLE-PLAINTIFF, OR REPRESENTATIVE ACTION OR
+            PROCEEDING (“CLASS ACTION”). YOU AND THE COMPANY AGREE TO WAIVE THE RIGHT TO PARTICIPATE
+            AS A PLAINTIFF OR CLASS MEMBER IN ANY CLASS ACTION. YOU AND THE COMPANY EXPRESSLY WAIVE
+            ANY ABILITY TO MAINTAIN A CLASS ACTION IN ANY FORUM. IF THE DISPUTE IS SUBJECT TO
+            ARBITRATION, THE ARBITRATOR WILL NOT HAVE THE AUTHORITY TO COMBINE OR AGGREGATE CLAIMS,
+            CONDUCT A CLASS ACTION, OR MAKE AN AWARD TO ANY PERSON OR ENTITY NOT A PARTY TO THE
+            ARBITRATION. FURTHER, YOU AND THE COMPANY AGREE THAT THE ARBITRATOR MAY NOT CONSOLIDATE
+            PROCEEDINGS FOR MORE THAN ONE PERSON’S CLAIMS, AND IT MAY NOT OTHERWISE PRESIDE OVER ANY
+            FORM OF A CLASS ACTION. FOR THE AVOIDANCE OF DOUBT, HOWEVER, YOU CAN SEEK PUBLIC
+            INJUNCTIVE RELIEF TO THE EXTENT AUTHORIZED BY LAW AND CONSISTENT WITH THE EXCEPTIONS
+            CLAUSE ABOVE. IF THIS CLASS ACTION WAIVER IS LIMITED, VOIDED, OR FOUND UNENFORCEABLE,
+            THEN, UNLESS THE PARTIES MUTUALLY AGREE OTHERWISE, THE PARTIES’ AGREEMENT TO ARBITRATE
+            SHALL BE NULL AND VOID WITH RESPECT TO SUCH PROCEEDING SO LONG AS THE PROCEEDING IS
+            PERMITTED TO PROCEED AS A CLASS ACTION. IF A COURT DECIDES THAT THE LIMITATIONS OF THIS
+            PARAGRAPH ARE DEEMED INVALID OR UNENFORCEABLE, ANY PUTATIVE CLASS, PRIVATE ATTORNEY
+            GENERAL OR CONSOLIDATED OR REPRESENTATIVE ACTION MUST BE BROUGHT IN A COURT OF PROPER
+            JURISDICTION AND NOT IN ARBITRATION.
           </p>
 
           <h3>
@@ -663,32 +667,32 @@ export default function GeneralTermsPage() {
             responsibility to review these Terms from time to time to view any such changes. The
             updated Terms will be effective as of the time of posting, or such later date as may be
             specified in the updated Terms. Your continued access or use of the Services after the
-            modifications have become effective will be deemed your acceptance of the modified Terms.
-            No amendment shall apply to a dispute for which an arbitration has been initiated prior to
-            the change in Terms.
+            modifications have become effective will be deemed your acceptance of the modified
+            Terms. No amendment shall apply to a dispute for which an arbitration has been initiated
+            prior to the change in Terms.
           </p>
 
           <p>
             If you breach any of the provisions of these Terms, all licenses granted by the Company
             will terminate automatically. Additionally, the Company may, in its sole discretion,
-            suspend or terminate your access to or use of any of the Services, with or without notice,
-            for any or no reason, including, without limitation, (i) if we believe, in our sole
-            discretion, you have engaged in any of the prohibited activities set forth in these Terms;
-            (ii) if you provide any incomplete, incorrect or false information to us; (iii) if you
-            have breached any portion of these Terms; (iv) if you are a Prohibited Person and/or
-            reside in a Prohibited Jurisdiction; and/or (v) if we determine such action is necessary
-            to comply with these Terms, any of our policies, procedures or practices, or any law rule
-            or regulation. All sections which by their nature should survive the termination of these
-            Terms shall continue in full force and effect subsequent to and notwithstanding any
-            termination of this Agreement by the Company or you. Termination will not limit any of the
-            Company’s other rights or remedies at law or in equity.
+            suspend or terminate your access to or use of any of the Services, with or without
+            notice, for any or no reason, including, without limitation, (i) if we believe, in our
+            sole discretion, you have engaged in any of the prohibited activities set forth in these
+            Terms; (ii) if you provide any incomplete, incorrect or false information to us; (iii)
+            if you have breached any portion of these Terms; (iv) if you are a Prohibited Person
+            and/or reside in a Prohibited Jurisdiction; and/or (v) if we determine such action is
+            necessary to comply with these Terms, any of our policies, procedures or practices, or
+            any law rule or regulation. All sections which by their nature should survive the
+            termination of these Terms shall continue in full force and effect subsequent to and
+            notwithstanding any termination of this Agreement by the Company or you. Termination
+            will not limit any of the Company’s other rights or remedies at law or in equity.
           </p>
 
           <p>
             You agree that a breach of these Terms will cause irreparable injury to the Company for
             which monetary damages would not be an adequate remedy and the Company shall be entitled
-            to equitable relief in addition to any remedies it may have hereunder or at law without a
-            bond, other security or proof of damages.
+            to equitable relief in addition to any remedies it may have hereunder or at law without
+            a bond, other security or proof of damages.
           </p>
 
           <p>
@@ -698,9 +702,9 @@ export default function GeneralTermsPage() {
             Services, when and to the extent such failure or delay is caused by or results from any
             events beyond our ability to control, including acts of God; flood, fire, earthquake,
             epidemics, pandemics, tsunami, explosion, war, invasion, hostilities (whether war is
-            declared or not), terrorist threats or acts, riot or other civil unrest, government order,
-            law, or action, embargoes or blockades, strikes, labor stoppages or slowdowns or other
-            industrial disturbances, shortage of adequate or suitable Internet connectivity,
+            declared or not), terrorist threats or acts, riot or other civil unrest, government
+            order, law, or action, embargoes or blockades, strikes, labor stoppages or slowdowns or
+            other industrial disturbances, shortage of adequate or suitable Internet connectivity,
             telecommunication breakdown or shortage of adequate power or electricity, and other
             similar events beyond our control.
           </p>
@@ -710,13 +714,13 @@ export default function GeneralTermsPage() {
             then that provision shall be deemed severable from these Terms and shall not affect the
             validity and enforceability of any remaining provisions. These Terms and the licenses
             granted hereunder may be assigned by the Company but may not be assigned by you without
-            the prior express written consent of the Company. No waiver by either party of any breach
-            or default hereunder shall be deemed to be a waiver of any preceding or subsequent breach
-            or default. The section headings used herein are for reference only and shall not be read
-            to have any legal effect. These Terms are governed by the laws of the British Virgin
-            Islands, without regard to conflict of laws rules, and the proper venue for any disputes
-            arising out of or relating to any of the same will be the courts in the British Virgin
-            Islands.
+            the prior express written consent of the Company. No waiver by either party of any
+            breach or default hereunder shall be deemed to be a waiver of any preceding or
+            subsequent breach or default. The section headings used herein are for reference only
+            and shall not be read to have any legal effect. These Terms are governed by the laws of
+            the British Virgin Islands, without regard to conflict of laws rules, and the proper
+            venue for any disputes arising out of or relating to any of the same will be the courts
+            in the British Virgin Islands.
           </p>
 
           <h3>
@@ -724,7 +728,7 @@ export default function GeneralTermsPage() {
           </h3>
 
           <p>
-            You may contact us regarding the Services or these Terms by e-mail at{" "}
+            You may contact us regarding the Services or these Terms by e-mail at{' '}
             <a href="mailto:support@bravolabs.xyz">support@bravolabs.xyz</a>.
           </p>
         </div>
@@ -733,19 +737,19 @@ export default function GeneralTermsPage() {
   );
 }
 
-const legalStyles = classNames(
-  "mx-auto max-w-[54rem]",
-  "text-black text-justify",
-  "[&_a]:text-primary [&_a]:underline",
-  "[&_p]:text-sm [&_p]:leading-6 [&_p]:mb-8 [&_p]:font-normal",
-  "[&_ul]:list-none [&_ul]:pl-4 [&_ul]:my-4 [&_ul]:text-sm [&_ul]:leading-6 [&_ul]:font-normal",
+const legalStyles = cn(
+  'mx-auto max-w-[54rem]',
+  'text-foreground text-justify',
+  '[&_a]:text-primary [&_a]:underline',
+  '[&_p]:text-sm [&_p]:leading-6 [&_p]:mb-8 [&_p]:font-normal',
+  '[&_ul]:list-none [&_ul]:pl-4 [&_ul]:my-4 [&_ul]:text-sm [&_ul]:leading-6 [&_ul]:font-normal',
   '[&_ul>li]:before:content-["("_counter(list-item)_")_"] [&_ul>li]:counter-increment-list-item',
-  "[&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mb-4",
-  "[&_h2]:text-xl [&_h2]:font-bold [&_h2]:mb-4",
-  "[&_h3]:text-lg [&_h3]:font-bold [&_h3]:mb-4",
-  "[&_h4]:text-base [&_h4]:font-bold [&_h4]:mb-4",
-  "[&_h5]:text-sm [&_h5]:font-bold [&_h5]:mb-4",
-  "[&_h6]:text-xs [&_h6]:font-bold [&_h6]:mb-4"
+  '[&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mb-4',
+  '[&_h2]:text-xl [&_h2]:font-bold [&_h2]:mb-4',
+  '[&_h3]:text-lg [&_h3]:font-bold [&_h3]:mb-4',
+  '[&_h4]:text-base [&_h4]:font-bold [&_h4]:mb-4',
+  '[&_h5]:text-sm [&_h5]:font-bold [&_h5]:mb-4',
+  '[&_h6]:text-xs [&_h6]:font-bold [&_h6]:mb-4'
 );
 
 const Underline = ({ children }: { children: React.ReactNode }) => {

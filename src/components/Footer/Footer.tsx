@@ -1,10 +1,11 @@
 import { useBreakpoints } from '@/hooks/useBreakpoints';
 
 import { LearnPopover } from '@/components/LearnPopover';
+import { LegalPopover } from '@/components/LegalPopover';
 import { SocialPopover } from '@/components/SocialPopover';
 
-import { ChainSelectorPopover } from './ChainSelectorPopover';
 import { TermsPopover } from '../TermsPopover';
+import { ChainSelectorPopover } from './ChainSelectorPopover';
 
 export function Footer() {
   const { isMobile } = useBreakpoints();
