@@ -1,7 +1,6 @@
 import { useBreakpoints } from '@/hooks/useBreakpoints';
 
 import { LearnPopover } from '@/components/LearnPopover';
-import { LegalPopover } from '@/components/LegalPopover';
 import { SocialPopover } from '@/components/SocialPopover';
 
 import { TermsPopover } from '../TermsPopover';
