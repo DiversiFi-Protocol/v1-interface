@@ -5,23 +5,23 @@ import { Link } from 'react-router-dom';
 
 import { PageRoutes } from '@/constants/routes';
 
-// import { useBreakpoints } from '@/hooks/useBreakpoints';
+import { useBreakpoints } from '@/hooks/useBreakpoints';
 import { useTheme } from '@/providers/ThemeProvider';
 
 import ThemeToggle from '../ThemeToggle';
 
 export default function Navbar() {
   const { theme } = useTheme();
-  // const { isMobile } = useBreakpoints();
+  const { isMobile } = useBreakpoints();
 
   const homeLink = useMemo(
     () =>
-      /* isMobile
-      //   ? '/brand/diversifi-logo.png'
-      //   : */theme === 'dark'
+      isMobile
+        ? '/brand/diversifi-logo.png'
+        : theme === 'dark'
           ? '/brand/diversifi-dark.png'
           : '/brand/diversifi-light.png',
-    [theme, /*isMobile*/]
+    [theme, isMobile]
   );
 
   return (
