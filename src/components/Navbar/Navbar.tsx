@@ -5,24 +5,24 @@ import { Link } from 'react-router-dom';
 
 import { PageRoutes } from '@/constants/routes';
 
-// import { useBreakpoints } from '@/hooks/useBreakpoints';
+import { useBreakpoints } from '@/hooks/useBreakpoints';
 import { useTheme } from '@/providers/ThemeProvider';
 
 import ThemeToggle from '../ThemeToggle';
 
 export default function Navbar() {
   const { theme } = useTheme();
-  // const { isMobile } = useBreakpoints();
+  const { isMobile } = useBreakpoints();
 
-  const homeLink = useMemo(
-    () =>
-      /* isMobile
-      //   ? '/brand/diversifi-logo.png'
-      //   : */theme === 'dark'
-          ? '/brand/diversifi-dark.png'
-          : '/brand/diversifi-light.png',
-    [theme, /*isMobile*/]
-  );
+  const logoImg = useMemo(() => {
+    if (isMobile) {
+      return <img src="/brand/diversifi-logo.png" alt="DiversiFi" className="w-8 min-w-8 h-auto" />;
+    }
+
+    const logoSrc = theme === 'dark' ? '/brand/diversifi-dark.png' : '/brand/diversifi-light.png';
+
+    return <img src={logoSrc} alt="DiversiFi" className="w-auto min-w-10 h-10" />;
+  }, [theme, isMobile]);
 
   return (
     <nav className="fixed top-0 left-0 right-0 h-[var(--navbar-height)] bg-background text-foreground border-b z-50">
@@ -33,7 +33,7 @@ export default function Navbar() {
               to={PageRoutes.Home}
               className="row gap-2 text-foreground hover:text-foreground font-bold text-xl"
             >
-              <img src={homeLink} alt="DiversiFi" className="w-auto min-w-10 h-10" />
+              {logoImg}
             </Link>
           </li>
         </ul>
