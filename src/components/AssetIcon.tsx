@@ -44,7 +44,7 @@ export default function AssetIcon({ asset, size = 'sm', className }: AssetIconPr
       <div
         className={cn(
           sizeClasses[size],
-          'bg-foreground text-background rounded-full flex justify-center items-center',
+          'text-background rounded-full flex justify-center items-center',
           className
         )}
       >
@@ -53,10 +53,6 @@ export default function AssetIcon({ asset, size = 'sm', className }: AssetIconPr
     );
   }
   return (
-    <img
-      src={assetPath}
-      alt={asset}
-      className={cn(sizeClasses[size], 'bg-foreground rounded-full', className)}
-    />
+    <img src={assetPath} alt={asset} className={cn(sizeClasses[size], 'rounded-full', className)} />
   );
 }
