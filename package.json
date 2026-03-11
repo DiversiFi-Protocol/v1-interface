@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && CLOUDFLARE_ENV=mainnet vite build",
-    "build:mainnet": "tsc -b && CLOUDFLARE_ENV=mainnet vite build",
-    "build:testnet": "tsc -b && CLOUDFLARE_ENV=testnet vite build",
+    "build": "tsc -b && vite build --mode mainnet",
+    "build:mainnet": "tsc -b && vite build --mode mainnet",
+    "build:testnet": "tsc -b && vite build --mode testnet",
     "deploy:mainnet": "pnpm run build:mainnet && wrangler deploy --env mainnet",
     "deploy:testnet": "pnpm run build:testnet && wrangler deploy --env testnet",
     "lint": "eslint . --ext .ts,.tsx",
