@@ -21,7 +21,8 @@
       ],
       "vars": {
         "APP_ENV": "mainnet",
-        "CHAIN_ID": "1"
+        "CHAIN_ID": "1",
+        "BYPASS_GEOLOCATION_CHECK": "false"
       }
     },
     "testnet": {
@@ -33,7 +34,8 @@
       ],
       "vars": {
         "APP_ENV": "testnet",
-        "CHAIN_ID": "11155111"
+        "CHAIN_ID": "11155111",
+        "BYPASS_GEOLOCATION_CHECK": "true"
       }
     }
   }

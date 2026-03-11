@@ -1,5 +1,6 @@
 type WorkerEnv = {
   ASSETS: Fetcher;
+  BYPASS_GEOLOCATION_CHECK?: string;
 };
 
 type RequestWithCountry = Request & {
@@ -10,6 +11,7 @@ type RequestWithCountry = Request & {
 
 export default {
   async fetch(request: RequestWithCountry, env: WorkerEnv): Promise<Response> {
+    const bypassGeolocationCheck = env.BYPASS_GEOLOCATION_CHECK === 'true';
     const blocked = [
       'CU', 'IR', 'KP', 'RU', 'SY', 'AF', 'BY', 'MM', 'VE', 'SS', 'SD', 'LY', 'SO', 'YE', 'NI', 'CF', 'CD',
       'CG', 'ML', 'ET', 'IQ', 'LB', 'BI', 'GW', 'CI', 'LR', 'US', 'ZW',
@@ -18,7 +20,7 @@ export default {
     const country = request.cf?.country ?? '';
     const url = new URL(request.url);
 
-    if (blocked.includes(country) && !url.pathname.startsWith('/blocked')) {
+    if (!bypassGeolocationCheck && blocked.includes(country) && !url.pathname.startsWith('/blocked')) {
       return Response.redirect(new URL('/blocked', request.url).toString(), 302);
     }
 
