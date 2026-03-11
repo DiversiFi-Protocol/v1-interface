@@ -3,6 +3,7 @@ import { hardhat, mainnet, sepolia } from 'viem/chains';
 export class EnvVar {
   private WALLETCONNECT_PROJECT_ID = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID;
   private CHAIN_ID = import.meta.env.VITE_CHAIN_ID;
+  private APP_ENV = import.meta.env.VITE_APP_ENV;
 
   get walletConnectProjectId() {
     return this.WALLETCONNECT_PROJECT_ID;
@@ -10,7 +11,7 @@ export class EnvVar {
 
   get chainId(): 1 | 31337 | 11155111 {
     if (!this.CHAIN_ID) {
-      throw new Error('CHAIN_ID is missing from environment variables');
+      throw new Error('VITE_CHAIN_ID is missing from environment variables');
     }
 
     if (
@@ -20,6 +21,10 @@ export class EnvVar {
     }
 
     return parseInt(this.CHAIN_ID, 10) as 1 | 31337 | 11155111;
+  }
+
+  get appEnv() {
+    return this.APP_ENV;
   }
 }
 
