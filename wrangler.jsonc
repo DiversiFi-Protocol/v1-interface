@@ -22,7 +22,8 @@
       "vars": {
         "APP_ENV": "mainnet",
         "CHAIN_ID": "1",
-        "VITE_CHAIN_ID": "1"
+        "VITE_CHAIN_ID": "1",
+        "VITE_WALLETCCONNECT_PROJECT_ID": "587840c4564edbb28f0e01ecb2c19cb7"
       }
     },
     "testnet": {
@@ -35,7 +36,8 @@
       "vars": {
         "APP_ENV": "testnet",
         "CHAIN_ID": "11155111",
-        "VITE_CHAIN_ID": "11155111"
+        "VITE_CHAIN_ID": "11155111",
+        "VITE_WALLETCCONNECT_PROJECT_ID": "587840c4564edbb28f0e01ecb2c19cb7"
       }
     }
   }
