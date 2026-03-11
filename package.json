@@ -5,7 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && CLOUDFLARE_ENV=mainnet vite build",
+    "build:mainnet": "tsc -b && CLOUDFLARE_ENV=mainnet vite build",
+    "build:testnet": "tsc -b && CLOUDFLARE_ENV=testnet vite build",
+    "deploy:mainnet": "pnpm run build:mainnet && wrangler deploy --env mainnet",
+    "deploy:testnet": "pnpm run build:testnet && wrangler deploy --env testnet",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "preview": "vite preview"
