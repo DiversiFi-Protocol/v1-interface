@@ -8,8 +8,8 @@
     "build": "pnpm exec tsc -b && pnpm exec vite build --mode mainnet",
     "build:mainnet": "pnpm exec tsc -b && pnpm exec vite build --mode mainnet",
     "build:testnet": "pnpm exec tsc -b && pnpm exec vite build --mode testnet",
-    "deploy:mainnet": "pnpm exec wrangler deploy --config wrangler.mainnet.jsonc",
-    "deploy:testnet": "pnpm exec wrangler deploy --config wrangler.testnet.jsonc",
+    "deploy:mainnet": "wrangler deploy --config wrangler.mainnet.jsonc",
+    "deploy:testnet": "wrangler deploy --config wrangler.testnet.jsonc",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "preview": "vite preview"
