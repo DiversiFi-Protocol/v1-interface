@@ -1,0 +1,40 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "v1-interface",
+  "main": "./worker/index.ts",
+  "compatibility_date": "2026-03-10",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/*", "!/assets/*"]
+  },
+  "keep_vars": true,
+  "env": {
+    "mainnet": {
+      "routes": [
+        {
+          "pattern": "app.diversifi.tech/*",
+          "zone_name": "diversifi.tech"
+        }
+      ],
+      "vars": {
+        "APP_ENV": "mainnet",
+        "CHAIN_ID": "1"
+      }
+    },
+    "testnet": {
+      "routes": [
+        {
+          "pattern": "testnet.diversifi.tech/*",
+          "zone_name": "diversifi.tech"
+        }
+      ],
+      "vars": {
+        "APP_ENV": "testnet",
+        "CHAIN_ID": "11155111"
+      }
+    }
+  }
+}
