@@ -3,7 +3,7 @@ type WorkerEnv = {
   BYPASS_GEOLOCATION_CHECK?: string;
 };
 
-type RequestWithCountry = Request & {//bruh
+type RequestWithCountry = Request & {
   cf?: {
     country?: string;
   };
