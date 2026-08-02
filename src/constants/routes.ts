@@ -1,6 +1,7 @@
 export enum PageRoutes {
   Home = '/',
   Account = '/account',
+  Rewards = '/rewards',
   Blocked = '/blocked',
   NotFound = '*',
 

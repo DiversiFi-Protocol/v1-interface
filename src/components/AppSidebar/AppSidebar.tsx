@@ -27,8 +27,12 @@ export function AppSidebar() {
 
   const pools = [
     {
-      title: 'DFiUSD',
+      title: 'Dashboard',
       url: PageRoutes.Home,
+    },
+    {
+      title: 'Liquidity Rewards',
+      url: PageRoutes.Rewards,
     },
   ];
 
@@ -54,7 +58,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              <span className="text-sm font-medium text-muted-foreground px-2">Pools</span>
+              <span className="text-sm font-medium text-muted-foreground px-2">DFiUSD</span>
               {pools.map((pool) => (
                 <SidebarMenuItem key={pool.title}>
                   <SidebarMenuButton asChild>

@@ -22,4 +22,13 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/api/merkl': {
+        target: 'https://api.merkl.xyz',
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/api\/merkl/, ''),
+      },
+    },
+  },
 });

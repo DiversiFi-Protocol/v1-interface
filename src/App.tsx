@@ -15,6 +15,7 @@ import GeneralTermsPage from './pages/Terms/GeneralTermsPage';
 const Swap = lazy(() => import('./pages/Pool/Swap'));
 const Pool = lazy(() => import('./pages/Pool/Pool'));
 const Settings = lazy(() => import('./pages/Account/Settings'));
+const MerklRewardsPage = lazy(() => import('./pages/Rewards/Merkl'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function App() {
@@ -46,6 +47,14 @@ function App() {
           element={
             <Suspense fallback={<LoadingSpinner />}>
               <Settings />
+            </Suspense>
+          }
+        />
+        <Route
+          path={PageRoutes.Rewards}
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <MerklRewardsPage />
             </Suspense>
           }
         />

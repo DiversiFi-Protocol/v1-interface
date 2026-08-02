@@ -112,3 +112,9 @@ export const BACKED_TOKEN = BACKED_TOKENS[chainId];
 
 export const ALL_SUPPORTED_TOKENS = [...SUPPORTED_RESERVE_ASSETS, BACKED_TOKEN];
 export const NORMALIZED_ASSET_DECIMALS = 18;
+
+export const DFI_MERKL_POINT_TOKEN = {
+  address: '0x15aa8b6E1e4E09F4D68E45A5ddeE77bD22C6d44a',
+  symbol: 'Diversifi-points',
+  decimals: 18,
+};
