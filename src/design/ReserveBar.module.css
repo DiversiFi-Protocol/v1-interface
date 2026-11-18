@@ -1,0 +1,15 @@
+.root { width: 100%; font-family: var(--mono); font-variant-numeric: tabular-nums; transition: opacity 300ms var(--ease); }
+.bar { display: flex; gap: 2px; transform-origin: 0 50%; transition: transform 1400ms var(--ease-settle); }
+.seg { position: relative; display: block; min-width: 0; border-radius: 2px; transition: opacity 160ms; }
+/* tap area reaches 44 px tall on the 40 px bar without changing how it looks */
+.seg::after { content: ""; position: absolute; inset: -2px 0; }
+.labels { display: flex; gap: 2px; }
+.col { min-width: 0; display: flex; flex-direction: column; transition: opacity 300ms var(--ease); }
+.stem { display: block; width: 2px; margin-top: 8px; background: var(--dim); }
+.lab { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; white-space: nowrap; }
+.ticker { font-weight: 500; line-height: 1.2; letter-spacing: .02em; color: var(--dim); }
+.share { font-weight: 600; line-height: 1; letter-spacing: -.03em; color: var(--fg); }
+.readout { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); min-height: 45px; }
+.rdLabel { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; letter-spacing: .02em; color: var(--dim); }
+.rdValue { font-size: 20px; font-weight: 600; letter-spacing: -.03em; color: var(--fg); }
+.rdScope { font-family: var(--sans); font-size: 13px; line-height: 1.35; color: var(--dim); }

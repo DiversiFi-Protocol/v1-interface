@@ -12,8 +12,7 @@ import DFiUSDMintUserTermsPage from './pages/Terms/DFiUSDMintUserTermsPage';
 import DFIUSDTermsPage from './pages/Terms/DFiUSDTermsPage';
 import GeneralTermsPage from './pages/Terms/GeneralTermsPage';
 
-const Swap = lazy(() => import('./pages/Pool/Swap'));
-const Pool = lazy(() => import('./pages/Pool/Pool'));
+const AppScreen = lazy(() => import('./design/AppScreen'));
 const Settings = lazy(() => import('./pages/Account/Settings'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
@@ -23,24 +22,16 @@ function App() {
   return (
     <Routes>
       <Route element={<RootLayout />}></Route>
+      {/* The DiversiFi app screen (src/design): our own nav, layout and footer, so it sits outside the sidebar layout. */}
+      <Route
+        path={PageRoutes.Home}
+        element={
+          <Suspense fallback={<LoadingSpinner />}>
+            <AppScreen />
+          </Suspense>
+        }
+      />
       <Route element={isTablet ? <RootLayout /> : <SidebarLayout />}>
-        <Route
-          path={PageRoutes.Home}
-          element={
-            <Suspense fallback={<LoadingSpinner />}>
-              <Pool />
-            </Suspense>
-          }
-        >
-          <Route
-            path={PageRoutes.Home}
-            element={
-              <Suspense fallback={<LoadingSpinner />}>
-                <Swap />
-              </Suspense>
-            }
-          />
-        </Route>
         <Route
           path={PageRoutes.Account}
           element={

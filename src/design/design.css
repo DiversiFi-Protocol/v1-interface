@@ -1,0 +1,126 @@
+/* DiversiFi "Instrument" design system, copied from diversifi.tech (web/app/globals.css). Dark only.
+   Only class names used by the app screens in src/design/ are defined here. */
+:root {
+  --bg: #0d0e10;
+  --raised: #16181b;
+  --line: #2a2e33;
+  --strong: #3a3f46;
+  --crop: #2a2e33;
+  --fg: #e9e7e1;
+  --dim: #8a8f96;
+  --signal: #bfefff;
+  --ok: #71d6a3;
+  --warn: #f2c86c;
+  --crit: #f05653;
+  --grid: rgba(255, 255, 255, 0.035);
+  --btn-hover: #ffffff;
+
+  --usdc: #7fb6ee;
+  --dai: #eacf83;
+  --usds: #e89b80;
+  --usdt: #85e7cd;
+  --gho: #96c07f;
+  --fdusd: #dbc2ff;
+  --frxusd: #e496b4;
+
+  --sans: 'Host Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, monospace;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-settle: cubic-bezier(0.2, 1.25, 0.4, 1.03);
+  --gutter: clamp(20px, 4.5vw, 64px);
+}
+
+/* The app screen fills the page. The client's body is a centring flex box for their own layouts, which lets this
+   screen grow wider than a phone; while it is shown, the body is a plain block instead. */
+body:has(.dfi-app) {
+  display: block;
+}
+#root:has(> .dfi-app) {
+  width: 100%;
+}
+.dfi-app {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: clamp(16px, 1.2vw, 18px);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+:where(.dfi-app) a { color: var(--signal); text-decoration: underline; text-underline-offset: 4px; font-weight: inherit; }
+:where(.dfi-app) a:hover { color: var(--fg); }
+:where(.dfi-app) :focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+:where(.dfi-app) :is(button, input) { font: inherit; }
+:where(.dfi-app) input::placeholder { color: var(--dim); opacity: 0.7; }
+:where(.dfi-app) :is(h1, h2, h3, p) { margin: 0; }
+:where(.dfi-app) svg { display: inline-block; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dfi-app *,
+  .dfi-app *::before,
+  .dfi-app *::after { transition-duration: 1ms !important; animation: none !important; }
+}
+
+.dfi-app .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.dfi-app .wrap { max-width: 1440px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+.dfi-app .dim { color: var(--dim); }
+.dfi-app .rail {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px 16px; flex-wrap: wrap;
+  padding-bottom: 16px; border-bottom: 1px solid var(--line);
+  font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: 0.02em; color: var(--dim);
+}
+.dfi-app .h3 { font-weight: 400; font-size: clamp(22px, 2.2vw, 28px); line-height: 1.15; letter-spacing: -0.02em; }
+.dfi-app .small { font-size: 15px; line-height: 1.45; }
+.dfi-app .foot { font-size: 13px; line-height: 1.35; color: var(--dim); }
+.dfi-app .pretty { text-wrap: pretty; }
+
+.dfi-app .btn {
+  display: inline-flex; align-items: center; justify-content: center; height: 48px; padding: 0 24px;
+  border-radius: 6px; font-weight: 500; font-size: 16px; text-decoration: none; cursor: pointer;
+  transition: background-color 160ms, border-color 160ms, opacity 160ms;
+}
+.dfi-app .btn-primary { background: var(--fg); color: var(--bg); border: 0; }
+.dfi-app .btn-primary:hover { background: var(--btn-hover); color: var(--bg); }
+.dfi-app .btn-secondary { background: transparent; color: var(--fg); border: 1px solid var(--strong); }
+.dfi-app .btn-secondary:hover { border-color: var(--dim); color: var(--fg); }
+.dfi-app .btn-nav { height: 44px; padding: 0 20px; font-size: 15px; }
+.dfi-app .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.dfi-app .btn-primary:disabled:hover { background: var(--fg); }
+
+.dfi-app .sw { display: inline-block; flex: none; width: 12px; height: 12px; border-radius: 2px; }
+.dfi-app .ruler { display: flex; justify-content: space-between; align-items: flex-end; height: 16px; }
+.dfi-app .ruler i { display: block; width: 2px; height: 16px; background: var(--dim); }
+.dfi-app .ruler i:nth-child(even) { height: 8px; }
+.dfi-app .minibar { display: flex; gap: 2px; }
+.dfi-app .minibar i { display: block; border-radius: 2px; min-width: 0; }
+.dfi-app .skel { background: var(--line); color: transparent; border-radius: 2px; }
+
+@keyframes dfi-livepulse { 0% { transform: scale(1); opacity: 0.8; } 90%, 100% { transform: scale(2.8); opacity: 0; } }
+.dfi-app .livedot { position: relative; display: inline-block; width: 8px; height: 8px; flex: none; }
+.dfi-app .livedot::before,
+.dfi-app .livedot::after { content: ''; position: absolute; inset: 0; border-radius: 50%; }
+.dfi-app .livedot::before { background: var(--signal); }
+.dfi-app .livedot::after { border: 1.5px solid var(--signal); animation: dfi-livepulse 1000ms ease-out infinite; }
+.dfi-app .dot { display: inline-block; flex: none; width: 8px; height: 8px; border-radius: 50%; }
+
+/* The client's transaction notifications (sonner, mounted in main.tsx with richColors) in the dark brand colours. */
+body:has(.dfi-app) [data-sonner-toaster][data-sonner-theme] {
+  --normal-bg: #16181b;
+  --normal-border: #2a2e33;
+  --normal-text: #e9e7e1;
+  --success-bg: #16181b;
+  --success-border: #2a2e33;
+  --success-text: #71d6a3;
+  --info-bg: #16181b;
+  --info-border: #2a2e33;
+  --info-text: #bfefff;
+  --warning-bg: #16181b;
+  --warning-border: #2a2e33;
+  --warning-text: #f2c86c;
+  --error-bg: #16181b;
+  --error-border: #2a2e33;
+  --error-text: #f05653;
+  font-family: var(--sans);
+}
