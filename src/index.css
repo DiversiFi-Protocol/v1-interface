@@ -6,102 +6,72 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 0 0% 98%;
-    --foreground: 240 10% 3.9%;
+  /* DiversiFi "Instrument" system: dark only. Both theme classes get the same values, so the
+     existing theme setting keeps working but always shows the approved dark design. */
+  :root,
+  .dark {
+    color-scheme: dark;
 
-    --card: 240 4.8% 95.9%;
-    --card-foreground: 240 10% 3.9%;
+    --background: 220 10.3% 5.7%; /* #0D0E10 */
+    --foreground: 45 15.4% 89.8%; /* #E9E7E1 */
 
-    --popover: 240 4.9% 83.9%;
-    --popover-foreground: 240 10% 3.9%;
+    --card: 216 10.2% 9.6%; /* #16181B raised */
+    --card-foreground: 45 15.4% 89.8%;
 
-    --primary: 162.3 79.9% 47.3%;
-    --primary-foreground: 0 0% 98%;
+    --popover: 216 10.2% 9.6%;
+    --popover-foreground: 45 15.4% 89.8%;
 
-    --secondary: 200.1 86.1% 92%;
-    --secondary-foreground: 240 5.9% 10%;
+    --primary: 45 15.4% 89.8%; /* light fill buttons, as on diversifi.tech */
+    --primary-foreground: 220 10.3% 5.7%;
 
-    --muted: 200.1 40% 94%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --secondary: 214.3 10.1% 13.5%;
+    --secondary-foreground: 45 15.4% 89.8%;
 
-    --accent: 200.1 86.1% 52.2%;
-    --accent-foreground: 0 0% 100%;
+    --muted: 216 10.2% 9.6%;
+    --muted-foreground: 215 5.4% 56.5%; /* #8A8F96 dim */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --accent: 214.3 10.1% 13.5%; /* hover surface */
+    --accent-foreground: 45 15.4% 89.8%;
 
-    --border: 200.1 40% 90%;
-    --input: 200.1 40% 90%;
-    --ring: 200.1 86.1% 52.2%;
+    --destructive: 1.1 84% 63.3%; /* #F05653 crit */
+    --destructive-foreground: 220 10.3% 5.7%;
 
-    --chart-1: 38 92% 54%;
-    --chart-2: 210 70% 48%;
-    --chart-3: 180 100% 29%;
-    --chart-4: 28 110% 80%;
-    --chart-5: 140 70% 49%;
-    --chart-6: 280 65% 60%;
-    --chart-7: 340 50% 55%;
-    --chart-8: 200 50% 38%;
-    --chart-9: 272 50% 30%;
-    --chart-10: 50 87% 67%;
+    --border: 213.3 9.7% 18.2%; /* #2A2E33 line */
+    --input: 215 9.4% 25.1%; /* #3A3F46 strong */
+    --ring: 195 100% 87.5%; /* #BFEFFF signal */
+
+    --signal-hsl: 195 100% 87.5%;
+
+    /* coin colours, matched by symbol (see PoolPieChart) */
+    --coin-usdc: 210.3 76.6% 71.6%;
+    --coin-dai: 44.3 71% 71.6%;
+    --coin-usds: 15.6 69.3% 70.6%;
+    --coin-usdt: 164.1 67.1% 71.4%;
+    --coin-gho: 98.8 34% 62.5%;
+    --coin-fdusd: 264.6 100% 88%;
+    --coin-frxusd: 336.9 59.1% 74.1%;
+
+    --chart-1: 210.3 76.6% 71.6%;
+    --chart-2: 44.3 71% 71.6%;
+    --chart-3: 15.6 69.3% 70.6%;
+    --chart-4: 164.1 67.1% 71.4%;
+    --chart-5: 98.8 34% 62.5%;
+    --chart-6: 264.6 100% 88%;
+    --chart-7: 336.9 59.1% 74.1%;
+    --chart-8: 195 100% 87.5%;
+    --chart-9: 215 5.4% 56.5%;
+    --chart-10: 41.2 83.7% 68.6%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 14.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-    --chart-1: 38 92% 54%;
-    --chart-2: 210 70% 48%;
-    --chart-3: 180 100% 29%;
-    --chart-4: 28 110% 80%;
-    --chart-5: 140 70% 49%;
-    --chart-6: 280 65% 60%;
-    --chart-7: 340 50% 55%;
-    --chart-8: 200 50% 38%;
-    --chart-9: 272 50% 30%;
-    --chart-10: 50 87% 67%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 220 10.3% 5.7%;
+    --sidebar-foreground: 45 15.4% 89.8%;
+    --sidebar-primary: 195 100% 87.5%;
+    --sidebar-primary-foreground: 220 10.3% 5.7%;
+    --sidebar-accent: 216 10.2% 9.6%;
+    --sidebar-accent-foreground: 45 15.4% 89.8%;
+    --sidebar-border: 213.3 9.7% 18.2%;
+    --sidebar-ring: 195 100% 87.5%;
   }
 }
 
@@ -115,12 +85,12 @@
 }
 
 :root {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Host Grotesk', ui-sans-serif, system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color-scheme: dark;
+  color: hsl(var(--foreground));
   background-color: hsl(var(--background));
 
   font-synthesis: none;
@@ -148,13 +118,13 @@
 
 a {
   font-weight: 500;
-  color: var(--accent);
+  color: hsl(var(--signal-hsl));
   text-decoration: inherit;
   cursor: pointer;
 }
 
 a:hover {
-  color: var(--accent);
+  color: hsl(var(--foreground));
 }
 
 body {
@@ -174,14 +144,22 @@ h1 {
   outline: none;
 }
 
-button:focus-visible {
-  outline: 4px auto var(--accent);
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid hsl(var(--signal-hsl));
+  outline-offset: 3px;
+}
+
+::selection {
+  background: hsl(var(--signal-hsl));
+  color: hsl(var(--background));
 }
 
 a:hover,
 a:focus-visible {
   text-decoration: underline;
-  text-decoration-color: var(--accent);
+  text-decoration-color: hsl(var(--signal-hsl));
+  text-underline-offset: 4px;
 }
 
 /* remove scrollbar */

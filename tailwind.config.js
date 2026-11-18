@@ -10,8 +10,10 @@ export default {
   content: ['./index.html', './src/**/*.{ts,tsx,js,jsx}'],
   theme: {
     fontFamily: {
-      mono: ['JetBrains Mono', 'monospace'],
-      roboto: ['Roboto', 'sans-serif'],
+      // The `roboto` key is kept so existing class names keep working; it now maps to the brand font.
+      sans: ['Host Grotesk', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      mono: ['Geist Mono', 'ui-monospace', 'monospace'],
+      roboto: ['Host Grotesk', 'ui-sans-serif', 'system-ui', 'sans-serif'],
     },
     extend: {
       fontSize: {

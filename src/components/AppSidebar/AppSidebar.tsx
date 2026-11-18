@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom';
 
 import { PageRoutes } from '@/constants/routes';
 
-import { useTheme } from '@/providers/ThemeProvider';
-
 import {
   Sidebar,
   SidebarContent,
@@ -19,12 +17,9 @@ import {
 import { LearnPopover } from '../LearnPopover';
 import { SocialPopover } from '../SocialPopover';
 import { TermsPopover } from '../TermsPopover';
-import ThemeToggle from '../ThemeToggle';
 import { ConnectButton } from './ConnectButton';
 
 export function AppSidebar() {
-  const { theme } = useTheme();
-
   const pools = [
     {
       title: 'DFiUSD',
@@ -43,11 +38,7 @@ export function AppSidebar() {
     <Sidebar className="border-r-1 border-border border-solid">
       <SidebarHeader className="px-4 py-2 mb-4">
         <Link to={PageRoutes.Home}>
-          <img
-            src={theme === 'dark' ? '/brand/logo-text-light.svg' : '/brand/logo-text-dark.svg'}
-            alt="DiversiFi"
-            className="w-auto min-w-8 h-8"
-          />
+          <img src="/brand/diversifi-lockup.svg" alt="DiversiFi" className="w-auto h-6" />
         </Link>
       </SidebarHeader>
       <SidebarContent>
@@ -88,9 +79,6 @@ export function AppSidebar() {
         <div className="row gap-[1px]">
           <div className="bg-sidebar h-full row flex-1 overflow-hidden hover:bg-sidebar/80">
             <ConnectButton className="w-full h-full p-2" />
-          </div>
-          <div className="bg-sidebar h-full row hover:bg-sidebar/80">
-            <ThemeToggle />
           </div>
         </div>
       </SidebarFooter>
