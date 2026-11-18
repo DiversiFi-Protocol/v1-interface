@@ -23,11 +23,7 @@
 
 /* connect */
 .connect { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 24px; padding: 40px 0; }
-.wallets { width: 100%; max-width: 360px; display: flex; flex-direction: column; gap: 8px; }
-.walletRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 52px; padding: 0 16px; border: 1px solid var(--strong); border-radius: 6px; background: var(--bg); color: var(--fg); font-size: 16px; font-weight: 500; cursor: pointer; transition: border-color 160ms; }
-.walletRow:hover { border-color: var(--fg); }
-.walletRow:disabled { opacity: .5; cursor: progress; }
-.kind { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .02em; color: var(--dim); }
+.connectButton { width: 100%; max-width: 360px; }
 
 /* amount */
 .tabs { display: flex; gap: 2px; padding: 2px; border: 1px solid var(--line); border-radius: 6px; align-self: flex-start; }

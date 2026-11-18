@@ -9,7 +9,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useModal } from 'connectkit';
 import { toast } from 'sonner';
 import { type WalletClient } from 'viem';
-import { useAccount, useConnect, useDisconnect, useSwitchChain, useWalletClient } from 'wagmi';
+import { useAccount, useDisconnect, useSwitchChain, useWalletClient } from 'wagmi';
 
 import { chainId as APP_CHAIN_ID } from '@/constants/chain';
 import { EMPTY_ARR } from '@/constants/objects';
@@ -35,12 +35,6 @@ type View = 'amount' | 'review' | 'done';
 type Tab = 'swap' | 'contribute';
 type Toast = { color: string; text: string; word: string } | null;
 type Step = { type: string; execute: (signer: WalletClient) => Promise<{ success: boolean; error?: unknown }> };
-
-const WALLETS = [
-  { id: 'metaMask', name: 'MetaMask', kind: 'BROWSER' },
-  { id: 'coinbase', name: 'Coinbase Wallet', kind: 'APP' },
-  { id: 'walletConnect', name: 'WalletConnect', kind: 'QR' },
-] as const;
 
 const CHAIN_NAMES: Record<number, string> = {
   1: 'Ethereum mainnet', 10: 'OP Mainnet', 56: 'BNB Chain', 137: 'Polygon', 8453: 'Base', 42161: 'Arbitrum One', 43114: 'Avalanche', 11155111: 'Sepolia',
@@ -186,7 +180,6 @@ const FlipIcon = () => (
 export default function AppScreen() {
   const { reading, mode } = useReserveReading();
   const { address, isConnected, chainId } = useAccount();
-  const { connect, connectors, isPending: connecting } = useConnect();
   const { disconnect } = useDisconnect();
   const { switchChain } = useSwitchChain();
   const { setOpen: openConnectKit } = useModal();
@@ -343,31 +336,8 @@ export default function AppScreen() {
   const goTab = (t: Tab) => { setTab(t); clear(); };
   const goDir = (d: 'mint' | 'redeem') => { setDir(d); clear(); };
 
-  /* ---------- connecting, through the client's Wagmi + ConnectKit setup ---------- */
-  const [env, setEnv] = useState({ phone: false, injected: false });
-  useEffect(() => setEnv({
-    phone: /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
-    injected: !!(window as { ethereum?: unknown }).ethereum,
-  }), []);
-  const connectFailed = (e: unknown) => {
-    const msg = String((e as { message?: string })?.message ?? e).toLowerCase();
-    if (isRejection(e) || msg.includes('reject') || msg.includes('closed')) showToast({ color: 'var(--dim)', text: 'connection cancelled.', word: 'CANCELLED' }, 4000);
-    else showToast({ color: 'var(--crit)', text: 'couldn’t connect that wallet. try again or pick another.', word: 'FAILED' }, 6000);
-  };
-  const pick = (id: (typeof WALLETS)[number]['id']) => {
-    if (id === 'metaMask' && !env.injected) {
-      // On a phone a normal browser has no MetaMask in it: open this page inside the MetaMask app instead.
-      if (env.phone) { window.location.href = `https://metamask.app.link/dapp/${window.location.host}${window.location.pathname}`; return; }
-      showToast({ color: 'var(--warn)', text: 'MetaMask isn’t installed in this browser. Add the extension, or use WalletConnect.', word: 'NOT FOUND' }, 6000);
-      return;
-    }
-    const c = id === 'metaMask'
-      ? connectors.find((k) => /metamask/i.test(k.name)) ?? connectors.find((k) => k.id === 'injected')
-      : id === 'coinbase' ? connectors.find((k) => /coinbase/i.test(k.id + k.name)) : undefined;
-    // WalletConnect (and anything not found) opens the client's ConnectKit window, which shows the QR code.
-    if (c) connect({ connector: c, chainId: APP_CHAIN_ID }, { onError: connectFailed });
-    else openConnectKit(true);
-  };
+  /* ---------- connecting: the client's ConnectKit window lists every wallet, as in the old app ---------- */
+  const openWalletList = () => openConnectKit(true);
 
   const inputStyle = (bad: boolean) => ({ borderColor: bad ? 'var(--crit)' : focus ? 'var(--fg)' : 'var(--strong)', boxShadow: focus ? '0 0 0 3px var(--bg), 0 0 0 5px var(--signal)' : 'none' });
   const amountInput = (bad: boolean, label: string) => (
@@ -427,7 +397,7 @@ export default function AppScreen() {
             <button
               type="button"
               className={connected ? s.walletOn : `btn btn-primary btn-nav ${s.walletOff}`}
-              onClick={() => (connected ? (disconnect(), reset()) : document.getElementById('wallets')?.querySelector('button')?.focus())}
+              onClick={() => (connected ? (disconnect(), reset()) : openWalletList())}
               aria-label={connected ? `connected as ${address}. disconnect` : undefined}
             >{connected ? short(address) : 'connect wallet'}</button>
           </div>
@@ -441,13 +411,7 @@ export default function AppScreen() {
             <div className={s.connect}>
               <Mark size={72} />
               <p className="h3" style={{ maxWidth: '18em' }}>connect a wallet to swap, mint or redeem DFiUSD.</p>
-              <div id="wallets" className={s.wallets}>
-                {WALLETS.map((w) => (
-                  <button key={w.id} type="button" className={s.walletRow} onClick={() => pick(w.id)} disabled={connecting}>
-                    <span>{w.name}</span><span className={s.kind}>{w.id === 'metaMask' && env.phone && !env.injected ? 'OPENS APP' : w.kind}</span>
-                  </button>
-                ))}
-              </div>
+              <button type="button" className={`btn btn-primary ${s.b52} ${s.connectButton}`} onClick={openWalletList}>connect wallet</button>
               <p className="foot">Ethereum mainnet only. Connecting doesn&apos;t move any funds.</p>
             </div>
           )}
