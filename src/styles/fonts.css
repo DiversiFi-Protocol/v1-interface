@@ -1,14 +1,16 @@
-jetbrains-mono-base {
-  font-family: 'JetBrains Mono', monospace;
-  font-optical-sizing: auto;
-  font-weight: 450;
+/* Self-hosted Latin-subset variable fonts (OFL-1.1, from Fontsource), same as diversifi.tech. */
+@font-face {
+  font-family: 'Host Grotesk';
+  src: url('/fonts/host-grotesk-latin-wght-normal.woff2') format('woff2');
+  font-weight: 300 800;
   font-style: normal;
+  font-display: swap;
 }
 
-roboto-base {
-  font-family: 'Roboto', sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 450;
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/geist-mono-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
   font-style: normal;
-  font-variation-settings: 'wdth' 100;
+  font-display: swap;
 }
